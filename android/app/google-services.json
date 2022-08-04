@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "291435191303",
+    "project_id": "green-thumb-labap",
+    "storage_bucket": "green-thumb-labap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291435191303:android:a68288835d5f9c76fedea2",
+        "android_client_info": {
+          "package_name": "com.example.green_thumb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291435191303-u45ev6dgb941os6376oiqjfec9pchubu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGy2zF6JzUVde9NrPSDcvw5DfjjvY3cQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291435191303-u45ev6dgb941os6376oiqjfec9pchubu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
