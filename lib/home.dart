@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-const double ZOOM = 10;
+const double ZOOM = 15;
 
 class HomeView extends StatelessWidget {
   GoogleMapController? mapController;
