@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 application
-INJECTED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml:3:4-33:19
+INJECTED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml:3:4-38:19
 MERGED from [:cloud_firestore] /home/ditommy/Documents/GitHub/green_thumb/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
 MERGED from [:cloud_firestore] /home/ditommy/Documents/GitHub/green_thumb/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
 MERGED from [:firebase_core] /home/ditommy/Documents/GitHub/green_thumb/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
@@ -21,6 +21,8 @@ MERGED from [com.google.firebase:firebase-installations:17.0.1] /home/ditommy/.g
 MERGED from [com.google.firebase:firebase-installations:17.0.1] /home/ditommy/.gradle/caches/transforms-3/8aab2c0b3ce9432893d27c9d0f95529c/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:14:5-22:19
 MERGED from [com.google.firebase:firebase-common:20.1.1] /home/ditommy/.gradle/caches/transforms-3/361614e9ca911f20112e2fe2e741c358/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:25:5-38:19
 MERGED from [com.google.firebase:firebase-common:20.1.1] /home/ditommy/.gradle/caches/transforms-3/361614e9ca911f20112e2fe2e741c358/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:25:5-38:19
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:36:5-42:19
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:36:5-42:19
 MERGED from [com.google.android.gms:play-services-measurement:21.1.0] /home/ditommy/.gradle/caches/transforms-3/4acfcce480efdb48d23189ce6293c971/transformed/jetified-play-services-measurement-21.1.0/AndroidManifest.xml:28:5-44:19
 MERGED from [com.google.android.gms:play-services-measurement:21.1.0] /home/ditommy/.gradle/caches/transforms-3/4acfcce480efdb48d23189ce6293c971/transformed/jetified-play-services-measurement-21.1.0/AndroidManifest.xml:28:5-44:19
 MERGED from [com.google.android.gms:play-services-measurement-sdk:21.1.0] /home/ditommy/.gradle/caches/transforms-3/1b32632c20cf129f2f85e4d8061a87ec/transformed/jetified-play-services-measurement-sdk-21.1.0/AndroidManifest.xml:22:5-23:19
@@ -50,13 +52,15 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/ditom
 	android:name
 		INJECTED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml
 manifest
-ADDED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml:1:1-34:12
-INJECTED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml:1:1-34:12
-INJECTED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml:1:1-34:12
-INJECTED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml:1:1-34:12
-MERGED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml:1:1-34:12
+ADDED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml:1:1-39:12
+INJECTED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml:1:1-39:12
+INJECTED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml:1:1-39:12
+INJECTED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml:1:1-39:12
+MERGED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml:1:1-39:12
 MERGED from [:cloud_firestore] /home/ditommy/Documents/GitHub/green_thumb/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-17:12
 MERGED from [:firebase_core] /home/ditommy/Documents/GitHub/green_thumb/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-17:12
+MERGED from [:google_maps_flutter] /home/ditommy/Documents/GitHub/green_thumb/build/google_maps_flutter/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [:flutter_plugin_android_lifecycle] /home/ditommy/Documents/GitHub/green_thumb/build/flutter_plugin_android_lifecycle/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.multidex:multidex:2.0.0] /home/ditommy/.gradle/caches/transforms-3/19c2addc77a9b3f8566c6804366b0253/transformed/multidex-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [com.google.firebase:firebase-analytics:21.1.0] /home/ditommy/.gradle/caches/transforms-3/fb1373eee93acc0d87d88b7e09234817/transformed/jetified-firebase-analytics-21.1.0/AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.window:window-java:1.0.0-beta04] /home/ditommy/.gradle/caches/transforms-3/28daf90d95404355e6e365bb554f1b5f/transformed/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:17:1-23:12
@@ -67,6 +71,7 @@ MERGED from [com.google.firebase:firebase-appcheck-interop:16.0.0] /home/ditommy
 MERGED from [com.google.firebase:firebase-auth-interop:19.0.2] /home/ditommy/.gradle/caches/transforms-3/d1e69eba033c56f52e19e6264a7a95b4/transformed/jetified-firebase-auth-interop-19.0.2/AndroidManifest.xml:2:1-10:12
 MERGED from [com.google.firebase:firebase-installations:17.0.1] /home/ditommy/.gradle/caches/transforms-3/8aab2c0b3ce9432893d27c9d0f95529c/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:2:1-24:12
 MERGED from [com.google.firebase:firebase-common:20.1.1] /home/ditommy/.gradle/caches/transforms-3/361614e9ca911f20112e2fe2e741c358/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:15:1-40:12
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:17:1-44:12
 MERGED from [com.google.android.gms:play-services-measurement:21.1.0] /home/ditommy/.gradle/caches/transforms-3/4acfcce480efdb48d23189ce6293c971/transformed/jetified-play-services-measurement-21.1.0/AndroidManifest.xml:17:1-46:12
 MERGED from [com.google.android.gms:play-services-measurement-sdk:21.1.0] /home/ditommy/.gradle/caches/transforms-3/1b32632c20cf129f2f85e4d8061a87ec/transformed/jetified-play-services-measurement-sdk-21.1.0/AndroidManifest.xml:17:1-25:12
 MERGED from [com.google.firebase:firebase-database-collection:18.0.1] /home/ditommy/.gradle/caches/transforms-3/e07d297d40330626f886a82606b50c55/transformed/jetified-firebase-database-collection-18.0.1/AndroidManifest.xml:2:1-9:12
@@ -111,11 +116,11 @@ INJECTED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/debug/A
 		INJECTED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/debug/AndroidManifest.xml
 	android:versionName
 		INJECTED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml
-		ADDED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml:1:1-34:12
+		ADDED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml:1:1-39:12
 		INJECTED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/debug/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml
-		ADDED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml:1:1-34:12
+		ADDED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml:1:1-39:12
 		INJECTED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/debug/AndroidManifest.xml
 	xmlns:android
 		ADDED from /home/ditommy/Documents/GitHub/green_thumb/android/app/src/main/AndroidManifest.xml:1:11-69
@@ -127,6 +132,10 @@ MERGED from [:cloud_firestore] /home/ditommy/Documents/GitHub/green_thumb/build/
 MERGED from [:cloud_firestore] /home/ditommy/Documents/GitHub/green_thumb/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:firebase_core] /home/ditommy/Documents/GitHub/green_thumb/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:firebase_core] /home/ditommy/Documents/GitHub/green_thumb/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:google_maps_flutter] /home/ditommy/Documents/GitHub/green_thumb/build/google_maps_flutter/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:google_maps_flutter] /home/ditommy/Documents/GitHub/green_thumb/build/google_maps_flutter/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_plugin_android_lifecycle] /home/ditommy/Documents/GitHub/green_thumb/build/flutter_plugin_android_lifecycle/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_plugin_android_lifecycle] /home/ditommy/Documents/GitHub/green_thumb/build/flutter_plugin_android_lifecycle/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.multidex:multidex:2.0.0] /home/ditommy/.gradle/caches/transforms-3/19c2addc77a9b3f8566c6804366b0253/transformed/multidex-2.0.0/AndroidManifest.xml:20:5-43
 MERGED from [androidx.multidex:multidex:2.0.0] /home/ditommy/.gradle/caches/transforms-3/19c2addc77a9b3f8566c6804366b0253/transformed/multidex-2.0.0/AndroidManifest.xml:20:5-43
 MERGED from [com.google.firebase:firebase-analytics:21.1.0] /home/ditommy/.gradle/caches/transforms-3/fb1373eee93acc0d87d88b7e09234817/transformed/jetified-firebase-analytics-21.1.0/AndroidManifest.xml:5:5-44
@@ -147,6 +156,8 @@ MERGED from [com.google.firebase:firebase-installations:17.0.1] /home/ditommy/.g
 MERGED from [com.google.firebase:firebase-installations:17.0.1] /home/ditommy/.gradle/caches/transforms-3/8aab2c0b3ce9432893d27c9d0f95529c/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:6:5-8:41
 MERGED from [com.google.firebase:firebase-common:20.1.1] /home/ditommy/.gradle/caches/transforms-3/361614e9ca911f20112e2fe2e741c358/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.firebase:firebase-common:20.1.1] /home/ditommy/.gradle/caches/transforms-3/361614e9ca911f20112e2fe2e741c358/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-measurement:21.1.0] /home/ditommy/.gradle/caches/transforms-3/4acfcce480efdb48d23189ce6293c971/transformed/jetified-play-services-measurement-21.1.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-measurement:21.1.0] /home/ditommy/.gradle/caches/transforms-3/4acfcce480efdb48d23189ce6293c971/transformed/jetified-play-services-measurement-21.1.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-measurement-sdk:21.1.0] /home/ditommy/.gradle/caches/transforms-3/1b32632c20cf129f2f85e4d8061a87ec/transformed/jetified-play-services-measurement-sdk-21.1.0/AndroidManifest.xml:20:5-44
@@ -233,6 +244,8 @@ MERGED from [com.google.android.gms:play-services-measurement-api:21.1.0] /home/
 MERGED from [com.google.android.gms:play-services-measurement-api:21.1.0] /home/ditommy/.gradle/caches/transforms-3/75356df2c8160aca29440f2f0a421e7a/transformed/jetified-play-services-measurement-api-21.1.0/AndroidManifest.xml:22:5-67
 MERGED from [com.google.firebase:firebase-installations:17.0.1] /home/ditommy/.gradle/caches/transforms-3/8aab2c0b3ce9432893d27c9d0f95529c/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:11:5-67
 MERGED from [com.google.firebase:firebase-installations:17.0.1] /home/ditommy/.gradle/caches/transforms-3/8aab2c0b3ce9432893d27c9d0f95529c/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:11:5-67
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:24:5-67
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:24:5-67
 MERGED from [com.google.android.gms:play-services-measurement:21.1.0] /home/ditommy/.gradle/caches/transforms-3/4acfcce480efdb48d23189ce6293c971/transformed/jetified-play-services-measurement-21.1.0/AndroidManifest.xml:23:5-67
 MERGED from [com.google.android.gms:play-services-measurement:21.1.0] /home/ditommy/.gradle/caches/transforms-3/4acfcce480efdb48d23189ce6293c971/transformed/jetified-play-services-measurement-21.1.0/AndroidManifest.xml:23:5-67
 MERGED from [com.google.android.gms:play-services-measurement-impl:21.1.0] /home/ditommy/.gradle/caches/transforms-3/ee900f68af7c243068965b926c6afa93/transformed/jetified-play-services-measurement-impl-21.1.0/AndroidManifest.xml:23:5-67
@@ -291,6 +304,8 @@ MERGED from [com.google.android.gms:play-services-measurement-api:21.1.0] /home/
 MERGED from [com.google.android.gms:play-services-measurement-api:21.1.0] /home/ditommy/.gradle/caches/transforms-3/75356df2c8160aca29440f2f0a421e7a/transformed/jetified-play-services-measurement-api-21.1.0/AndroidManifest.xml:23:5-79
 MERGED from [com.google.firebase:firebase-installations:17.0.1] /home/ditommy/.gradle/caches/transforms-3/8aab2c0b3ce9432893d27c9d0f95529c/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:10:5-79
 MERGED from [com.google.firebase:firebase-installations:17.0.1] /home/ditommy/.gradle/caches/transforms-3/8aab2c0b3ce9432893d27c9d0f95529c/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:10:5-79
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:23:5-79
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:23:5-79
 MERGED from [com.google.android.gms:play-services-measurement:21.1.0] /home/ditommy/.gradle/caches/transforms-3/4acfcce480efdb48d23189ce6293c971/transformed/jetified-play-services-measurement-21.1.0/AndroidManifest.xml:24:5-79
 MERGED from [com.google.android.gms:play-services-measurement:21.1.0] /home/ditommy/.gradle/caches/transforms-3/4acfcce480efdb48d23189ce6293c971/transformed/jetified-play-services-measurement-21.1.0/AndroidManifest.xml:24:5-79
 MERGED from [com.google.android.gms:play-services-measurement-impl:21.1.0] /home/ditommy/.gradle/caches/transforms-3/ee900f68af7c243068965b926c6afa93/transformed/jetified-play-services-measurement-impl-21.1.0/AndroidManifest.xml:24:5-79
@@ -351,6 +366,24 @@ ADDED from [com.google.firebase:firebase-common:20.1.1] /home/ditommy/.gradle/ca
 		ADDED from [com.google.firebase:firebase-common:20.1.1] /home/ditommy/.gradle/caches/transforms-3/361614e9ca911f20112e2fe2e741c358/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:31:13-36
 	android:name
 		ADDED from [com.google.firebase:firebase-common:20.1.1] /home/ditommy/.gradle/caches/transforms-3/361614e9ca911f20112e2fe2e741c358/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:27:13-77
+uses-feature#0x00020000
+ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:26:5-28:35
+	android:glEsVersion
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:27:9-41
+	android:required
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:28:9-32
+queries
+ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:30:5-34:15
+package#com.google.android.apps.maps
+ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:33:9-64
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:33:18-61
+uses-library#org.apache.http.legacy
+ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:39:9-41:40
+	android:required
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:41:13-37
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/ditommy/.gradle/caches/transforms-3/33f15e7630bfb3ec1ccd1e3092e0fbb0/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:40:13-50
 uses-permission#com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE
 ADDED from [com.google.android.gms:play-services-measurement:21.1.0] /home/ditommy/.gradle/caches/transforms-3/4acfcce480efdb48d23189ce6293c971/transformed/jetified-play-services-measurement-21.1.0/AndroidManifest.xml:26:5-110
 MERGED from [com.google.android.gms:play-services-measurement-impl:21.1.0] /home/ditommy/.gradle/caches/transforms-3/ee900f68af7c243068965b926c6afa93/transformed/jetified-play-services-measurement-impl-21.1.0/AndroidManifest.xml:26:5-110
