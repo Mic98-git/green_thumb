@@ -1,5 +1,3 @@
-import 'dart:ui';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:green_thumb/core/api_client.dart';
 import 'package:green_thumb/screens/home_page.dart';
@@ -33,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-      if (res['ErrorCode'] == null) {
+      if (res['error'] == null) {
         String accessToken = res['token'];
         showAlertDialog(context);
         // Navigator.push(
@@ -42,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
         //         builder: (context) => HomeScreen(accesstoken: accessToken)));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Error: ${res['Message']}'),
+          content: Text('Error: ${res['error']}'),
           backgroundColor: Colors.red.shade300,
         ));
       }

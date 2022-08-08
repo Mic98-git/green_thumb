@@ -1,5 +1,3 @@
-import 'dart:developer';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:green_thumb/core/api_client.dart';
 import 'package:green_thumb/screens/login_page.dart';
