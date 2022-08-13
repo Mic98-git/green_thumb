@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:green_thumb/screens/register_page.dart';
+import 'package:green_thumb/screens/sendPosition_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const RegisterScreen(),
+      home: const SendPositionScreen(),
     );
   }
 }

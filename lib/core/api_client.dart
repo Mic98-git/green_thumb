@@ -15,6 +15,17 @@ class ApiClient {
     }
   }
 
+  Future<dynamic> updatePosition(Map<String, dynamic>? data) async {
+    try {
+      Response response =
+          await _dio.put('http://10.0.2.2:3000/users/courier', data: data);
+      return response.data;
+    } on DioError catch (e) {
+      log(e.toString());
+      return e.response!.data;
+    }
+  }
+
   Future<dynamic> login(String email, String password) async {
     try {
       Response response =
