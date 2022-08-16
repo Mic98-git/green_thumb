@@ -1,39 +1,23 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import 'home.dart';
+import 'package:green_thumb/screens/register_page.dart';
 
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: 'geolocation',
-    home: Home(),
-  ));
+  runApp(const MyApp());
 }
 
-class Home extends StatefulWidget {
-  @override
-  State<Home> createState() => HomeSampleState();
-}
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-class HomeSampleState extends State<Home> {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder(
-        future: Firebase.initializeApp(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) return Text("Ugh oh! Something went wrong");
-
-          if (!snapshot.hasData) return Text("Got no data :(");
-
-          if (snapshot.hasData &&
-              snapshot.connectionState == ConnectionState.done)
-            return HomeView();
-
-          return Text("Loading please...");
-        },
+    return MaterialApp(
+      title: 'LoginRadius Example',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: const RegisterScreen(),
     );
   }
 }
