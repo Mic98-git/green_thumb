@@ -60,13 +60,12 @@ class _SendPositionScreen extends State<SendPositionScreen> {
           ? 'Unknown'
           : '${position.latitude.toString()}, ${position.longitude.toString()}');
 
-      Map<String, dynamic> userData = {
-        "id": "62f77dbead2e4d00133f3145",
+      Map<String, dynamic> body = {
         "latitude": position?.latitude,
         "longitude": position?.longitude
       };
 
-      dynamic res = await apiClient.updatePosition(userData);
+      dynamic res = await apiClient.updatePosition(body);
     });
 
     // When we reach here, permissions are granted and we can
