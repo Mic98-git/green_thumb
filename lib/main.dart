@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:green_thumb/home.dart';
 import 'package:green_thumb/screens/register_page.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const RegisterScreen(),
+      home: HomeView(),
     );
   }
 }
