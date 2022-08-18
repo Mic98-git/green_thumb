@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:green_thumb/screens/register_page.dart';
+import 'package:green_thumb/screens/starting_page.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'custom_material_color.dart';
+import 'package:green_thumb/screens/login_page.dart';
 
 void main() {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(const MyApp());
+  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatelessWidget {
@@ -15,9 +21,9 @@ class MyApp extends StatelessWidget {
       title: 'LoginRadius Example',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: createMaterialColor(Color.fromRGBO(51, 153, 66, 1)),
       ),
-      home: const RegisterScreen(),
+      home: const StartingScreen(),
     );
   }
 }
