@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:green_thumb/core/api_client.dart';
-import 'package:green_thumb/screens/home_page.dart';
 import 'package:green_thumb/utils/validator.dart';
+import 'package:green_thumb/core/api_client.dart';
+import './profile_registration/user_info.dart';
+import '../colors.dart';
 
 class LoginScreen extends StatefulWidget {
+  static String id = "login_screen";
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -78,114 +80,173 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Scaffold(
-        backgroundColor: Colors.blueGrey[200],
-        body: Form(
-          key: _formKey,
-          child: Stack(children: [
-            SizedBox(
-              width: size.width,
-              height: size.height,
-              child: Align(
-                alignment: Alignment.center,
-                child: Container(
-                  width: size.width * 0.85,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
+    return GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 70.0),
+                  child: Center(
+                    child: Container(
+                        width: 200,
+                        height: 150,
+                        child: Image.asset('assets/images/logo.png')),
                   ),
-                  child: SingleChildScrollView(
-                    child: Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          // SizedBox(height: size.height * 0.08),
-                          const Center(
-                            child: Text(
-                              "Login",
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: size.height * 0.06),
-                          TextFormField(
-                            controller: emailController,
-                            validator: (value) {
-                              return Validator.validateEmail(value ?? "");
-                            },
-                            decoration: InputDecoration(
-                              hintText: "Email",
-                              isDense: true,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: size.height * 0.03),
-                          TextFormField(
-                            obscureText: _showPassword,
-                            controller: passwordController,
-                            validator: (value) {
-                              return Validator.validatePassword(value ?? "");
-                            },
-                            decoration: InputDecoration(
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  setState(
-                                      () => _showPassword = !_showPassword);
-                                },
-                                child: Icon(
-                                  _showPassword
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              hintText: "Password",
-                              isDense: true,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: size.height * 0.04),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: ElevatedButton(
-                                  onPressed: login,
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Colors.indigo,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 40, vertical: 15)),
-                                  child: const Text(
-                                    "Login",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 30.0),
+                  child: Text(
+                    'GreenThumb',
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(
+                  width: size.width * 0.6,
+                  height: size.height * 0.02,
+                  child: Divider(color: primaryColor),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Your way to greenification',
+                    style: TextStyle(color: primaryColor, fontSize: 15),
+                  ),
+                ),
+                SizedBox(height: size.height * 0.05),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Sign In",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-              ),
+                SizedBox(height: size.height * 0.03),
+                Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: TextFormField(
+                      controller: emailController,
+                      validator: (value) {
+                        return Validator.validateEmail(value ?? "");
+                      },
+                      decoration: InputDecoration(
+                        hintText: "Email",
+                        isDense: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    )),
+                SizedBox(height: size.height * 0.02),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: TextFormField(
+                    obscureText: !_showPassword,
+                    controller: passwordController,
+                    validator: (value) {
+                      return Validator.validatePassword(value ?? "");
+                    },
+                    decoration: InputDecoration(
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() => _showPassword = !_showPassword);
+                        },
+                        child: Icon(
+                          _showPassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      hintText: "Password",
+                      isDense: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
+                Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: TextButton(
+                        onPressed: () {
+                          //TODO FORGOT PASSWORD SCREEN GOES HERE
+                        },
+                        child: Text(
+                          'Password Forgotten?',
+                          style: TextStyle(color: primaryColor, fontSize: 15),
+                        ),
+                      ),
+                    )),
+                SizedBox(
+                  height: size.height * 0.03,
+                ),
+                Container(
+                  height: 50,
+                  width: 250,
+                  decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: primaryColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15))),
+                    onPressed: login,
+                    child: Text(
+                      'Login',
+                      style: TextStyle(color: Colors.white, fontSize: 25),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'New User? Please, ',
+                        style: TextStyle(color: Colors.black, fontSize: 15),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const UserInfoScreen()));
+                        },
+                        child: Text(
+                          'register here!',
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                        ),
+                      ),
+                    ]),
+              ],
             ),
-          ]),
+          ),
         ));
   }
 }

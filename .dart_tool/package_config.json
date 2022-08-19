@@ -38,6 +38,18 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "checked_yaml",
+      "rootUri": "file:///Users/michael/flutter/.pub-cache/hosted/pub.dartlang.org/checked_yaml-2.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "cli_util",
+      "rootUri": "file:///Users/michael/flutter/.pub-cache/hosted/pub.dartlang.org/cli_util-0.3.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "clock",
       "rootUri": "file:///Users/michael/flutter/.pub-cache/hosted/pub.dartlang.org/clock-1.1.0",
       "packageUri": "lib/",
@@ -76,6 +88,12 @@
     {
       "name": "flutter",
       "rootUri": "file:///Users/michael/flutter/packages/flutter",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_launcher_icons",
+      "rootUri": "file:///Users/michael/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_launcher_icons-0.10.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -120,6 +138,12 @@
       "rootUri": "file:///Users/michael/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.4",
       "packageUri": "lib/",
       "languageVersion": "2.16"
+    },
+    {
+      "name": "json_annotation",
+      "rootUri": "file:///Users/michael/flutter/.pub-cache/hosted/pub.dartlang.org/json_annotation-4.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
     },
     {
       "name": "lint",
@@ -248,7 +272,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2022-08-18T11:32:25.610391Z",
+  "generated": "2022-08-18T22:04:31.095859Z",
   "generator": "pub",
   "generatorVersion": "2.17.6"
 }
