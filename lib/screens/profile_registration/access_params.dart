@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import './registration_completed.dart';
+import 'user_registration_completed.dart';
+import 'package:green_thumb/utils/validator.dart';
 import '../../colors.dart';
 
 class AccessParamsScreen extends StatefulWidget {
-  static String id = "login_screen";
+  static String id = "access_params_screen";
   const AccessParamsScreen({Key? key}) : super(key: key);
 
   @override
@@ -11,6 +12,15 @@ class AccessParamsScreen extends StatefulWidget {
 }
 
 class _AccessParamsScreenState extends State<AccessParamsScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool _showPassword = false;
+
+  void saveAccessParams() {
+    print(emailController.text);
+    print(passwordController.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -18,7 +28,7 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
         backgroundColor: Colors.white,
         body: Column(children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top: 100.0),
+            padding: const EdgeInsets.only(top: 30.0),
             child: Center(
               child: Text(
                 'About You',
@@ -30,7 +40,7 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
             ),
           ),
           SizedBox(
-            height: size.height * 0.03,
+            height: size.height * 0.05,
           ),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
             Text(
@@ -70,6 +80,10 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
+                controller: emailController,
+                validator: (value) {
+                  return Validator.validateEmail(value ?? "");
+                },
                 decoration: InputDecoration(
                   hintText: "Email",
                   isDense: true,
@@ -98,18 +112,33 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
             height: size.height * 0.02,
           ),
           Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: "Password",
-                  isDense: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: TextFormField(
+              obscureText: !_showPassword,
+              controller: passwordController,
+              validator: (value) {
+                return Validator.validatePassword(value ?? "");
+              },
+              decoration: InputDecoration(
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    setState(() => _showPassword = !_showPassword);
+                  },
+                  child: Icon(
+                    _showPassword ? Icons.visibility : Icons.visibility_off,
+                    color: Colors.grey,
                   ),
                 ),
-              )),
+                hintText: "Password",
+                isDense: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+          ),
           SizedBox(
-            height: size.height * 0.06,
+            height: size.height * 0.05,
           ),
           Container(
             height: 50,
@@ -122,11 +151,12 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15))),
               onPressed: () {
+                saveAccessParams();
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            const RegistrationCompletedScreen()));
+                            const UserRegistrationCompletedScreen()));
               },
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

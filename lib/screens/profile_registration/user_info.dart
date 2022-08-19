@@ -3,7 +3,7 @@ import './access_params.dart';
 import '../../colors.dart';
 
 class UserInfoScreen extends StatefulWidget {
-  static String id = "login_screen";
+  static String id = "user_info_screen";
   const UserInfoScreen({Key? key}) : super(key: key);
 
   @override
@@ -14,12 +14,13 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController birthDateController = TextEditingController();
   final TextEditingController fiscalCodeController = TextEditingController();
-  bool isSeller = false;
-  String name = "";
-  String birthDate = "";
-  String fiscalCode = "";
-  DateTime date =
-      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  bool isCustomer = true;
+  late DateTime birthDate;
+
+  void saveInfo() {
+    //check errors or nullable values to eraise dialogs
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -27,7 +28,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
         backgroundColor: Colors.white,
         body: Column(children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top: 100.0),
+            padding: const EdgeInsets.only(top: 30.0),
             child: Center(
               child: Text(
                 'About You',
@@ -39,7 +40,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
             ),
           ),
           SizedBox(
-            height: size.height * 0.03,
+            height: size.height * 0.05,
           ),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
             Text(
@@ -58,22 +59,30 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
             ),
           ]),
           SizedBox(
-            height: size.height * 0.06,
+            height: size.height * 0.03,
           ),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
             Text(
-              'I am a customer                  ',
+              'I am a customer',
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,
-                  fontWeight: FontWeight.bold),
+                  fontWeight: isCustomer ? FontWeight.bold : null),
+            ),
+            Switch(
+              value: !isCustomer,
+              onChanged: (value) {
+                setState(() {
+                  isCustomer = !value;
+                });
+              },
             ),
             Text(
               'I am a seller',
               style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-              ),
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: !isCustomer ? FontWeight.bold : null),
             ),
           ]),
           SizedBox(
@@ -129,21 +138,30 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
-                onTap: () async {
-                  DateTime? newDate = await showDatePicker(
-                    context: context,
-                    initialDate: date,
-                    firstDate: DateTime(1900),
-                    lastDate: DateTime(2022),
-                  );
-                  if (newDate == null)
-                    return;
-                  else {
-                    setState(() => date = newDate);
-                  }
-                },
                 controller: birthDateController,
                 decoration: InputDecoration(
+                  suffixIcon: GestureDetector(
+                    onTap: () async {
+                      final datePick = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2100));
+                      if (datePick != null) {
+                        setState(() {
+                          this.birthDate = datePick;
+                        });
+                        final date =
+                            "${birthDate.day}/${birthDate.month}/${birthDate.year}";
+                        birthDateController.value =
+                            birthDateController.value.copyWith(text: date);
+                      }
+                    },
+                    child: Icon(
+                      Icons.calendar_month_sharp,
+                      color: Colors.grey,
+                    ),
+                  ),
                   hintText: "dd/mm/yyyy",
                   isDense: true,
                   border: OutlineInputBorder(
@@ -183,7 +201,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                 ),
               )),
           SizedBox(
-            height: size.height * 0.06,
+            height: size.height * 0.05,
           ),
           Container(
             height: 50,
@@ -196,16 +214,14 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15))),
               onPressed: () {
-                name = nameController.text;
-                birthDate = birthDateController.text;
-                fiscalCode = fiscalCodeController.text;
+                saveInfo();
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const AccessParamsScreen()));
               },
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
                       'Continue',
