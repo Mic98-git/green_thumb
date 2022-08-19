@@ -65,6 +65,12 @@ class HomeView extends StatelessWidget {
     mapController = controller;
   }
 
+  Stream<Order> getPosition() async* {
+    yield* Stream.periodic(Duration(seconds: 2), (_) {
+      return fetchOrder();
+    }).asyncMap((event) async => await event);
+  }
+
   late Future<Order> futureOrder = fetchOrder();
 
   Set<Marker> markers = Set();
@@ -72,8 +78,8 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: FutureBuilder<Order>(
-        future: futureOrder,
+      child: StreamBuilder<Order>(
+        stream: getPosition(),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             latitude = snapshot.data!.latitude;
