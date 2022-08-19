@@ -1,48 +1,91 @@
+import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'core/api_client.dart';
 
+final ApiClient apiClient = ApiClient();
+String id = '62fe30f5e7d2a2e6d06ef826';
+
+Future<Order> fetchOrder() async {
+  final response = await http
+      // ignore: prefer_interpolation_to_compose_strings
+      .get(Uri.parse('http://10.0.2.2:3003/order/' + id));
+
+  if (response.statusCode == 200) {
+    print(response.body);
+    return Order.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to load album');
+  }
+}
+
+class Order {
+  final String userId;
+  final int total;
+  final String createdAt;
+  final double latitude;
+  final double longitude;
+  final String productId;
+  final int quantity;
+
+  const Order(
+      {required this.userId,
+      required this.total,
+      required this.createdAt,
+      required this.latitude,
+      required this.longitude,
+      required this.productId,
+      required this.quantity});
+
+  factory Order.fromJson(Map<String, dynamic> json) {
+    return Order(
+        userId: json['ord']['user'],
+        total: json['ord']['total'],
+        createdAt: json['ord']['created_at'],
+        latitude: json['ord']['latitude'],
+        longitude: json['ord']['longitude'],
+        productId: json['ord']['orderItems'][0]['product'],
+        quantity: json['ord']['orderItems'][0]['qty']);
+  }
+}
+
 const double ZOOM = 15;
 
 class HomeView extends StatelessWidget {
   GoogleMapController? mapController;
 
+  double longitude = 0;
+  double latitude = 0;
+
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
 
-  Future<dynamic> getPosition() async {
-    Map<String, dynamic> userData = {
-      "id": "62fb81491ec9080013b923e9",
-    };
-
-    final ApiClient apiClient = ApiClient();
-    dynamic res = await apiClient.getPosition(userData);
-
-    //debugPrint(res);
-
-    return res;
-  }
+  late Future<Order> futureOrder = fetchOrder();
 
   Set<Marker> markers = Set();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: StreamBuilder(
+      child: FutureBuilder<Order>(
+        future: futureOrder,
         builder: (context, AsyncSnapshot snapshot) {
-          print(snapshot);
+          if (snapshot.hasData) {
+            latitude = snapshot.data!.latitude;
+            longitude = snapshot.data!.longitude;
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
 
           // Remove any existing markers
           markers.clear();
 
-          getPosition();
-
-          final latLng = LatLng(1, 1);
+          final latLng = LatLng(latitude, longitude);
 
           // Add new marker with markerId.
           markers.add(Marker(markerId: MarkerId("location"), position: latLng));
@@ -56,16 +99,14 @@ class HomeView extends StatelessWidget {
           ));
 
           return GoogleMap(
-            initialCameraPosition: CameraPosition(target: LatLng(1, 1)),
+            initialCameraPosition:
+                CameraPosition(target: LatLng(latitude, longitude)),
             // Markers to be pointed
             markers: markers,
             onMapCreated: (controller) {
               // Assign the controller value to use it later
               mapController = controller;
             },
-          );
-          return Center(
-            child: CircularProgressIndicator(),
           );
         },
       ),

@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'dart:convert';
 
 class ApiClient {
   final Dio _dio = Dio();
@@ -15,10 +16,9 @@ class ApiClient {
     }
   }
 
-  Future<dynamic> getPosition(Map<String, dynamic>? data) async {
+  Future<dynamic> getPosition(id) async {
     try {
-      Response response = await _dio.get('http://10.0.2.2:3000/users/id',
-          queryParameters: data);
+      Response response = await _dio.get('http://10.0.2.2:3003/order/' + id);
       return response.data;
     } on DioError catch (e) {
       log(e.toString());
