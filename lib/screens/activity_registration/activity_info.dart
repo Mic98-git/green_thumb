@@ -236,7 +236,7 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'Confirm',
+                          'Confirm ',
                           style: TextStyle(color: Colors.white, fontSize: 25),
                         ),
                         Icon(Icons.double_arrow_outlined),

@@ -102,18 +102,20 @@ class _UserRegistrationCompletedScreenState
                             builder: (context) => const ActivityInfoScreen()));
               },
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     isCustomer
                         ? Text(
-                            'Home Page',
+                            'Home Page ',
                             style: TextStyle(color: Colors.white, fontSize: 25),
                           )
                         : Text(
                             'Register Activity',
                             style: TextStyle(color: Colors.white, fontSize: 25),
                           ),
-                    Icon(Icons.double_arrow_outlined)
+                    isCustomer
+                        ? Icon(Icons.home_outlined, size: 30)
+                        : Icon(Icons.double_arrow_outlined)
                   ]),
             ),
           ),

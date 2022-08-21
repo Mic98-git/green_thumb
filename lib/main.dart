@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:green_thumb/screens/login_page.dart';
-import 'package:green_thumb/screens/announcement_creation/new_article.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'custom_material_color.dart';
 
@@ -18,12 +17,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'LoginRadius Example',
+      title: 'GreenThumb ecommerce',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: createMaterialColor(Color.fromRGBO(51, 153, 66, 1)),
       ),
-      home: const NewArticleScreen(),
+      home: const LoginScreen(),
     );
   }
 }

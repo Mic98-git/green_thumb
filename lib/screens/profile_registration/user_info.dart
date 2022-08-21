@@ -291,7 +291,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'Continue',
+                          'Continue ',
                           style: TextStyle(color: Colors.white, fontSize: 25),
                         ),
                         Icon(Icons.double_arrow_outlined),

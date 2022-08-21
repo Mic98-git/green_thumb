@@ -146,46 +146,55 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
                     ),
                   ]),
               SizedBox(
-                height: size.height * 0.02,
+                height: size.height * 0.05,
               ),
               Stack(
                 alignment: Alignment.topRight,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.only(left: 20),
                     child: Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: Alignment.topLeft,
                       child: Container(
-                        height: 160.0,
-                        width: 160.0,
+                        height: size.height * 0.20,
+                        width: size.width * 0.35,
                         child: widget.image,
+                        decoration: BoxDecoration(
+                            color: articleBoxColor,
+                            borderRadius: BorderRadius.circular(20)),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(right: size.width * 0.3),
-                    child: Text(
-                      widget.fullName,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  Text(widget.latinName,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      )),
-                  Text('Price: ' + widget.price,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
+                  Container(
+                      height: size.height * 0.25,
+                      width: size.width * 0.55,
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: size.height * 0.02,
+                          ),
+                          Text(
+                            widget.fullName,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 25,
+                            ),
+                          ),
+                          SizedBox(height: size.height * 0.03),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Price: ' + widget.price,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                  )),
+                              Icon(Icons.euro),
+                            ],
+                          ),
+                        ],
                       )),
                 ],
-              ),
-              SizedBox(
-                height: size.height * 0.02,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -255,16 +264,13 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
               SizedBox(
                 height: size.height * 0.03,
               ),
-              Row(children: <Widget>[
-                SizedBox(
-                  width: 20,
-                ),
-                Text(widget.description,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                    ))
-              ]),
+              Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: Text(widget.description,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ))),
               SizedBox(
                 height: size.height * 0.05,
               ),
@@ -291,7 +297,7 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'Post Article',
+                          'Post Article ',
                           style: TextStyle(color: Colors.white, fontSize: 25),
                         ),
                         Icon(Icons.double_arrow_outlined),

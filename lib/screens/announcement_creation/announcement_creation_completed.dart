@@ -46,23 +46,10 @@ class _AnnouncementCreationCompletedScreenState
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 30),
               child: Align(
-                alignment: Alignment.topLeft,
-                child: Text("Article posted!",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    )),
-              )),
-          SizedBox(
-            height: size.height * 0.02,
-          ),
-          Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                      "Please wait for the approval and check your inbox. "
-                      "Thanks for sharing on GreenThumb!",
+                      "Thanks for sharing on GreenThumb! "
+                      "Please wait for the approval and check your inbox. ",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20,

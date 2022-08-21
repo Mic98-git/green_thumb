@@ -189,6 +189,16 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                         });
                       },
                       items: dropdownItems),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Text(
+                    'water frequency',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
+                  )
                 ],
               ),
               SizedBox(
@@ -213,12 +223,22 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                     child: TextFormField(
                       controller: oxygenController,
                       decoration: InputDecoration(
-                        hintText: "Grams/day",
+                        hintText: "Oxygen production",
                         isDense: true,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'grams/day',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
                     ),
                   )
                 ],
@@ -245,14 +265,14 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                     child: TextFormField(
                       controller: lightController,
                       decoration: InputDecoration(
-                        hintText: "Light info",
+                        hintText: "Sunlight exposition",
                         isDense: true,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
               SizedBox(
@@ -283,7 +303,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                         ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
               SizedBox(
@@ -364,7 +384,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'Confirm',
+                          'Confirm ',
                           style: TextStyle(color: Colors.white, fontSize: 25),
                         ),
                         Icon(Icons.double_arrow_outlined),
