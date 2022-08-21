@@ -93,7 +93,10 @@ class _ActivityRegistrationCompletedScreenState
                       'My Account',
                       style: TextStyle(color: Colors.white, fontSize: 25),
                     ),
-                    Icon(Icons.double_arrow_outlined),
+                    Icon(
+                      Icons.account_circle_outlined,
+                      size: 30,
+                    ),
                   ]),
             ),
           ),
