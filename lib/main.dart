@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: createMaterialColor(Color.fromRGBO(51, 153, 66, 1)),
       ),
-      home: const MyAccountScreen(),
+      home: const LoginScreen(),
     );
   }
 }

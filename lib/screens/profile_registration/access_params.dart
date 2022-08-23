@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'user_registration_completed.dart';
 import 'package:green_thumb/utils/validator.dart';
+import '../../core/api_client.dart';
 import '../login_page.dart';
 import '../../global_variables.dart';
 
@@ -26,11 +27,45 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final ApiClient _apiClient = ApiClient();
+
   bool _showPassword = false;
+
+  Future<void> registerUsers() async {
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text('Processing Data'),
+        backgroundColor: Colors.green.shade300,
+      ));
+
+      Map<String, dynamic> userData = {
+        "seller": widget.isCustomer,
+        "fullname": widget.name,
+        "birth": widget.birthDate,
+        "fiscalcode": widget.fiscalCode,
+        "email": emailController.text,
+        "password": passwordController.text
+      };
+
+      dynamic res = await _apiClient.registerUser(userData);
+
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+      if (res['ErrorCode'] == null) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const LoginScreen()));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Error: ${res['Message']}'),
+          backgroundColor: Colors.red.shade300,
+        ));
+      }
+    }
+  }
 
   void saveAccessParams() {
     if (_formKey.currentState!.validate()) {
-      //SEND PARAMS (user info are widget.isCustomer ecc)
+      registerUsers();
       Navigator.push(
           context,
           MaterialPageRoute(

@@ -6,8 +6,9 @@ class ApiClient {
 
   Future<dynamic> registerUser(Map<String, dynamic>? data) async {
     try {
-      Response response =
-          await _dio.post('http://10.0.2.2:3000/users/register', data: data);
+      Response response = await _dio
+          // .post('http://valeriobob.ddns.net:3000/users/register', data: data);
+          .post('http://10.0.2.2:3000/users/register', data: data);
       return response.data;
     } on DioError catch (e) {
       log(e.toString());
@@ -18,6 +19,7 @@ class ApiClient {
   Future<dynamic> login(String email, String password) async {
     try {
       Response response =
+          // await _dio.post('http://valeriobob.ddns.net:3000/users/login', data: {
           await _dio.post('http://10.0.2.2:3000/users/login', data: {
         'email': email,
         'password': password,

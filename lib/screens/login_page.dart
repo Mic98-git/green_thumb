@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:green_thumb/screens/my_account.dart';
 import 'package:green_thumb/utils/validator.dart';
 import 'package:green_thumb/core/api_client.dart';
 import './profile_registration/user_info.dart';
@@ -37,10 +38,8 @@ class _LoginScreenState extends State<LoginScreen> {
       if (res['error'] == null) {
         String accessToken = res['token'];
         showAlertDialog(context);
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => HomeScreen(accesstoken: accessToken)));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const MyAccountScreen()));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Error: ${res['error']}'),
