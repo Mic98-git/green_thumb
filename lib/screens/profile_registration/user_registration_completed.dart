@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../activity_registration/activity_info.dart';
 import '../../global_variables.dart';
+import '../login_page.dart';
 
 class UserRegistrationCompletedScreen extends StatefulWidget {
   static String id = "registration_completed_screen";
@@ -67,7 +68,7 @@ class _UserRegistrationCompletedScreenState
                   child: Align(
                       alignment: Alignment.topLeft,
                       child: isCustomer
-                          ? Text("Start buying something!",
+                          ? Text("Please login and start buying something!",
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 20,
@@ -97,8 +98,7 @@ class _UserRegistrationCompletedScreenState
                         ? Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    const UserRegistrationCompletedScreen()))
+                                builder: (context) => const LoginScreen()))
                         : Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -110,7 +110,7 @@ class _UserRegistrationCompletedScreenState
                       children: <Widget>[
                         isCustomer
                             ? Text(
-                                'Home Page ',
+                                'Login ',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 25),
                               )
@@ -120,7 +120,7 @@ class _UserRegistrationCompletedScreenState
                                     color: Colors.white, fontSize: 25),
                               ),
                         isCustomer
-                            ? Icon(Icons.home_outlined, size: 30)
+                            ? Icon(Icons.double_arrow_outlined, size: 30)
                             : Icon(Icons.double_arrow_outlined)
                       ]),
                 ),

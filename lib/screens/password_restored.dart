@@ -79,9 +79,7 @@ class _PasswordRestoredScreenState extends State<PasswordRestoredScreen> {
                       'Login',
                       style: TextStyle(color: Colors.white, fontSize: 25),
                     ),
-                    Icon(
-                      Icons.double_arrow_outlined,
-                    ),
+                    Icon(Icons.double_arrow_outlined, size: 30),
                   ]),
             ),
           ),

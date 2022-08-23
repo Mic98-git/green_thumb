@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../global_variables.dart';
-import '../my_account.dart';
+import '../login_page.dart';
 
 class ActivityRegistrationCompletedScreen extends StatefulWidget {
   static String id = "registration_completed_screen";
@@ -87,19 +87,16 @@ class _ActivityRegistrationCompletedScreenState
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MyAccountScreen()));
+                            builder: (context) => const LoginScreen()));
                   },
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Text(
-                          'My Account',
+                          'Login',
                           style: TextStyle(color: Colors.white, fontSize: 25),
                         ),
-                        Icon(
-                          Icons.account_circle_outlined,
-                          size: 30,
-                        ),
+                        Icon(Icons.double_arrow_outlined, size: 30),
                       ]),
                 ),
               ),
