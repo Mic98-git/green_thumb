@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../colors.dart';
+import '../my_account.dart';
 
 class AnnouncementCreationCompletedScreen extends StatefulWidget {
   static String id = "announcement_completed_screen";
@@ -67,7 +68,12 @@ class _AnnouncementCreationCompletedScreenState
                   primary: primaryColor,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15))),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MyAccountScreen()));
+              },
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[

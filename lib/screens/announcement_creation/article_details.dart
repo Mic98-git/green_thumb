@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import '../profile_registration/user_registration_completed.dart';
 import './article_review.dart';
 import '../../colors.dart';
+import '../my_account.dart';
 
 class ArticleDetailsScreen extends StatefulWidget {
   static String id = "article_details_screen";
@@ -69,10 +70,8 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
     Widget okButton = TextButton(
       child: Text("Yes"),
       onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const UserRegistrationCompletedScreen()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const MyAccountScreen()));
       },
     );
 

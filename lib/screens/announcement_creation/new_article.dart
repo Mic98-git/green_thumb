@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../profile_registration/user_registration_completed.dart';
 import './article_details.dart';
 import '../../colors.dart';
+import '../my_account.dart';
 
 class NewArticleScreen extends StatefulWidget {
   static String id = "new_article_screen";
@@ -35,10 +36,8 @@ class _NewArticleScreenState extends State<NewArticleScreen> {
     Widget okButton = TextButton(
       child: Text("Yes"),
       onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const UserRegistrationCompletedScreen()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const MyAccountScreen()));
       },
     );
 
