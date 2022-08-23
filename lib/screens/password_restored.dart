@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../colors.dart';
+import '../global_variables.dart';
 import './login_page.dart';
 
 class PasswordRestoredScreen extends StatefulWidget {

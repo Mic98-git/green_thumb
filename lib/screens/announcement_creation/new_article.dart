@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../profile_registration/user_registration_completed.dart';
 import './article_details.dart';
-import '../../colors.dart';
+import '../../global_variables.dart';
 import '../my_account.dart';
 
 class NewArticleScreen extends StatefulWidget {

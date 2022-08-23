@@ -2,11 +2,21 @@ import 'package:flutter/material.dart';
 import 'user_registration_completed.dart';
 import 'package:green_thumb/utils/validator.dart';
 import '../login_page.dart';
-import '../../colors.dart';
+import '../../global_variables.dart';
 
 class AccessParamsScreen extends StatefulWidget {
   static String id = "access_params_screen";
-  const AccessParamsScreen({Key? key}) : super(key: key);
+  final bool isCustomer;
+  final String name;
+  final String birthDate;
+  final String fiscalCode;
+  const AccessParamsScreen({
+    Key? key,
+    required this.isCustomer,
+    required this.name,
+    required this.birthDate,
+    required this.fiscalCode,
+  }) : super(key: key);
 
   @override
   State<AccessParamsScreen> createState() => _AccessParamsScreenState();
@@ -20,6 +30,7 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
 
   void saveAccessParams() {
     if (_formKey.currentState!.validate()) {
+      //SEND PARAMS (user info are widget.isCustomer ecc)
       Navigator.push(
           context,
           MaterialPageRoute(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:green_thumb/utils/validator.dart';
-import '../../colors.dart';
+import '../global_variables.dart';
 import './password_restored.dart';
 
 class PasswordForgottenScreen extends StatefulWidget {

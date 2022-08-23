@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../profile_registration/user_registration_completed.dart';
 import './announcement_creation_completed.dart';
-import '../../colors.dart';
+import '../../global_variables.dart';
 import '../my_account.dart';
 
 class ArticleReviewScreen extends StatefulWidget {
@@ -37,6 +36,7 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
 
   void saveInfo() {
     //check errors or nullable values to eraise dialogs
+    //params are widget.water ecc
   }
 
   showAlertDialog(BuildContext context) {

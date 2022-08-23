@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import './activity_registration_completed.dart';
 import '../profile_registration/user_registration_completed.dart';
-import '../../colors.dart';
+import '../../global_variables.dart';
 
 class FiscalDetailsScreen extends StatefulWidget {
   static String id = "fiscal_details_screen";
-  const FiscalDetailsScreen({Key? key}) : super(key: key);
+  final String activityName;
+  final String fiscalAddress;
+  final String city;
+  const FiscalDetailsScreen(
+      {Key? key,
+      required this.activityName,
+      required this.fiscalAddress,
+      required this.city})
+      : super(key: key);
 
   @override
   State<FiscalDetailsScreen> createState() => _FiscalDetailsScreenState();
@@ -17,6 +25,7 @@ class _FiscalDetailsScreenState extends State<FiscalDetailsScreen> {
 
   void saveInfo() {
     //check errors or nullable values to eraise dialogs
+    //paras are : widget.activityName ecc
   }
 
   showAlertDialog(BuildContext context) {
@@ -198,12 +207,20 @@ class _FiscalDetailsScreenState extends State<FiscalDetailsScreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15))),
                   onPressed: () {
-                    saveInfo();
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const ActivityRegistrationCompletedScreen()));
+                    if (this.VATController.text.isNotEmpty &&
+                        this.IBANController.text.isNotEmpty) {
+                      saveInfo();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ActivityRegistrationCompletedScreen()));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('Error: Complete all the requested data'),
+                        backgroundColor: Colors.red.shade300,
+                      ));
+                    }
                   },
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

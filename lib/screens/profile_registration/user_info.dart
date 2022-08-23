@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './access_params.dart';
 import '../login_page.dart';
-import '../../colors.dart';
+import '../../global_variables.dart';
 
 class UserInfoScreen extends StatefulWidget {
   static String id = "user_info_screen";
@@ -267,7 +267,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                     ),
                   )),
               SizedBox(
-                height: size.height * 0.05,
+                height: size.height * 0.04,
               ),
               Container(
                 height: 50,
@@ -281,11 +281,25 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15))),
                   onPressed: () {
-                    saveInfo();
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const AccessParamsScreen()));
+                    if (this.nameController.text.isNotEmpty &&
+                        this.birthDateController.text.isNotEmpty &&
+                        this.fiscalCodeController.text.isNotEmpty) {
+                      saveInfo();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AccessParamsScreen(
+                                    isCustomer: this.isCustomer,
+                                    name: this.nameController.text,
+                                    birthDate: this.birthDateController.text,
+                                    fiscalCode: this.fiscalCodeController.text,
+                                  )));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('Error: Complete all the requested data'),
+                        backgroundColor: Colors.red.shade300,
+                      ));
+                    }
                   },
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

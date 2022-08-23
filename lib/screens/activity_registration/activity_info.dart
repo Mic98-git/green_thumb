@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './fiscal_details.dart';
 import '../profile_registration/user_registration_completed.dart';
-import '../../colors.dart';
+import '../../global_variables.dart';
 
 class ActivityInfoScreen extends StatefulWidget {
   static String id = "activity_info_screen";
@@ -226,11 +226,24 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15))),
                   onPressed: () {
-                    saveInfo();
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const FiscalDetailsScreen()));
+                    if (this.nameController.text.isNotEmpty &&
+                        this.fiscalAddressController.text.isNotEmpty &&
+                        this.cityController.text.isNotEmpty) {
+                      saveInfo();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FiscalDetailsScreen(
+                                  activityName: this.nameController.text,
+                                  fiscalAddress:
+                                      this.fiscalAddressController.text,
+                                  city: this.cityController.text)));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('Error: Complete all the requested data'),
+                        backgroundColor: Colors.red.shade300,
+                      ));
+                    }
                   },
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

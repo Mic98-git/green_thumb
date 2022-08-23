@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import '../profile_registration/user_registration_completed.dart';
 import './article_review.dart';
-import '../../colors.dart';
+import '../../global_variables.dart';
 import '../my_account.dart';
 
 class ArticleDetailsScreen extends StatefulWidget {
