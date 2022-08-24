@@ -34,7 +34,7 @@ class Message {
   }
 }
 
-String idDestinatario = '62fe30f5e7d2a2e6d06ef826';
+// String idDestinatario = '62fe30f5e7d2a2e6d06ef826';
 String idMittente = '62fe30611f401e001333dd93';
 
 class Profile {
@@ -51,7 +51,7 @@ class Profile {
 
   factory Profile.fromJson(Map<String, dynamic> json) {
     return Profile(
-        fullname: json['user']['fullname'], userId: json['user']['_id']);
+        fullname: json['user']['fullname'], userId: json['user']['id']);
   }
 }
 
@@ -111,12 +111,38 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final List<types.Message> _messages = [];
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     body: FutureBuilder<Profile>(
+  //       future: getUsername(),
+  //       builder: (BuildContext context, AsyncSnapshot<Profile> snapshot) {
+  //         if (snapshot.hasData) {
+  //           return Center(
+  //             child: Chat(
+  //               messages: _messages,
+  //               onSendPressed: _handleSendPressed,
+  //               user: types.User(
+  //                   id: snapshot.data!.userId,
+  //                   firstName: snapshot.data!.fullname),
+  //             ),
+  //           );
+  //         } else {
+  //           return Center(
+  //             child: CircularProgressIndicator(),
+  //           );
+  //         }
+  //       },
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         body: Chat(
           messages: _messages,
           onSendPressed: _handleSendPressed,
-          user: types.User(id: "user.userId", firstName: "user.fullname"),
+          user: types.User(id: "userserId", firstName: "usefullname"),
         ),
       );
 
@@ -130,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _handleSendPressed(types.PartialText message) {
     final textMessage = types.TextMessage(
-      author: types.User(id: "user.userId", firstName: "user.fullname"),
+      author: types.User(id: "userId", firstName: "fullname"),
       createdAt: DateTime.now().millisecondsSinceEpoch,
       id: idDestinatario,
       text: message.text,

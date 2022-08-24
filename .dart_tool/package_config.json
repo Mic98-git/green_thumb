@@ -26,6 +26,24 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "cached_network_image",
+      "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/cached_network_image-3.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "cached_network_image_platform_interface",
+      "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/cached_network_image_platform_interface-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "cached_network_image_web",
+      "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/cached_network_image_web-1.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "characters",
       "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/characters-1.2.1",
       "packageUri": "lib/",
@@ -80,6 +98,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "dash_chat_2",
+      "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/dash_chat_2-0.0.14",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "diffutil_dart",
       "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/diffutil_dart-3.0.0",
       "packageUri": "lib/",
@@ -126,6 +150,18 @@
       "rootUri": "file:///home/ditommy/snap/flutter/common/flutter/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "flutter_blurhash",
+      "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/flutter_blurhash-0.7.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "flutter_cache_manager",
+      "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/flutter_cache_manager-3.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "flutter_chat_types",
@@ -296,6 +332,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "octo_image",
+      "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/octo_image-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "path",
       "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/path-1.8.2",
       "packageUri": "lib/",
@@ -344,6 +386,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "pedantic",
+      "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/pedantic-1.11.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "petitparser",
       "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/petitparser-5.0.0",
       "packageUri": "lib/",
@@ -374,6 +422,12 @@
       "languageVersion": "2.14"
     },
     {
+      "name": "rxdart",
+      "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/rxdart-0.27.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///home/ditommy/snap/flutter/common/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -384,6 +438,18 @@
       "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/source_span-1.9.1",
       "packageUri": "lib/",
       "languageVersion": "2.14"
+    },
+    {
+      "name": "sqflite",
+      "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/sqflite-2.0.3+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "sqflite_common",
+      "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/sqflite_common-2.2.1+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
     },
     {
       "name": "stack_trace",
@@ -402,6 +468,12 @@
       "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "synchronized",
+      "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/synchronized-3.0.0+2",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
     },
     {
       "name": "term_glyph",
@@ -494,6 +566,36 @@
       "languageVersion": "2.14"
     },
     {
+      "name": "video_player",
+      "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/video_player-2.4.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "video_player_android",
+      "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/video_player_android-2.3.9",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "video_player_avfoundation",
+      "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/video_player_avfoundation-2.3.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "video_player_platform_interface",
+      "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/video_player_platform_interface-5.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "video_player_web",
+      "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/video_player_web-2.0.12",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "visibility_detector",
       "rootUri": "file:///home/ditommy/.pub-cache/hosted/pub.dartlang.org/visibility_detector-0.3.3",
       "packageUri": "lib/",
@@ -530,7 +632,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2022-08-23T15:34:15.765944Z",
+  "generated": "2022-08-24T15:48:52.582447Z",
   "generator": "pub",
   "generatorVersion": "2.19.0-127.0.dev"
 }
