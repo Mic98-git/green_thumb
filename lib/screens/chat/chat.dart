@@ -25,6 +25,39 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+class Profile {
+  const Profile({required this.fullname, required this.userId});
+
+  /// Username of the profile
+  final String fullname;
+
+  final String userId;
+
+  String get getName {
+    return fullname;
+  }
+
+  factory Profile.fromJson(Map<String, dynamic> json) {
+    return Profile(
+        fullname: json['user']['fullname'], userId: json['user']['_id']);
+  }
+}
+
+// String idMittente = '62fe30611f401e001333dd93';
+
+// Future<Profile> getUsername() async {
+//   final response = await http
+//       // ignore: prefer_interpolation_to_compose_strings
+//       .get(Uri.parse('http://10.0.2.2:3000/users/' + idMittente));
+
+//   if (response.statusCode == 200) {
+//     print(response.body);
+//     return await Profile.fromJson(jsonDecode(response.body));
+//   } else {
+//     throw Exception('Failed to load message');
+//   }
+// }
+
 class Message {
   const Message(
       {required this.messageId,
@@ -86,6 +119,13 @@ class _MyHomePageState extends State<MyHomePage> {
     }).asyncMap((event) async => await event);
   }
 
+  Future<http.Response> sendMessage(String content, String idChat) {
+    return http.put(
+      Uri.parse('http://10.0.2.2:3005/chat/' + idChat),
+      body: (<String, String>{'content': content}),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return new StreamBuilder<Message>(
@@ -111,6 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onSend: (ChatMessage m) {
                 setState(() {
                   messages.insert(0, m);
+                  sendMessage(m.text, '63066b91135c2f2bdcbd51d2');
                 });
               },
               messages: messages,
@@ -124,51 +165,3 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 }
-
-// Widget getMessageWidget(BuildContext context) {
-//   return DefaultTextStyle(
-//     style: Theme.of(context).textTheme.displayMedium!,
-//     textAlign: TextAlign.center,
-//     child: FutureBuilder<Message>(
-//       future: getMessage(), // a previously-obtained Future<String> or null
-//       builder: (BuildContext context, AsyncSnapshot<Message> snapshot) {
-//         if (snapshot.hasData) {
-//           messages.add(ChatMessage(
-//             text: snapshot.data!.content,
-//             user: user2,
-//             createdAt: DateTime(2021, 01, 30, 16, 45),
-//           ));
-//         }
-//         return Center(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//           ),
-//         );
-//       },
-//     ),
-//   );
-// }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Basic example'),
-//       ),
-//       body: DashChat(
-//         currentUser: user,
-//         onSend: (ChatMessage m) {
-//           setState(() {
-//             messages.insert(0, m);
-//           });
-//         },
-//         messages: messages,
-//         messageListOptions: MessageListOptions(
-//           onLoadEarlier: () async {
-//             await Future.delayed(const Duration(seconds: 3));
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }
