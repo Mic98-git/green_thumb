@@ -147,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
           }
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Basic example'),
+              title: const Text('Chat'),
             ),
             body: DashChat(
               currentUser: user,
