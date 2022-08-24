@@ -1,10 +1,29 @@
 import 'dart:async';
+
+import 'package:dash_chat_2/dash_chat_2.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'package:http/http.dart' as http;
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) => const MaterialApp(
+        home: MyHomePage(),
+      );
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
 
 class Message {
   const Message(
@@ -34,140 +53,122 @@ class Message {
   }
 }
 
-// String idDestinatario = '62fe30f5e7d2a2e6d06ef826';
-String idMittente = '62fe30611f401e001333dd93';
+ChatUser user = ChatUser(id: '0');
+ChatUser user2 = ChatUser(id: '2', firstName: 'Niki Lauda');
 
-class Profile {
-  const Profile({required this.fullname, required this.userId});
+List<ChatMessage> messages = <ChatMessage>[];
 
-  /// Username of the profile
-  final String fullname;
-
-  final String userId;
-
-  String get getName {
-    return fullname;
-  }
-
-  factory Profile.fromJson(Map<String, dynamic> json) {
-    return Profile(
-        fullname: json['user']['fullname'], userId: json['user']['id']);
-  }
-}
-
-Future<Profile> getUsername() async {
-  final response = await http
-      // ignore: prefer_interpolation_to_compose_strings
-      .get(Uri.parse('http://10.0.2.2:3000/users/' + idMittente));
-
-  if (response.statusCode == 200) {
-    print(response.body);
-    return await Profile.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception('Failed to load message');
-  }
-}
-
-Future<http.Response> sendMessage(String content, String idDestinatario) {
-  return http.post(
-    Uri.parse('http://10.0.2.2:3005/chat/'),
-    body: (<String, String>{'userId': idDestinatario, 'content': content}),
-  );
-}
-
-// Future<Message> getMessage() async {
-//   final response = await http
-//       // ignore: prefer_interpolation_to_compose_strings
-//       .get(Uri.parse('http://10.0.2.2:3005/chat/' + idMittente));
-
-//   if (response.statusCode == 200) {
-//     print(response.body);
-//     return Message.fromJson(jsonDecode(response.body));
-//   } else {
-//     throw Exception('Failed to load message');
-//   }
-// }
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) => const MaterialApp(
-        home: MyHomePage(),
-      );
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+ChatMessage mess = new ChatMessage(
+  text: '',
+  user: user2,
+  createdAt: DateTime.now(),
+);
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<types.Message> _messages = [];
+  String idMittente = '62fe30f5e7d2a2e6d06ef826';
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     body: FutureBuilder<Profile>(
-  //       future: getUsername(),
-  //       builder: (BuildContext context, AsyncSnapshot<Profile> snapshot) {
-  //         if (snapshot.hasData) {
-  //           return Center(
-  //             child: Chat(
-  //               messages: _messages,
-  //               onSendPressed: _handleSendPressed,
-  //               user: types.User(
-  //                   id: snapshot.data!.userId,
-  //                   firstName: snapshot.data!.fullname),
-  //             ),
-  //           );
-  //         } else {
-  //           return Center(
-  //             child: CircularProgressIndicator(),
-  //           );
-  //         }
-  //       },
-  //     ),
-  //   );
-  // }
+  Future<Message> getMessage() async {
+    final response = await http
+        // ignore: prefer_interpolation_to_compose_strings
+        .get(Uri.parse('http://10.0.2.2:3005/chat/' + idMittente));
+
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Message.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load message');
+    }
+  }
+
+  Stream<Message> getText() async* {
+    yield* Stream.periodic(Duration(seconds: 1), (_) {
+      return getMessage();
+    }).asyncMap((event) async => await event);
+  }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Chat(
-          messages: _messages,
-          onSendPressed: _handleSendPressed,
-          user: types.User(id: "userserId", firstName: "usefullname"),
-        ),
-      );
-
-  void _addMessage(types.Message message) {
-    setState(() {
-      _messages.insert(0, message);
-    });
-  }
-
-  String idDestinatario = '62fe30f5e7d2a2e6d06ef826';
-
-  void _handleSendPressed(types.PartialText message) {
-    final textMessage = types.TextMessage(
-      author: types.User(id: "userId", firstName: "fullname"),
-      createdAt: DateTime.now().millisecondsSinceEpoch,
-      id: idDestinatario,
-      text: message.text,
-    );
-
-    print(message.text);
-
-    String content = message.text;
-
-    sendMessage(content, idDestinatario);
-
-    _addMessage(textMessage);
+  Widget build(BuildContext context) {
+    return new StreamBuilder<Message>(
+        stream: getText(),
+        builder: (BuildContext context, AsyncSnapshot<Message> snapshot) {
+          if (snapshot.hasData) {
+            if (mess.text != snapshot.data!.content) {
+              ChatMessage newMess = new ChatMessage(
+                  text: snapshot.data!.content,
+                  user: user2,
+                  createdAt: DateTime.parse(snapshot.data!.createdAt));
+              messages.insert(0, newMess);
+              mess.text = snapshot.data!.content;
+              mess.createdAt = DateTime.parse(snapshot.data!.createdAt);
+            }
+          }
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Basic example'),
+            ),
+            body: DashChat(
+              currentUser: user,
+              onSend: (ChatMessage m) {
+                setState(() {
+                  messages.insert(0, m);
+                });
+              },
+              messages: messages,
+              messageListOptions: MessageListOptions(
+                onLoadEarlier: () async {
+                  await Future.delayed(const Duration(seconds: 3));
+                },
+              ),
+            ),
+          );
+        });
   }
 }
+
+// Widget getMessageWidget(BuildContext context) {
+//   return DefaultTextStyle(
+//     style: Theme.of(context).textTheme.displayMedium!,
+//     textAlign: TextAlign.center,
+//     child: FutureBuilder<Message>(
+//       future: getMessage(), // a previously-obtained Future<String> or null
+//       builder: (BuildContext context, AsyncSnapshot<Message> snapshot) {
+//         if (snapshot.hasData) {
+//           messages.add(ChatMessage(
+//             text: snapshot.data!.content,
+//             user: user2,
+//             createdAt: DateTime(2021, 01, 30, 16, 45),
+//           ));
+//         }
+//         return Center(
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//           ),
+//         );
+//       },
+//     ),
+//   );
+// }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Basic example'),
+//       ),
+//       body: DashChat(
+//         currentUser: user,
+//         onSend: (ChatMessage m) {
+//           setState(() {
+//             messages.insert(0, m);
+//           });
+//         },
+//         messages: messages,
+//         messageListOptions: MessageListOptions(
+//           onLoadEarlier: () async {
+//             await Future.delayed(const Duration(seconds: 3));
+//           },
+//         ),
+//       ),
+//     );
+//   }
+// }
