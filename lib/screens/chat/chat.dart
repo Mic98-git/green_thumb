@@ -4,6 +4,7 @@ import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(const MyApp());
@@ -90,6 +91,7 @@ ChatUser user = ChatUser(id: '0');
 ChatUser user2 = ChatUser(id: '2', firstName: 'Niki Lauda');
 
 List<ChatMessage> messages = <ChatMessage>[];
+DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
 
 ChatMessage mess = new ChatMessage(
   text: '',
@@ -119,10 +121,11 @@ class _MyHomePageState extends State<MyHomePage> {
     }).asyncMap((event) async => await event);
   }
 
-  Future<http.Response> sendMessage(String content, String idChat) {
+  Future<http.Response> sendMessage(
+      String content, String idChat, String date) {
     return http.put(
       Uri.parse('http://10.0.2.2:3005/chat/' + idChat),
-      body: (<String, String>{'content': content}),
+      body: (<String, String>{'content': content, 'created_at': date}),
     );
   }
 
@@ -151,7 +154,9 @@ class _MyHomePageState extends State<MyHomePage> {
               onSend: (ChatMessage m) {
                 setState(() {
                   messages.insert(0, m);
-                  sendMessage(m.text, '63066b91135c2f2bdcbd51d2');
+                  print(DateTime.now.toString());
+                  sendMessage(m.text, '63066b91135c2f2bdcbd51d2',
+                      dateFormat.format(DateTime.now()));
                 });
               },
               messages: messages,
