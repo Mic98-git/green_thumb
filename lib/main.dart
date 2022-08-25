@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: createMaterialColor(Color.fromRGBO(51, 153, 66, 1)),
       ),
-      home: const NewArticleScreen(),
+      home: const LoginScreen(),
     );
   }
 }

@@ -56,6 +56,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
   }
 
   Future<void> saveInfo() async {
+    //todo manage errors
     Map<String, dynamic> articleData = {
       'name': widget.fullName,
       'latin': widget.latinName,
@@ -386,7 +387,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                             this.priceController.text.isNotEmpty != null
                         // this.articleImage
                         ) {
-                      saveInfo();
+                      saveInfo(); //todo manage errors
                       Navigator.push(
                           context,
                           MaterialPageRoute(

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'user_registration_completed.dart';
 import 'package:green_thumb/utils/validator.dart';
@@ -33,11 +35,6 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
 
   Future<void> registerUsers() async {
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text('Processing Data'),
-        backgroundColor: Colors.green.shade300,
-      ));
-
       Map<String, dynamic> userData = {
         "seller": widget.isCustomer,
         "fullname": widget.name,
@@ -49,27 +46,17 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
 
       dynamic res = await _apiClient.registerUser(userData);
 
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-      if (res['ErrorCode'] == null) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const LoginScreen()));
+      if (res['error'] == null) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const UserRegistrationCompletedScreen()));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Error: ${res['Message']}'),
+          content: Text('Error: ${res['error']}'),
           backgroundColor: Colors.red.shade300,
         ));
       }
-    }
-  }
-
-  void saveAccessParams() {
-    if (_formKey.currentState!.validate()) {
-      registerUsers();
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const UserRegistrationCompletedScreen()));
     }
   }
 
@@ -271,7 +258,9 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15))),
                       onPressed: () {
-                        saveAccessParams();
+                        if (_formKey.currentState!.validate()) {
+                          registerUsers();
+                        }
                       },
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

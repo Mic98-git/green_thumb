@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:green_thumb/screens/my_account.dart';
 import 'package:green_thumb/utils/validator.dart';
@@ -37,6 +39,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (res['error'] == null) {
         String accessToken = res['token'];
+        token = accessToken;
+        userId = res['id'];
         showAlertDialog(context);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const MyAccountScreen()));

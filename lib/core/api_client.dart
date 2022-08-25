@@ -43,6 +43,18 @@ class ApiClient {
       return e.response!.data;
     }
   }
+
+  Future<dynamic> getUser(String userId) async {
+    try {
+      Response response = await _dio.get(
+        'http://valeriobob.ddns.net:3000/users/' + userId,
+      );
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
   // Future<dynamic> getUserProfileData(String accessToken) async {
   //   try {
   //     Response response = await _dio.get(
