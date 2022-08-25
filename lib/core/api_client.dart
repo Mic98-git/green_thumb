@@ -1,15 +1,14 @@
 import 'dart:developer';
-import 'dart:ffi';
 import 'package:dio/dio.dart';
+import 'package:green_thumb/global_variables.dart';
 
 class ApiClient {
   final Dio _dio = Dio();
 
   Future<dynamic> registerUser(Map<String, dynamic>? data) async {
     try {
-      Response response = await _dio
-          .post('http://valeriobob.ddns.net:3000/users/register', data: data);
-      // .post('http://10.0.2.2:3000/users/register', data: data);
+      Response response =
+          await _dio.post(url + ':3000/users/register', data: data);
       return response.data;
     } on DioError catch (e) {
       log(e.toString());
@@ -19,9 +18,7 @@ class ApiClient {
 
   Future<dynamic> login(String email, String password) async {
     try {
-      Response response =
-          await _dio.post('http://valeriobob.ddns.net:3000/users/login', data: {
-        // await _dio.post('http://10.0.2.2:3000/users/login', data: {
+      Response response = await _dio.post(url + ':3000/users/login', data: {
         'email': email,
         'password': password,
       });
@@ -31,12 +28,20 @@ class ApiClient {
     }
   }
 
+  Future<dynamic> getUser(String userId) async {
+    try {
+      Response response = await _dio.get(
+        url + ':3000/users/' + userId,
+      );
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
   Future<dynamic> addNewProduct(Map<String, dynamic>? data) async {
     try {
-      Response response =
-          await _dio.post('http://valeriobob.ddns.net:3002/products', data: data
-              // await _dio.post('http://10.0.2.2:3000/users/login', data: data
-              );
+      Response response = await _dio.post(url + ':3002/products', data: data);
       return response.data;
     } on DioError catch (e) {
       log(e.toString());
@@ -44,11 +49,55 @@ class ApiClient {
     }
   }
 
-  Future<dynamic> getUser(String userId) async {
+  Future<dynamic> getProducts() async {
     try {
       Response response = await _dio.get(
-        'http://valeriobob.ddns.net:3000/users/' + userId,
+        url + ':3002/products',
       );
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
+  Future<dynamic> getSellersProducts(String userId) async {
+    try {
+      Response response = await _dio.get(
+        url + ':3002/products/' + userId,
+      );
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
+  Future<dynamic> getProduct(String productId) async {
+    try {
+      Response response = await _dio.get(
+        url + ':3002/products/' + productId,
+      );
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
+  Future<dynamic> deleteProduct(String productId) async {
+    try {
+      Response response = await _dio.delete(
+        url + ':3002/products/' + productId,
+      );
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
+  Future<dynamic> updateProduct(
+      String productId, Map<String, dynamic>? data) async {
+    try {
+      Response response =
+          await _dio.put(url + ':3002/products/' + productId, data: data);
       return response.data;
     } on DioError catch (e) {
       return e.response!.data;

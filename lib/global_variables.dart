@@ -6,3 +6,6 @@ final bool isLoggedIn = false;
 final bool isCustomer = false; //late initializer
 String userId = '';
 String token = '';
+
+String url = 'http://valeriobob.ddns.net';
+// String url = 'http://10.0.2.2';
