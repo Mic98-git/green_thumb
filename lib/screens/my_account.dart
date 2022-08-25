@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:green_thumb/config/global_variables.dart';
-import '../widgets/app_bar.dart';
-import '../widgets/navigation_bar.dart';
+import 'package:green_thumb/global_variables.dart';
+import 'package:green_thumb/widgets/app_bar.dart';
+import 'package:green_thumb/widgets/navigation_bar.dart';
 import './announcement_creation/new_article.dart';
 import '../models/article.dart';
+import '../core/api_client.dart';
 
 class MyAccountScreen extends StatefulWidget {
   static String id = "my_account_screen";
@@ -14,9 +15,16 @@ class MyAccountScreen extends StatefulWidget {
 }
 
 class _MyAccountScreenState extends State<MyAccountScreen> {
+  final ApiClient _apiClient = ApiClient();
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<void> getSellersAnnouncements(String userId) async {
+    dynamic res = await _apiClient.getSellersProducts(userId);
+
+    print(res);
   }
 
   Widget articleBox({required Article item}) => Container(
