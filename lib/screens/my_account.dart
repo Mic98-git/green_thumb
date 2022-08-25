@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:green_thumb/global_variables.dart';
-import 'app_bar.dart';
-import 'navigation_bar.dart';
+import 'package:green_thumb/config/global_variables.dart';
+import '../widgets/app_bar.dart';
+import '../widgets/navigation_bar.dart';
 import './announcement_creation/new_article.dart';
-import './article.dart';
+import '../models/article.dart';
 
 class MyAccountScreen extends StatefulWidget {
   static String id = "my_account_screen";

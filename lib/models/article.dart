@@ -35,13 +35,8 @@ class Article {
     this.picture = articlePicture;
   }
 
-  late List<Article> currentAnnouncements;
-
   /*Article getArticleInfo() {
     return Article();
   }*/
 
-  List<Article> getArticleList() {
-    return currentAnnouncements;
-  }
 }

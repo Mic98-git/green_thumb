@@ -5,7 +5,7 @@ import 'user_registration_completed.dart';
 import 'package:green_thumb/utils/validator.dart';
 import '../../core/api_client.dart';
 import '../login_page.dart';
-import '../../global_variables.dart';
+import '../../config/global_variables.dart';
 
 class AccessParamsScreen extends StatefulWidget {
   static String id = "access_params_screen";

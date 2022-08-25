@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import './article_review.dart';
-import '../../global_variables.dart';
+import '../../config/global_variables.dart';
 import '../my_account.dart';
 import '../../core/api_client.dart';
 

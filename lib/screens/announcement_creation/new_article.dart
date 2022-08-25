@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './article_details.dart';
-import '../../global_variables.dart';
+import '../../config/global_variables.dart';
 import '../my_account.dart';
 
 class NewArticleScreen extends StatefulWidget {

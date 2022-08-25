@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../activity_registration/activity_info.dart';
-import '../../global_variables.dart';
+import '../../config/global_variables.dart';
 import '../login_page.dart';
 
 class UserRegistrationCompletedScreen extends StatefulWidget {

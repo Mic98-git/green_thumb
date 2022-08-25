@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './activity_registration_completed.dart';
 import '../profile_registration/user_registration_completed.dart';
-import '../../global_variables.dart';
+import '../../config/global_variables.dart';
 
 class FiscalDetailsScreen extends StatefulWidget {
   static String id = "fiscal_details_screen";

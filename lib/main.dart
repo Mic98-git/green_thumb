@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:green_thumb/screens/login_page.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import './screens/my_account.dart';
-import 'custom_material_color.dart';
+import 'config/custom_material_color.dart';
 
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();

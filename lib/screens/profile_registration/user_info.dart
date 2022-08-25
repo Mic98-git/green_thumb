@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './access_params.dart';
 import '../login_page.dart';
-import '../../global_variables.dart';
+import '../../config/global_variables.dart';
 
 class UserInfoScreen extends StatefulWidget {
   static String id = "user_info_screen";

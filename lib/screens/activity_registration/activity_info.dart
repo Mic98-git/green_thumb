@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './fiscal_details.dart';
 import '../profile_registration/user_registration_completed.dart';
-import '../../global_variables.dart';
+import '../../config/global_variables.dart';
 
 class ActivityInfoScreen extends StatefulWidget {
   static String id = "activity_info_screen";
