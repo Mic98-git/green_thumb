@@ -157,7 +157,12 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
                       child: Container(
                         height: size.height * 0.20,
                         width: size.width * 0.35,
-                        child: widget.image,
+                        child: AspectRatio(
+                          aspectRatio: 4 / 3,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: widget.image),
+                        ),
                         decoration: BoxDecoration(
                             color: articleBoxColor,
                             borderRadius: BorderRadius.circular(20)),

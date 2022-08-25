@@ -3,6 +3,7 @@ import 'package:green_thumb/global_variables.dart';
 import 'app_bar.dart';
 import 'navigation_bar.dart';
 import './announcement_creation/new_article.dart';
+import './article.dart';
 
 class MyAccountScreen extends StatefulWidget {
   static String id = "my_account_screen";
@@ -13,6 +14,27 @@ class MyAccountScreen extends StatefulWidget {
 }
 
 class _MyAccountScreenState extends State<MyAccountScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Widget articleBox({required Article item}) => Container(
+        width: 200,
+        color: articleBoxColor,
+        child: Column(children: [
+          Expanded(
+              child: AspectRatio(
+                  aspectRatio: 4 / 3,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    /*child: Material(
+                      child: 
+                    )*/
+                  )))
+        ]),
+      );
+
   @override
   Widget build(BuildContext context) {
     int _currentIndex = 3;
@@ -176,7 +198,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
-                                )
+                                ),
+                                SizedBox(height: size.height * 0.02),
                               ],
                             ),
                           )
@@ -201,6 +224,21 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                           fontWeight: FontWeight.bold),
                                     ),
                                     SizedBox(height: size.height * 0.02),
+                                    /*Container(
+                                        height: size.height * 0.05,
+                                        child: ListView.separated(
+                                          padding: EdgeInsets.all(10),
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: Article()
+                                              .currentAnnouncements
+                                              .length,
+                                          itemBuilder: (context, index) =>
+                                              articleBox(Article()
+                                                  .currentAnnouncements[index]),
+                                          separatorBuilder: (context, _) =>
+                                              SizedBox(
+                                                  width: size.width * 0.02),
+                                        ))*/
                                   ],
                                 ),
                               )

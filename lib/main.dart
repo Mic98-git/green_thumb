@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:green_thumb/screens/announcement_creation/new_article.dart';
 import 'package:green_thumb/screens/login_page.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import './screens/my_account.dart';
