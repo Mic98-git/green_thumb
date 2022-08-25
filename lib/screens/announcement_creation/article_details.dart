@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import './article_review.dart';
 import '../../global_variables.dart';
 import '../my_account.dart';
+import '../../core/api_client.dart';
 
 class ArticleDetailsScreen extends StatefulWidget {
   static String id = "article_details_screen";
@@ -27,6 +28,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
   final TextEditingController lightController = TextEditingController();
   final TextEditingController oxygenController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
+  final ApiClient _apiClient = ApiClient();
 
   Image? articleImage;
   late String imagePath;
@@ -53,7 +55,34 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
       return;
   }
 
-  void saveInfo() {
+  Future<void> saveInfo() async {
+    Map<String, dynamic> articleData = {
+      'name': widget.fullName,
+      'latin': widget.latinName,
+      'description': widget.category,
+      'plant': widget.category,
+      // 'category':category,
+      'water': waterFrequency, //todo
+      'oxigen': oxygenController.text,
+      'sunlight': lightController.text,
+      'price': priceController.text,
+      // 'image': image
+    };
+
+    dynamic res = await _apiClient.addNewProduct(articleData);
+
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+    if (res['ErrorCode'] == null) {
+      //product added
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => const LoginScreen()));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: ${res['Message']}'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
     //check errors or nullable values to eraise dialogs
   }
 
@@ -353,9 +382,10 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                           borderRadius: BorderRadius.circular(15))),
                   onPressed: () {
                     if (this.oxygenController.text.isNotEmpty &&
-                        this.lightController.text.isNotEmpty &&
-                        this.priceController.text.isNotEmpty &&
-                        this.articleImage != null) {
+                            this.lightController.text.isNotEmpty &&
+                            this.priceController.text.isNotEmpty != null
+                        // this.articleImage
+                        ) {
                       saveInfo();
                       Navigator.push(
                           context,
