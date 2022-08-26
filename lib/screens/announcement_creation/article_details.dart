@@ -31,7 +31,6 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
   final TextEditingController lightController = TextEditingController();
   final TextEditingController oxygenController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
-  final ApiClient _apiClient = ApiClient();
 
   Image? articleImage;
   String? imageString;
@@ -61,38 +60,6 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
       });
     } else
       return;
-  }
-
-  Future<void> saveInfo() async {
-    //todo manage errors
-    Map<String, dynamic> articleData = {
-      'seller': userId,
-      'name': widget.fullName,
-      'latin': widget.latinName,
-      'description': widget.description,
-      'category': widget.category,
-      'water': waterFrequency, //todo
-      'oxygen': oxygenController.text,
-      'sunlight': lightController.text,
-      'price': priceController.text,
-      'picture': imageString //todo
-    };
-
-    dynamic res = await _apiClient.addNewProduct(articleData);
-
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-    if (res['ErrorCode'] == null) {
-      //product added
-      // Navigator.push(context,
-      //     MaterialPageRoute(builder: (context) => const LoginScreen()));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Error: ${res['Message']}'),
-        backgroundColor: Colors.red.shade300,
-      ));
-    }
-    //check errors or nullable values to eraise dialogs
   }
 
   showAlertDialog(BuildContext context) {
@@ -391,11 +358,9 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                           borderRadius: BorderRadius.circular(15))),
                   onPressed: () {
                     if (this.oxygenController.text.isNotEmpty &&
-                            this.lightController.text.isNotEmpty &&
-                            this.priceController.text.isNotEmpty
-                        // this.articleImage
-                        ) {
-                      saveInfo(); //todo manage errors
+                        this.lightController.text.isNotEmpty &&
+                        this.priceController.text.isNotEmpty &&
+                        this.articleImage != null) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -405,6 +370,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                                     sun: this.lightController.text,
                                     price: this.priceController.text,
                                     image: this.articleImage!,
+                                    imageString: this.imageString!,
                                     fullName: widget.fullName,
                                     latinName: widget.latinName,
                                     description: widget.description,
