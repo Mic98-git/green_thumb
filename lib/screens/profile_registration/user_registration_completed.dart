@@ -5,7 +5,11 @@ import '../login_page.dart';
 
 class UserRegistrationCompletedScreen extends StatefulWidget {
   static String id = "registration_completed_screen";
-  const UserRegistrationCompletedScreen({Key? key}) : super(key: key);
+  final String name;
+  final bool isCustomer;
+  const UserRegistrationCompletedScreen(
+      {Key? key, required this.name, required this.isCustomer})
+      : super(key: key);
 
   @override
   State<UserRegistrationCompletedScreen> createState() =>
@@ -14,10 +18,10 @@ class UserRegistrationCompletedScreen extends StatefulWidget {
 
 class _UserRegistrationCompletedScreenState
     extends State<UserRegistrationCompletedScreen> {
-  String userName = "";
-  bool isCustomer = false;
   @override
   Widget build(BuildContext context) {
+    String userName = widget.name;
+    bool isCustomer = widget.isCustomer;
     var size = MediaQuery.of(context).size;
     return WillPopScope(
         onWillPop: () async => false,
@@ -54,7 +58,7 @@ class _UserRegistrationCompletedScreenState
                   child: Text(
                       "Dear " +
                           userName +
-                          " , we are glad to see you here!"
+                          ", we are glad to see you here!"
                               " Your account has been created.",
                       style: TextStyle(
                         color: Colors.black,

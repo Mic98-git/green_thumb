@@ -50,7 +50,10 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => const UserRegistrationCompletedScreen()));
+                builder: (context) => UserRegistrationCompletedScreen(
+                      name: widget.name,
+                      isCustomer: widget.isCustomer,
+                    )));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Error: ${res['error']}'),

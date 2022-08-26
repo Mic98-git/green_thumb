@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import './fiscal_details.dart';
-import '../profile_registration/user_registration_completed.dart';
 import '../../config/global_variables.dart';
 
 class ActivityInfoScreen extends StatefulWidget {
@@ -32,10 +31,9 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
     Widget okButton = TextButton(
       child: Text("Yes"),
       onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const UserRegistrationCompletedScreen()));
+        Navigator.of(context)
+          ..pop()
+          ..pop();
       },
     );
 

@@ -5,6 +5,7 @@ import 'package:green_thumb/widgets/navigation_bar.dart';
 import './announcement_creation/new_article.dart';
 import '../models/article.dart';
 import '../core/api_client.dart';
+import '../models/articleList.dart';
 
 class MyAccountScreen extends StatefulWidget {
   static String id = "my_account_screen";
@@ -23,8 +24,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   Future<void> getSellersAnnouncements(String userId) async {
     dynamic res = await _apiClient.getSellersProducts(userId);
+    articleList articles = new articleList(res);
 
-    print(res);
+    print(articles);
   }
 
   Widget articleBox({required Article item}) => Container(
@@ -177,6 +179,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           const NewArticleScreen()));
+                                              // getSellersAnnouncements(userId);
                                             },
                                             child: Text(
                                               'New Announcement',

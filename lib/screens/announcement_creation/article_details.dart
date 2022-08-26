@@ -58,16 +58,16 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
   Future<void> saveInfo() async {
     //todo manage errors
     Map<String, dynamic> articleData = {
+      'seller': userId,
       'name': widget.fullName,
       'latin': widget.latinName,
-      'description': widget.category,
-      'plant': widget.category,
-      // 'category':category,
+      'description': widget.description,
+      'category': widget.category,
       'water': waterFrequency, //todo
-      'oxigen': oxygenController.text,
+      'oxygen': oxygenController.text,
       'sunlight': lightController.text,
       'price': priceController.text,
-      // 'image': image
+      'picture': 'image' //todo
     };
 
     dynamic res = await _apiClient.addNewProduct(articleData);
@@ -384,7 +384,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                   onPressed: () {
                     if (this.oxygenController.text.isNotEmpty &&
                             this.lightController.text.isNotEmpty &&
-                            this.priceController.text.isNotEmpty != null
+                            this.priceController.text.isNotEmpty
                         // this.articleImage
                         ) {
                       saveInfo(); //todo manage errors
