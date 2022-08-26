@@ -1,4 +1,9 @@
 import 'dart:collection';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
 
 import 'article.dart';
 
@@ -8,6 +13,10 @@ class articleList {
   articleList(LinkedHashMap<String, dynamic> data) {
     this.list = <Article>[];
     for (var p in data['products']) {
+      final base64String = p['picture'];
+      Uint8List _bytes = base64.decode(base64String);
+      File _myFile = File.fromRawPath(_bytes);
+      Image? articleImage = Image.file(_myFile);
       list.add(new Article(
           p['seller'],
           p['name'],
@@ -18,7 +27,7 @@ class articleList {
           p['oxygen'].toString(),
           p['sunlight'],
           p['price'].toString(),
-          p['picture']));
+          articleImage)); //todo
     }
   }
 }
