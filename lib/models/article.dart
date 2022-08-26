@@ -10,7 +10,7 @@ class Article {
   late String oxygen;
   late String sunlight;
   late String price;
-  late Image picture;
+  late String picture; //todo
 
   Article(
       String seller,
@@ -22,7 +22,8 @@ class Article {
       String articleOxygen,
       String articleSunlight,
       String articlePrice,
-      Image articlePicture) {
+      String articlePicture) {
+    //todo
     this.seller = seller;
     this.name = articleName;
     this.latinName = articleLatinName;
