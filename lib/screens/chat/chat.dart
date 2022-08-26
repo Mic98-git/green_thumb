@@ -9,24 +9,16 @@ import 'package:green_thumb/models/message.dart';
 
 import '../../widgets/app_bar.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ChatScreen extends StatefulWidget {
+  final String fullname;
+  const ChatScreen(String this.fullname, {super.key});
 
   @override
-  Widget build(BuildContext context) => const MaterialApp(
-        home: MyHomePage(),
-      );
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<ChatScreen> createState() => _ChatScreenState();
 }
 
 ChatUser user = ChatUser(id: '0');
-ChatUser user2 = ChatUser(id: '2', firstName: 'Niki Lauda');
+ChatUser user2 = ChatUser(id: '2', firstName: '');
 
 List<ChatMessage> messages = <ChatMessage>[];
 DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
@@ -37,7 +29,7 @@ ChatMessage mess = new ChatMessage(
   createdAt: DateTime.now(),
 );
 
-class _MyHomePageState extends State<MyHomePage> {
+class _ChatScreenState extends State<ChatScreen> {
   String userIdMittente =
       '6308c9876991b40012a08682'; //COMPRATORE il mio id, verifico se mi arrivano messaggi
 
@@ -84,6 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    user2.firstName = widget.fullname;
     var size = MediaQuery.of(context).size;
     createChat();
     return new StreamBuilder<Message>(

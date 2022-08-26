@@ -13,18 +13,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => const MaterialApp(
-        home: ConversationPage(),
+        home: ConversationScreen(),
       );
 }
 
-class ConversationPage extends StatefulWidget {
-  const ConversationPage({super.key});
+class ConversationScreen extends StatefulWidget {
+  const ConversationScreen({super.key});
 
   @override
-  State<ConversationPage> createState() => _ConversationPageState();
+  State<ConversationScreen> createState() => _ConversationScreenState();
 }
 
-class _ConversationPageState extends State<ConversationPage> {
+class _ConversationScreenState extends State<ConversationScreen> {
   String mioId =
       '6308c9956991b40012a08684'; //VENDITORE quando clicco prendo l'id
 
@@ -79,8 +79,8 @@ class _ConversationPageState extends State<ConversationPage> {
                 itemBuilder: (context, i) => ListTile(
                     title: Text(fullname),
                     onTap: () async {
-                      await Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => MyHomePage()));
+                      await Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => ChatScreen(fullname)));
                     })),
           );
         });
