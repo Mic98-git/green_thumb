@@ -25,30 +25,6 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-// appBar: AppBar(
-//   title: Text("YOUR_APPBAR_TITLE"),
-//   automaticallyImplyLeading: false,
-//   leading: new IconButton(
-//     icon: new Icon(Icons.arrow_back, color: Colors.orange),
-//     onPressed: () => Navigator.of(context).pop(),
-//   ),
-// ),
-
-// String idMittente = '62fe30611f401e001333dd93';
-
-// Future<Profile> getUsername() async {
-//   final response = await http
-//       // ignore: prefer_interpolation_to_compose_strings
-//       .get(Uri.parse('http://10.0.2.2:3000/users/' + idMittente));
-
-//   if (response.statusCode == 200) {
-//     print(response.body);
-//     return await Profile.fromJson(jsonDecode(response.body));
-//   } else {
-//     throw Exception('Failed to load message');
-//   }
-// }
-
 ChatUser user = ChatUser(id: '0');
 ChatUser user2 = ChatUser(id: '2', firstName: 'Niki Lauda');
 
@@ -70,10 +46,10 @@ class _MyHomePageState extends State<MyHomePage> {
         // ignore: prefer_interpolation_to_compose_strings
         .get(Uri.parse('http://10.0.2.2:3005/chat/' + userIdMittente));
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 && !response.body.endsWith('null}')) {
       return Message.fromJson(jsonDecode(response.body));
     } else {
-      throw Exception('Failed to load message');
+      throw Exception('Failed to load message, maybe does not exists');
     }
   }
 
@@ -89,7 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<http.Response> createChat() {
     return http.post(
       Uri.parse('http://10.0.2.2:3005/chat/'),
-      body: (<String, String>{'content': ' ', 'userId': userIdDestinatario}),
+      body: (<String, String>{
+        'content': ' ',
+        'userId': userIdDestinatario,
+        'idConversation': userIdMittente
+      }),
     );
   }
 
@@ -106,10 +86,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     createChat();
-    // late Future<Message> chat =
-    //     createChat().then((value) => Message.fromJson(jsonDecode(value.body)));
-    // print(chat);
-    // createChat().then((value) => print(value.body));
     return new StreamBuilder<Message>(
         stream: getText(),
         builder: (BuildContext context, AsyncSnapshot<Message> snapshot) {
@@ -127,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return Scaffold(
             appBar: PreferredSize(
                 preferredSize: Size.fromHeight(size.height * 0.1),
-                child: appBarWidget(size, true)),
+                child: appBarWidget(size, true, 'Chat')),
             body: DashChat(
               currentUser: user,
               onSend: (ChatMessage m) {

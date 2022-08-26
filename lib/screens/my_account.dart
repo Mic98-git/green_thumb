@@ -54,7 +54,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         child: Scaffold(
             appBar: PreferredSize(
                 preferredSize: Size.fromHeight(size.height * 0.1),
-                child: appBarWidget(size, false)),
+                child: appBarWidget(size, false, 'Account')),
             backgroundColor: Colors.white,
             bottomNavigationBar:
                 BottomNavigationBarScreen(currentIndex: _currentIndex),

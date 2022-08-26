@@ -1,67 +1,88 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:green_thumb/models/message.dart';
+import 'package:green_thumb/models/user.dart';
+import 'package:green_thumb/screens/chat/chat.dart';
+import 'package:http/http.dart' as http;
 
-void main() => runApp(FlutterContactsExample());
+import '../../widgets/app_bar.dart';
 
-class FlutterContactsExample extends StatefulWidget {
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
-  _FlutterContactsExampleState createState() => _FlutterContactsExampleState();
+  Widget build(BuildContext context) => const MaterialApp(
+        home: ConversationPage(),
+      );
 }
 
-class _FlutterContactsExampleState extends State<FlutterContactsExample> {
-  List<Contact>? _contacts;
-  bool _permissionDenied = false;
+class ConversationPage extends StatefulWidget {
+  const ConversationPage({super.key});
 
   @override
-  void initState() {
-    super.initState();
-    _fetchContacts();
-  }
+  State<ConversationPage> createState() => _ConversationPageState();
+}
 
-  Future _fetchContacts() async {
-    if (!await FlutterContacts.requestPermission(readonly: true)) {
-      setState(() => _permissionDenied = true);
+class _ConversationPageState extends State<ConversationPage> {
+  String mioId =
+      '6308c9956991b40012a08684'; //VENDITORE quando clicco prendo l'id
+
+  Future<Message> getMessage() async {
+    final response = await http
+        // ignore: prefer_interpolation_to_compose_strings
+        .get(Uri.parse('http://10.0.2.2:3005/chat/' + mioId));
+
+    if (response.statusCode == 200) {
+      return Message.fromJson(jsonDecode(response.body));
     } else {
-      final contacts = await FlutterContacts.getContacts();
-      setState(() => _contacts = contacts);
+      throw Exception('Failed to load message');
     }
   }
 
-  @override
-  Widget build(BuildContext context) => MaterialApp(
-      home: Scaffold(
-          appBar: AppBar(title: Text('flutter_contacts_example')),
-          body: _body()));
+  Future<User> getUsername(idMittente) async {
+    final response = await http
+        // ignore: prefer_interpolation_to_compose_strings
+        .get(Uri.parse('http://10.0.2.2:3000/users/' + idMittente));
 
-  Widget _body() {
-    if (_permissionDenied) return Center(child: Text('Permission denied'));
-    if (_contacts == null) return Center(child: CircularProgressIndicator());
-    return ListView.builder(
-        itemCount: _contacts!.length,
-        itemBuilder: (context, i) => ListTile(
-            title: Text(_contacts![i].displayName),
-            onTap: () async {
-              final fullContact =
-                  await FlutterContacts.getContact(_contacts![i].id);
-              await Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => ContactPage(fullContact!)));
-            }));
+    if (response.statusCode == 200) {
+      //print(response.body);
+      return await User.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load message');
+    }
   }
-}
 
-class ContactPage extends StatelessWidget {
-  final Contact contact;
-  ContactPage(this.contact);
+  Stream<Message> getText() async* {
+    yield* Stream.periodic(Duration(seconds: 1), (_) {
+      return getMessage();
+    }).asyncMap((event) async => await event);
+  }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(title: Text(contact.displayName)),
-      body: Column(children: [
-        Text('First name: ${contact.name.first}'),
-        Text('Last name: ${contact.name.last}'),
-        Text(
-            'Phone number: ${contact.phones.isNotEmpty ? contact.phones.first.number : '(none)'}'),
-        Text(
-            'Email address: ${contact.emails.isNotEmpty ? contact.emails.first.address : '(none)'}'),
-      ]));
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    late String fullname = '';
+    return new StreamBuilder<Message>(
+        stream: getText(),
+        builder: (BuildContext context, AsyncSnapshot<Message> snapshot) {
+          if (snapshot.hasData) {
+            getUsername(snapshot.data!.idConversation)
+                .then((value) => fullname = value.fullname);
+          }
+          return Scaffold(
+            appBar: PreferredSize(
+                preferredSize: Size.fromHeight(size.height * 0.1),
+                child: appBarWidget(size, true, 'Conversations')),
+            body: ListView.builder(
+                itemCount: 1,
+                itemBuilder: (context, i) => ListTile(
+                    title: Text(fullname),
+                    onTap: () async {
+                      await Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => MyHomePage()));
+                    })),
+          );
+        });
+  }
 }
