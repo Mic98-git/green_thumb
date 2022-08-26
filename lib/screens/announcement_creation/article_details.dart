@@ -384,7 +384,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                   onPressed: () {
                     if (this.oxygenController.text.isNotEmpty &&
                             this.lightController.text.isNotEmpty &&
-                            this.priceController.text.isNotEmpty != null
+                            this.priceController.text.isNotEmpty
                         // this.articleImage
                         ) {
                       saveInfo(); //todo manage errors

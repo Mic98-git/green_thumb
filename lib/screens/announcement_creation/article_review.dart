@@ -32,8 +32,6 @@ class ArticleReviewScreen extends StatefulWidget {
 }
 
 class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
-  String waterFrequency = "Daily";
-
   void saveInfo() {
     //check errors or nullable values to eraise dialogs
     //params are widget.water ecc
