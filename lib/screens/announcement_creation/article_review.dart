@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/api_client.dart';
 import './announcement_creation_completed.dart';
 import '../../config/global_variables.dart';
 import '../my_account.dart';
@@ -10,6 +11,7 @@ class ArticleReviewScreen extends StatefulWidget {
   final String sun;
   final String price;
   final Image image;
+  final String imageString;
   final String fullName;
   final String latinName;
   final String description;
@@ -21,6 +23,7 @@ class ArticleReviewScreen extends StatefulWidget {
       required this.sun,
       required this.price,
       required this.image,
+      required this.imageString,
       required this.fullName,
       required this.latinName,
       required this.description,
@@ -32,7 +35,36 @@ class ArticleReviewScreen extends StatefulWidget {
 }
 
 class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
-  void saveInfo() {
+  final ApiClient _apiClient = ApiClient();
+  Future<void> saveInfo() async {
+    //todo manage errors
+    Map<String, dynamic> articleData = {
+      'seller': userId,
+      'name': widget.fullName,
+      'latin': widget.latinName,
+      'description': widget.description,
+      'category': widget.category,
+      'water': widget.water, //todo
+      'oxygen': widget.oxygen,
+      'sunlight': widget.sun,
+      'price': widget.price,
+      'picture': widget.imageString //todo
+    };
+
+    dynamic res = await _apiClient.addNewProduct(articleData);
+
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+    if (res['ErrorCode'] == null) {
+      //product added
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => const LoginScreen()));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: ${res['Message']}'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
     //check errors or nullable values to eraise dialogs
     //params are widget.water ecc
   }

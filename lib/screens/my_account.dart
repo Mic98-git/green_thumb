@@ -26,7 +26,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     dynamic res = await _apiClient.getSellersProducts(userId);
     articleList articles = new articleList(res);
 
-    print(articles);
+    print(articles.list.length);
   }
 
   Widget articleBox({required Article item}) => Container(
@@ -131,6 +131,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                                       BorderRadius.circular(
                                                           20))),
                                           onPressed: () {
+                                            getSellersAnnouncements(userId);
+
                                             /*Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -179,7 +181,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           const NewArticleScreen()));
-                                              // getSellersAnnouncements(userId);
                                             },
                                             child: Text(
                                               'New Announcement',
