@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -31,6 +34,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
   final ApiClient _apiClient = ApiClient();
 
   Image? articleImage;
+  String? imageString;
   late String imagePath;
 
   List<DropdownMenuItem<String>> get dropdownItems {
@@ -48,8 +52,12 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
     XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (file != null) {
       imagePath = file.path;
+      File imageFile = File(imagePath);
+      Uint8List bytes = await imageFile.readAsBytes();
+      String base64Image = base64.encode(bytes);
       setState(() {
-        this.articleImage = Image.file(File(imagePath));
+        this.articleImage = Image.file(imageFile);
+        this.imageString = base64Image;
       });
     } else
       return;
@@ -67,7 +75,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
       'oxygen': oxygenController.text,
       'sunlight': lightController.text,
       'price': priceController.text,
-      'picture': 'image' //todo
+      'picture': imageString //todo
     };
 
     dynamic res = await _apiClient.addNewProduct(articleData);
