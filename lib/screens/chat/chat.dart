@@ -102,17 +102,10 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  var bool = true;
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
-    if (bool) {
-      createChat();
-      bool = false;
-    }
-
+    createChat();
     // late Future<Message> chat =
     //     createChat().then((value) => Message.fromJson(jsonDecode(value.body)));
     // print(chat);

@@ -19,9 +19,9 @@ class Message {
 
   factory Message.fromJson(Map<String, dynamic> json) {
     return Message(
-        chatId: json['mess'][0]['_id'],
-        userId: json['mess'][0]['userId'],
-        createdAt: json['mess'][0]['created_at'],
-        content: json['mess'][0]['content']);
+        chatId: json['mess']['_id'],
+        userId: json['mess']['userId'],
+        createdAt: json['mess']['created_at'],
+        content: json['mess']['content']);
   }
 }
