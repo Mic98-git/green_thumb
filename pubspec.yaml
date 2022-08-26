@@ -37,6 +37,9 @@ dependencies:
   dio: ^4.0.4
   flutter_native_splash: ^2.2.7
   image_picker: ^0.8.5+3
+  dash_chat_2: ^0.0.14
+  intl: ^0.17.0
+  flutter_contacts: ^1.1.5
 
 dev_dependencies:
   flutter_test:
