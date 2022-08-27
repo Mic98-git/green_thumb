@@ -9,10 +9,9 @@ import 'article.dart';
 
 class articleList {
   late List<Article> list;
-
   articleList(LinkedHashMap<String, dynamic> data) {
     this.list = <Article>[];
-    for (var p in data['products']) {
+    for (var p in data['product']) {
       final base64String = p['picture'];
       Uint8List _bytes = base64.decode(base64String);
       File _myFile = File.fromRawPath(_bytes);
