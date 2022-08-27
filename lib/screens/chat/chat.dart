@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:green_thumb/models/message.dart';
-
+import 'package:green_thumb/global_variables.dart';
 import '../../widgets/app_bar.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -36,7 +36,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Future<Message> getMessage() async {
     final response = await http
         // ignore: prefer_interpolation_to_compose_strings
-        .get(Uri.parse('http://10.0.2.2:3005/chat/' + userIdMittente));
+        .get(Uri.parse(url + ':3004/chat/' + userIdMittente));
 
     if (response.statusCode == 200 && !response.body.endsWith('null}')) {
       return Message.fromJson(jsonDecode(response.body));
@@ -56,7 +56,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<http.Response> createChat() {
     return http.post(
-      Uri.parse('http://10.0.2.2:3005/chat/'),
+      Uri.parse(url + ':3004/chat/'),
       body: (<String, String>{
         'content': ' ',
         'userId': userIdDestinatario,
@@ -69,7 +69,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<http.Response> sendMessage(String content, String date) {
     return http.put(
-      Uri.parse('http://10.0.2.2:3005/chat/' + userIdDestinatario),
+      Uri.parse(url + ':3004/chat/' + userIdDestinatario),
       body: (<String, String>{'content': content, 'created_at': date}),
     );
   }
