@@ -227,6 +227,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                     height: 50,
                     child: TextFormField(
                       controller: oxygenController,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: "Oxygen production",
                         isDense: true,
@@ -300,6 +301,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                     height: 50,
                     child: TextFormField(
                       controller: priceController,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: "Price",
                         isDense: true,
@@ -332,6 +334,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                     height: 50,
                     child: TextFormField(
                       controller: availablePiecesController,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: "Available pieces",
                         isDense: true,
