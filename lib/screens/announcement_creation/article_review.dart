@@ -195,7 +195,10 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
                           aspectRatio: 4 / 3,
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
-                              child: widget.image),
+                              child: FittedBox(
+                                child: widget.image,
+                                fit: BoxFit.fill,
+                              )),
                         ),
                         decoration: BoxDecoration(
                             color: articleBoxColor,
@@ -204,12 +207,12 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
                     ),
                   ),
                   Container(
-                      height: size.height * 0.25,
+                      height: size.height * 0.27,
                       width: size.width * 0.55,
                       child: Column(
                         children: <Widget>[
                           SizedBox(
-                            height: size.height * 0.02,
+                            height: size.height * 0.01,
                           ),
                           Text(
                             widget.fullName,
@@ -234,7 +237,7 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('Pieces: ' + widget.pieces,
+                              Text('Available items: ' + widget.pieces,
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 20,

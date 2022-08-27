@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
-import 'package:green_thumb/global_variables.dart';
+import 'package:green_thumb/config/global_variables.dart';
 
 class ApiClient {
   final Dio _dio = Dio();

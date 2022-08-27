@@ -7,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import './article_review.dart';
 import '../../config/global_variables.dart';
 import '../my_account.dart';
-import '../../core/api_client.dart';
 
 class ArticleDetailsScreen extends StatefulWidget {
   static String id = "article_details_screen";

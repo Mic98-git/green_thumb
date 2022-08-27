@@ -18,6 +18,7 @@ class MyAccountScreen extends StatefulWidget {
 class _MyAccountScreenState extends State<MyAccountScreen> {
   final ApiClient _apiClient = ApiClient();
   List<Article> myArticles = [];
+  bool check = false;
 
   @override
   void initState() {
@@ -30,20 +31,28 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     articleList articles = new articleList(res);
     setState(() {
       this.myArticles = articles.list;
+      check = true;
     });
   }
 
   Widget articleBox({required Article item, required Size size}) => Container(
-        child: Column(children: [
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Expanded(
-              child: Container(
-                  color: articleBoxColor,
-                  child: AspectRatio(
-                      aspectRatio: 4 / 3,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: item.picture)))),
-          SizedBox(height: size.height * 0.02),
+            child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: AspectRatio(
+                  aspectRatio: 4 / 3,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: FittedBox(
+                        child: item.picture,
+                        fit: BoxFit.fill,
+                      )),
+                )),
+          ),
+          SizedBox(height: size.height * 0.01),
           Container(
               width: size.width * 0.35,
               child: Text(
@@ -91,14 +100,26 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                             alignment: Alignment.topLeft,
                             child: CircleAvatar(
                               backgroundColor: primaryColor,
-                              radius: 70,
+                              radius: 67,
                               child: CircleAvatar(
                                 radius: 65,
-                                //backgroundImage:
+                                backgroundImage:
+                                    Image.asset('assets/images/image.png')
+                                        .image,
                                 backgroundColor: Colors.white,
                               ),
                             )),
                       ),
+                      Padding(
+                          padding: EdgeInsets.only(
+                              right: size.width / 1.75,
+                              top: size.height * 0.15),
+                          child: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.add_circle_outline_outlined,
+                                size: 40,
+                              ))),
                       Container(
                           height: size.height * 0.25,
                           width: size.width * 0.55,
@@ -240,13 +261,17 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               ),
                             ],
                           ),
-                          myArticles.isEmpty
+                          myArticles.isEmpty && check
                               ? Column(children: [
-                                  SizedBox(height: size.height * 0.03),
-                                  Text('No announcement posted',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                      )),
+                                  SizedBox(height: size.height * 0.09),
+                                  Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 20),
+                                      child: Text(
+                                          'No announcement posted. Create your first one!',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                          ))),
                                 ])
                               : Column(children: [
                                   SizedBox(height: size.height * 0.02),
@@ -266,7 +291,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                             SizedBox(width: size.width * 0.03),
                                       ))
                                 ]),
-                          SizedBox(height: size.height * 0.05),
+                          myArticles.isEmpty && check
+                              ? SizedBox(height: size.height * 0.09)
+                              : SizedBox(height: size.height * 0.03),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[

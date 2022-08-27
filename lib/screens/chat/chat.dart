@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:green_thumb/models/message.dart';
-import 'package:green_thumb/global_variables.dart';
+import 'package:green_thumb/config/global_variables.dart';
 import '../../widgets/app_bar.dart';
 
 class ChatScreen extends StatefulWidget {
