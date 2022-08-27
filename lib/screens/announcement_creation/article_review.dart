@@ -38,6 +38,7 @@ class ArticleReviewScreen extends StatefulWidget {
 
 class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
   final ApiClient _apiClient = ApiClient();
+
   Future<void> saveInfo() async {
     //todo manage errors
     Map<String, dynamic> articleData = {

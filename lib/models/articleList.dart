@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:flutter/widgets.dart';
 
 import 'package:flutter/material.dart';
 
@@ -13,9 +14,7 @@ class articleList {
     this.list = <Article>[];
     for (var p in data['product']) {
       final base64String = p['picture'];
-      Uint8List _bytes = base64.decode(base64String);
-      File _myFile = File.fromRawPath(_bytes);
-      Image? articleImage = Image.file(_myFile);
+      Image articleImage = Image.memory(base64Decode(base64String));
       list.add(new Article(
           p['seller'],
           p['name'],
