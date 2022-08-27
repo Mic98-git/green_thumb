@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-Widget appBarWidget(Size size, bool back, String title) {
+Widget appBarWidget(Size size, bool back) {
   return AppBar(
-    title: Text(title),
     automaticallyImplyLeading: back,
     actions: <Widget>[
       TextButton(

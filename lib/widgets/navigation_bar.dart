@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:green_thumb/screens/chat/conversations.dart';
+import 'package:green_thumb/screens/my_account.dart';
 
 class BottomNavigationBarScreen extends StatefulWidget {
   static String id = "BottomNavigationBar_screen";
@@ -20,7 +22,12 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
     _currentIndex = widget.currentIndex; // assign it a value here
   }
 
-  final List<Widget> _routes = [];
+  final List<Widget> _routes = [
+    MyAccountScreen(),
+    MyAccountScreen(),
+    ConversationScreen(),
+    MyAccountScreen()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +54,8 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
       currentIndex: _currentIndex,
       onTap: (index) {
         setState(() => _currentIndex = index);
-        /*Navigator.push(
-            context, MaterialPageRoute(builder: (context) => _routes[index]));*/
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => _routes[index]));
         ;
       },
     );

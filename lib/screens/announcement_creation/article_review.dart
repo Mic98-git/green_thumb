@@ -10,6 +10,7 @@ class ArticleReviewScreen extends StatefulWidget {
   final String oxygen;
   final String sun;
   final String price;
+  final String pieces;
   final Image image;
   final String imageString;
   final String fullName;
@@ -21,6 +22,7 @@ class ArticleReviewScreen extends StatefulWidget {
       required this.water,
       required this.oxygen,
       required this.sun,
+      required this.pieces,
       required this.price,
       required this.image,
       required this.imageString,
@@ -48,7 +50,8 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
       'oxygen': widget.oxygen,
       'sunlight': widget.sun,
       'price': widget.price,
-      'picture': widget.imageString //todo
+      'picture': widget.imageString, //todo
+      'pieces': widget.pieces, //todo
     };
 
     dynamic res = await _apiClient.addNewProduct(articleData);
@@ -226,6 +229,22 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
                               Icon(Icons.euro),
                             ],
                           ),
+                          SizedBox(height: size.height * 0.03),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Pieces: ' + widget.pieces,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                  )),
+                              Container(
+                                width: 25,
+                                height: 25,
+                                child: Image.asset('assets/icons/leaf.png'),
+                              ),
+                            ],
+                          ),
                         ],
                       )),
                 ],
@@ -296,14 +315,14 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
                 ],
               ),
               SizedBox(
-                height: size.height * 0.03,
+                height: size.height * 0.04,
               ),
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30),
                   child: Text(widget.description,
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 15,
+                        fontSize: 20,
                       ))),
               SizedBox(
                 height: size.height * 0.05,

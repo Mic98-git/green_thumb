@@ -7,6 +7,7 @@ import 'package:green_thumb/screens/chat/chat.dart';
 import 'package:http/http.dart' as http;
 
 import '../../widgets/app_bar.dart';
+import '../../widgets/navigation_bar.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -62,27 +63,54 @@ class _ConversationScreenState extends State<ConversationScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    late String fullname = '';
-    return new StreamBuilder<Message>(
-        stream: getText(),
-        builder: (BuildContext context, AsyncSnapshot<Message> snapshot) {
-          if (snapshot.hasData) {
-            getUsername(snapshot.data!.idConversation)
-                .then((value) => fullname = value.fullname);
-          }
-          return Scaffold(
-            appBar: PreferredSize(
-                preferredSize: Size.fromHeight(size.height * 0.1),
-                child: appBarWidget(size, true, 'Conversations')),
-            body: ListView.builder(
-                itemCount: 1,
-                itemBuilder: (context, i) => ListTile(
-                    title: Text(fullname),
-                    onTap: () async {
-                      await Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => ChatScreen(fullname)));
-                    })),
-          );
-        });
+    String fullname = '';
+    int _currentIndex = 2;
+    return WillPopScope(
+        onWillPop: () async => false,
+        child: new StreamBuilder<Message>(
+            stream: getText(),
+            builder: (BuildContext context, AsyncSnapshot<Message> snapshot) {
+              if (snapshot.hasData) {
+                getUsername(snapshot.data!.idConversation)
+                    .then((value) => fullname = value.fullname);
+              }
+              return Scaffold(
+                  appBar: PreferredSize(
+                      preferredSize: Size.fromHeight(size.height * 0.09),
+                      child: appBarWidget(size, false)),
+                  bottomNavigationBar:
+                      BottomNavigationBarScreen(currentIndex: _currentIndex),
+                  body: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(children: [
+                        SizedBox(
+                          height: size.height * 0.03,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Conversations",
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.03,
+                        ),
+                        snapshot.hasData
+                            ? ListView.builder(
+                                itemCount: 1,
+                                itemBuilder: (context, i) => ListTile(
+                                    title: Text(fullname),
+                                    onTap: () async {
+                                      await Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  ChatScreen(fullname)));
+                                    }))
+                            : Text("No message here",
+                                style: TextStyle(fontSize: 20)),
+                      ])));
+            }));
   }
 }

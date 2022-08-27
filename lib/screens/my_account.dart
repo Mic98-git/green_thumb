@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:green_thumb/global_variables.dart';
+import 'package:green_thumb/config/global_variables.dart';
 import 'package:green_thumb/widgets/app_bar.dart';
 import 'package:green_thumb/widgets/navigation_bar.dart';
 import './announcement_creation/new_article.dart';
@@ -17,31 +17,39 @@ class MyAccountScreen extends StatefulWidget {
 
 class _MyAccountScreenState extends State<MyAccountScreen> {
   final ApiClient _apiClient = ApiClient();
+  List<Article> myArticles = [];
+
   @override
   void initState() {
     super.initState();
+    this.getSellersAnnouncements(userId);
   }
 
   Future<void> getSellersAnnouncements(String userId) async {
     dynamic res = await _apiClient.getSellersProducts(userId);
     articleList articles = new articleList(res);
-
-    print(articles.list.length);
+    setState(() {
+      this.myArticles = articles.list;
+    });
   }
 
-  Widget articleBox({required Article item}) => Container(
-        width: 200,
-        color: articleBoxColor,
+  Widget articleBox({required Article item, required Size size}) => Container(
         child: Column(children: [
           Expanded(
-              child: AspectRatio(
-                  aspectRatio: 4 / 3,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    /*child: Material(
-                      child: 
-                    )*/
-                  )))
+              child: Container(
+                  color: articleBoxColor,
+                  child: AspectRatio(
+                      aspectRatio: 4 / 3,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: item.picture)))),
+          SizedBox(height: size.height * 0.02),
+          Container(
+              width: size.width * 0.35,
+              child: Text(
+                item.name,
+                style: TextStyle(fontSize: 20),
+              ))
         ]),
       );
 
@@ -53,8 +61,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         onWillPop: () async => false,
         child: Scaffold(
             appBar: PreferredSize(
-                preferredSize: Size.fromHeight(size.height * 0.1),
-                child: appBarWidget(size, false, 'Account')),
+                preferredSize: Size.fromHeight(size.height * 0.09),
+                child: appBarWidget(size, false)),
             backgroundColor: Colors.white,
             bottomNavigationBar:
                 BottomNavigationBarScreen(currentIndex: _currentIndex),
@@ -130,15 +138,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           20))),
-                                          onPressed: () {
-                                            getSellersAnnouncements(userId);
-
-                                            /*Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const NewArticleScreen()));*/
-                                          },
+                                          onPressed: () {},
                                           child: Row(
                                             children: <Widget>[
                                               Text(
@@ -235,27 +235,72 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    SizedBox(height: size.height * 0.02),
-                                    /*Container(
-                                        height: size.height * 0.05,
-                                        child: ListView.separated(
-                                          padding: EdgeInsets.all(10),
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: Article()
-                                              .currentAnnouncements
-                                              .length,
-                                          itemBuilder: (context, index) =>
-                                              articleBox(Article()
-                                                  .currentAnnouncements[index]),
-                                          separatorBuilder: (context, _) =>
-                                              SizedBox(
-                                                  width: size.width * 0.02),
-                                        ))*/
                                   ],
                                 ),
-                              )
+                              ),
                             ],
-                          )
+                          ),
+                          myArticles.isEmpty
+                              ? Column(children: [
+                                  SizedBox(height: size.height * 0.03),
+                                  Text('No announcement posted',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      )),
+                                ])
+                              : Column(children: [
+                                  SizedBox(height: size.height * 0.02),
+                                  Container(
+                                      height: size.height * 0.2,
+                                      child: ListView.separated(
+                                        shrinkWrap: true,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: size.width * 0.05),
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: this.myArticles.length,
+                                        itemBuilder: (context, index) =>
+                                            articleBox(
+                                                item: this.myArticles[index],
+                                                size: size),
+                                        separatorBuilder: (context, _) =>
+                                            SizedBox(width: size.width * 0.03),
+                                      ))
+                                ]),
+                          SizedBox(height: size.height * 0.05),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: size.height * 0.03),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'My orders',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: size.height * 0.02),
+                          Container(
+                              height: size.height * 0.2,
+                              child: ListView.separated(
+                                shrinkWrap: true,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: size.width * 0.05),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: this.myArticles.length,
+                                itemBuilder: (context, index) => articleBox(
+                                    item: this.myArticles[index], size: size),
+                                separatorBuilder: (context, _) =>
+                                    SizedBox(width: size.width * 0.03),
+                              ))
                         ],
                       )
                   ],

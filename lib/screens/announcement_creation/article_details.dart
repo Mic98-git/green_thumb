@@ -31,6 +31,8 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
   final TextEditingController lightController = TextEditingController();
   final TextEditingController oxygenController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
+  final TextEditingController availablePiecesController =
+      TextEditingController();
 
   Image? articleImage;
   String? imageString;
@@ -168,7 +170,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                     ),
                   ]),
               SizedBox(
-                height: size.height * 0.04,
+                height: size.height * 0.03,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -317,6 +319,38 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                   SizedBox(
                     width: 20,
                   ),
+                  Container(
+                    width: 30,
+                    height: 30,
+                    child: Image.asset('assets/icons/leaf.png'),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Container(
+                    width: 200,
+                    height: 50,
+                    child: TextFormField(
+                      controller: availablePiecesController,
+                      decoration: InputDecoration(
+                        hintText: "Available pieces",
+                        isDense: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              Row(
+                children: <Widget>[
+                  SizedBox(
+                    width: 20,
+                  ),
                   Icon(
                     Icons.add_a_photo,
                     size: 30,
@@ -343,7 +377,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                 ],
               ),
               SizedBox(
-                height: size.height * 0.05,
+                height: size.height * 0.03,
               ),
               Container(
                 height: 50,
@@ -360,6 +394,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                     if (this.oxygenController.text.isNotEmpty &&
                         this.lightController.text.isNotEmpty &&
                         this.priceController.text.isNotEmpty &&
+                        this.availablePiecesController.text.isNotEmpty &&
                         this.articleImage != null) {
                       Navigator.push(
                           context,
@@ -369,6 +404,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                                     oxygen: this.oxygenController.text,
                                     sun: this.lightController.text,
                                     price: this.priceController.text,
+                                    pieces: this.availablePiecesController.text,
                                     image: this.articleImage!,
                                     imageString: this.imageString!,
                                     fullName: widget.fullName,

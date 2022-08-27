@@ -96,7 +96,7 @@ class _ChatScreenState extends State<ChatScreen> {
           return Scaffold(
             appBar: PreferredSize(
                 preferredSize: Size.fromHeight(size.height * 0.1),
-                child: appBarWidget(size, true, 'Chat')),
+                child: appBarWidget(size, true)),
             body: DashChat(
               currentUser: user,
               onSend: (ChatMessage m) {
