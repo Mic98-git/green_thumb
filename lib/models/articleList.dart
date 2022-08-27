@@ -1,7 +1,5 @@
 import 'dart:collection';
 import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter/material.dart';
@@ -25,7 +23,7 @@ class articleList {
           p['oxygen'].toString(),
           p['sunlight'],
           p['price'].toString(),
-          articleImage)); //todo
+          articleImage));
     }
   }
 }
