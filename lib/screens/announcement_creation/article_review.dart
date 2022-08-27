@@ -47,12 +47,12 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
       'latin': widget.latinName,
       'description': widget.description,
       'category': widget.category,
-      'water': widget.water, //todo
+      'water': widget.water,
       'oxygen': widget.oxygen,
       'sunlight': widget.sun,
       'price': widget.price,
-      'picture': widget.imageString, //todo
-      'pieces': widget.pieces, //todo
+      'picture': widget.imageString,
+      'quantity': widget.pieces,
     };
 
     dynamic res = await _apiClient.addNewProduct(articleData);
