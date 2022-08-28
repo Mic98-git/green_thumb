@@ -36,7 +36,7 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
   Future<void> registerUsers() async {
     if (_formKey.currentState!.validate()) {
       Map<String, dynamic> userData = {
-        "seller": widget.isCustomer,
+        "isCustomer": widget.isCustomer,
         "fullname": widget.name,
         "birth": widget.birthDate,
         "fiscalcode": widget.fiscalCode,

@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (res['error'] == null) {
         user = new User(
-            isCustomer: !res['seller'],
+            isCustomer: res['isCustomer'],
             fullname: res['fullname'],
             birth: res['birth'],
             fiscalcode: res['fiscalcode'],
