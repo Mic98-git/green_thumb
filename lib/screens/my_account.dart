@@ -25,7 +25,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   @override
   void initState() {
     super.initState();
-    this.getSellersAnnouncements(userId);
+    this.getSellersAnnouncements(user.userId);
   }
 
   Future<void> getSellersAnnouncements(String userId) async {
@@ -183,7 +183,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                   ],
                                 ),
                                 SizedBox(height: size.height * 0.02),
-                                if (!isCustomer)
+                                if (!user.isCustomer)
                                   Row(
                                     children: [
                                       SizedBox(
@@ -225,7 +225,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       ],
                     ),
                     SizedBox(height: size.height * 0.03),
-                    if (isCustomer)
+                    if (user.isCustomer)
                       Column(
                         children: <Widget>[
                           Padding(

@@ -38,9 +38,14 @@ class _LoginScreenState extends State<LoginScreen> {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       if (res['error'] == null) {
-        String accessToken = res['token'];
-        token = accessToken;
-        userId = res['id'];
+        user = new User(
+            isCustomer: !res['seller'],
+            fullname: res['fullname'],
+            birth: res['birth'],
+            fiscalcode: res['fiscalcode'],
+            email: res['email'],
+            userId: res['id'],
+            token: res['token']);
         showAlertDialog(context);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const MyAccountScreen()));
