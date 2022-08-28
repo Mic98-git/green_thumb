@@ -3,6 +3,7 @@ import 'package:green_thumb/config/global_variables.dart';
 import 'package:green_thumb/widgets/app_bar.dart';
 import 'package:green_thumb/widgets/navigation_bar.dart';
 import './announcement_creation/new_article.dart';
+import 'article_page.dart';
 import '../models/article.dart';
 import '../core/api_client.dart';
 import '../models/articleList.dart';
@@ -20,7 +21,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   List<Article> myArticles = [];
   bool check = false;
   Image profileImage = Image.asset('assets/images/image.png');
-  String name = "My name";
 
   @override
   void initState() {
@@ -37,7 +37,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     });
   }
 
-  void showArticleDetails() {}
+  void showArticleDetails(Article a) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => ArticleScreen(article: a)));
+  }
 
   Widget articleBox({required Article item, required Size size}) => Container(
         child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -56,7 +59,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       fit: BoxFit.cover,
                       child: InkWell(
                         onTap: () {
-                          showArticleDetails();
+                          showArticleDetails(item);
                         },
                       ),
                     )),
@@ -68,7 +71,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
               width: size.width * 0.35,
               child: GestureDetector(
                   onTap: () {
-                    showArticleDetails();
+                    showArticleDetails(item);
                   },
                   child: Text(
                     item.name,
@@ -106,40 +109,35 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: size.height * 0.01,
+                      height: size.height * 0.03,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: size.width * 0.045),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: primaryColor,
-                                radius: size.height * 0.1,
-                                child: CircleAvatar(
-                                  radius: size.height * 0.09,
-                                  backgroundImage: profileImage.image,
-                                ),
+                    Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: size.width * 0.045),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: primaryColor,
+                              radius: size.height * 0.1,
+                              child: CircleAvatar(
+                                radius: size.height * 0.09,
+                                backgroundImage: profileImage.image,
                               ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.only(right: size.width * 0.045),
-                            child: Container(
-                                child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 SizedBox(
                                   height: size.height * 0.03,
                                 ),
                                 Row(
                                   children: [
+                                    SizedBox(
+                                      width: size.width * 0.03,
+                                    ),
                                     Text(
-                                      name,
+                                      user.fullname,
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 20,
@@ -150,6 +148,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 SizedBox(height: size.height * 0.02),
                                 Row(
                                   children: [
+                                    SizedBox(
+                                      width: size.width * 0.02,
+                                    ),
                                     Container(
                                       height: 40,
                                       width: 85,
@@ -221,9 +222,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     ],
                                   ),
                               ],
-                            ))),
-                      ],
-                    ),
+                            ),
+                          ],
+                        )),
                     SizedBox(height: size.height * 0.03),
                     if (user.isCustomer)
                       Column(

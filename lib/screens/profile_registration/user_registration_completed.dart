@@ -20,8 +20,6 @@ class _UserRegistrationCompletedScreenState
     extends State<UserRegistrationCompletedScreen> {
   @override
   Widget build(BuildContext context) {
-    String userName = widget.name;
-    bool isCustomer = widget.isCustomer;
     var size = MediaQuery.of(context).size;
     return WillPopScope(
         onWillPop: () async => false,
@@ -57,7 +55,7 @@ class _UserRegistrationCompletedScreenState
                   padding: EdgeInsets.symmetric(horizontal: 30),
                   child: Text(
                       "Dear " +
-                          userName +
+                          widget.name +
                           ", we are glad to see you here!"
                               " Your account has been created.",
                       style: TextStyle(
@@ -71,7 +69,7 @@ class _UserRegistrationCompletedScreenState
                   padding: EdgeInsets.symmetric(horizontal: 30),
                   child: Align(
                       alignment: Alignment.topLeft,
-                      child: isCustomer
+                      child: widget.isCustomer
                           ? Text("Please login and start buying something!",
                               style: TextStyle(
                                 color: Colors.black,
@@ -98,7 +96,7 @@ class _UserRegistrationCompletedScreenState
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15))),
                   onPressed: () {
-                    isCustomer
+                    widget.isCustomer
                         ? Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -112,7 +110,7 @@ class _UserRegistrationCompletedScreenState
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        isCustomer
+                        widget.isCustomer
                             ? Text(
                                 'Login ',
                                 style: TextStyle(
@@ -123,7 +121,7 @@ class _UserRegistrationCompletedScreenState
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 25),
                               ),
-                        isCustomer
+                        widget.isCustomer
                             ? Icon(Icons.double_arrow_outlined, size: 30)
                             : Icon(Icons.double_arrow_outlined)
                       ]),

@@ -38,9 +38,4 @@ class Article {
     this.price = articlePrice;
     this.picture = articlePicture;
   }
-
-  /*Article getArticleInfo() {
-    return Article();
-  }*/
-
 }

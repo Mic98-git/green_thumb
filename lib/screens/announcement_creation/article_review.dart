@@ -198,7 +198,7 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
                               borderRadius: BorderRadius.circular(20),
                               child: FittedBox(
                                 child: widget.image,
-                                fit: BoxFit.fill,
+                                fit: BoxFit.cover,
                               )),
                         ),
                         decoration: BoxDecoration(
