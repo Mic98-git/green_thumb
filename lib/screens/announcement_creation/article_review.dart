@@ -42,7 +42,8 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
   Future<void> saveInfo() async {
     //todo manage errors
     Map<String, dynamic> articleData = {
-      'seller': user.userId,
+      'sellerId': user.userId,
+      'sellerName': user.fullname,
       'name': widget.fullName,
       'latin': widget.latinName,
       'description': widget.description,
