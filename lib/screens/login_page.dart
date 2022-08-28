@@ -95,7 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(top: 40.0),
+                      padding:
+                          EdgeInsets.only(top: size.height.toDouble() * 0.05),
                       child: Center(
                         child: Container(
                             width: 100,
@@ -104,7 +105,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 10.0),
+                      padding:
+                          EdgeInsets.only(top: size.height.toDouble() * 0.02),
                       child: Text(
                         'GreenThumb',
                         style: TextStyle(
