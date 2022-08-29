@@ -3,7 +3,6 @@ import 'package:green_thumb/config/global_variables.dart';
 import 'package:green_thumb/screens/puchase_procedure/shipping_info.dart';
 import 'package:green_thumb/widgets/app_bar.dart';
 import 'package:green_thumb/widgets/navigation_bar.dart';
-import '../core/api_client.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
   static String id = "shopping_cart_screen";
@@ -14,8 +13,6 @@ class ShoppingCartScreen extends StatefulWidget {
 }
 
 class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
-  final ApiClient _apiClient = ApiClient();
-
   @override
   void initState() {
     super.initState();

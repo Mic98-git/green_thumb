@@ -43,6 +43,7 @@ dependencies:
   geolocator: ^9.0.1
   google_maps_flutter: ^2.1.12
   flutter_credit_card: ^3.0.3
+  webview_flutter: ^3.0.4
 
 dev_dependencies:
   flutter_test:

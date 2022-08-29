@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:green_thumb/screens/puchase_procedure/credit_card_info.dart';
+import 'package:green_thumb/screens/puchase_procedure/paypal.dart';
 import '../../config/global_variables.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 
@@ -219,6 +220,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       onPressed: () {
                         if (this.paymentMethod != "") {
                           if (this.paymentMethod == "paypal") {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const PaypalPayment(
+                                    amount: 5.99,
+                                    currency: 'USD',
+                                  ),
+                                ));
                           } else {
                             Navigator.push(
                                 context,

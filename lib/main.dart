@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:green_thumb/screens/login_page.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:green_thumb/screens/shopping_cart.dart';
+import 'package:green_thumb/screens/puchase_procedure/shipping_info.dart';
+
 import 'config/custom_material_color.dart';
 
 void main() {
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: createMaterialColor(Color.fromRGBO(51, 153, 66, 1)),
       ),
-      home: const LoginScreen(),
+      home: const ShippingInfoScreen(),
     );
   }
 }
