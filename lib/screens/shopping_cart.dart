@@ -68,38 +68,41 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     SizedBox(
                       height: size.height * 0.2,
                     ),
-                    Container(
-                      height: 50,
-                      width: 250,
-                      decoration: BoxDecoration(
-                          color: primaryColor,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: primaryColor,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20))),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ShippingInfoScreen()));
-                          },
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  'Purchase ',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 25),
-                                ),
-                                Icon(
-                                  Icons.shopping_cart_checkout,
-                                  size: 30,
-                                )
-                              ])),
-                    ),
+                    shoppingCartItems.length > 0
+                        ? Container(
+                            height: 50,
+                            width: 250,
+                            decoration: BoxDecoration(
+                                color: primaryColor,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: primaryColor,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20))),
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ShippingInfoScreen()));
+                                },
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        'Purchase ',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 25),
+                                      ),
+                                      Icon(
+                                        Icons.shopping_cart_checkout,
+                                        size: 30,
+                                      )
+                                    ])),
+                          )
+                        : Container(),
                   ],
                 ))));
   }

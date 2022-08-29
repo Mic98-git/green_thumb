@@ -235,8 +235,8 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
                               },
                               child: Icon(
                                 _showPassword
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
                                 color: Colors.grey,
                               ),
                             ),

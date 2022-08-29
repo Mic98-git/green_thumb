@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:green_thumb/screens/puchase_procedure/credit_card_info.dart';
 import '../../config/global_variables.dart';
+import 'package:flutter_credit_card/flutter_credit_card.dart';
 
 class PaymentScreen extends StatefulWidget {
   static String id = "shipping_info_screen";
@@ -15,9 +17,7 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController cityController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
+  String paymentMethod = "";
 
   void saveInfo() {
     //check errors or nullable values to eraise dialogs
@@ -99,7 +99,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ),
                   Center(
                     child: Text(
-                      'Checkuout',
+                      'Checkout',
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 40,
@@ -135,10 +135,75 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         ),
                       ]),
                   SizedBox(
-                    height: size.height * 0.05,
+                    height: size.height * 0.1,
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          this.paymentMethod = "paypal";
+                        });
+                      },
+                      icon: Icon(
+                        Icons.paypal,
+                        size: 50,
+                        color: this.paymentMethod == "paypal"
+                            ? primaryColor
+                            : Colors.grey,
+                      ),
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.zero,
+                    ),
                   ),
                   SizedBox(
-                    height: size.height * 0.05,
+                    height: size.height * 0.08,
+                  ),
+                  Align(
+                      child: Row(children: [
+                    SizedBox(
+                      width: size.width * 0.025,
+                    ),
+                    SizedBox(
+                      width: size.width * 0.3,
+                      height: size.height * 0.02,
+                      child: Divider(color: Colors.grey),
+                    ),
+                    Text("  Or pay with  ",
+                        style: TextStyle(fontSize: 20, color: Colors.grey)),
+                    SizedBox(
+                      width: size.width * 0.3,
+                      height: size.height * 0.02,
+                      child: Divider(color: Colors.grey),
+                    ),
+                    SizedBox(
+                      width: size.width * 0.025,
+                    ),
+                  ])),
+                  SizedBox(
+                    height: size.height * 0.08,
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          this.paymentMethod = "credit card";
+                        });
+                      },
+                      icon: Icon(
+                        Icons.credit_card,
+                        size: 50,
+                        color: this.paymentMethod == "credit card"
+                            ? primaryColor
+                            : Colors.grey,
+                      ),
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.zero,
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.1,
                   ),
                   Container(
                     height: 50,
@@ -152,14 +217,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20))),
                       onPressed: () {
-                        if (this.nameController.text.isNotEmpty &&
-                            this.addressController.text.isNotEmpty &&
-                            this.cityController.text.isNotEmpty) {
-                          saveInfo();
+                        if (this.paymentMethod != "") {
+                          if (this.paymentMethod == "paypal") {
+                          } else {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const CreditCardInfo()));
+                          }
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content:
-                                Text('Error: Complete all the requested data'),
+                            content: Text('Error: Select one payment method'),
                             backgroundColor: Colors.red.shade300,
                           ));
                         }

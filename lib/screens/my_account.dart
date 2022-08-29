@@ -39,7 +39,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   void showArticleDetails(Article a) {
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => ArticleScreen(article: a)));
+            MaterialPageRoute(builder: (context) => ArticleScreen(article: a)))
+        .then((_) {
+      setState(() {});
+    });
   }
 
   Widget articleBox({required Article item, required Size size}) => Container(
@@ -119,9 +122,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           children: [
                             CircleAvatar(
                               backgroundColor: primaryColor,
-                              radius: size.height * 0.1,
+                              radius: size.height * 0.11,
                               child: CircleAvatar(
-                                radius: size.height * 0.09,
+                                radius: size.height * 0.1,
                                 backgroundImage: profileImage.image,
                               ),
                             ),
@@ -129,7 +132,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 SizedBox(
-                                  height: size.height * 0.03,
+                                  height: size.height * 0.01,
                                 ),
                                 Row(
                                   children: [
