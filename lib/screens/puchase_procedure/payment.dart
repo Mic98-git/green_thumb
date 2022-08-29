@@ -68,110 +68,114 @@ class _PaymentScreenState extends State<PaymentScreen> {
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
             backgroundColor: Colors.white,
-            body: Column(children: <Widget>[
-              SizedBox(
-                height: size.height * 0.03,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.arrow_back_ios_new_outlined),
-                    onPressed: Navigator.of(context).pop,
+            body: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(children: <Widget>[
+                  SizedBox(
+                    height: size.height * 0.03,
                   ),
-                  TextButton(
-                      onPressed: () {
-                        showAlertDialog(context);
-                      },
-                      child: Text(
-                        'X Close',
-                        style: TextStyle(
-                            color: primaryColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.arrow_back_ios_new_outlined),
+                        onPressed: Navigator.of(context).pop,
                       ),
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                      )),
-                ],
-              ),
-              Center(
-                child: Text(
-                  'Checkuout',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(
-                height: size.height * 0.03,
-              ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Shipping Info >> ',
+                      TextButton(
+                          onPressed: () {
+                            showAlertDialog(context);
+                          },
+                          child: Text(
+                            'X Close',
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.symmetric(horizontal: 15),
+                          )),
+                    ],
+                  ),
+                  Center(
+                    child: Text(
+                      'Checkuout',
                       style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                      ),
-                    ),
-                    Text(
-                      'Payment >> ',
-                      style: TextStyle(
-                          color: primaryColor,
-                          fontSize: 15,
+                          color: Colors.black,
+                          fontSize: 40,
                           fontWeight: FontWeight.bold),
                     ),
-                    Text(
-                      'Confirmation',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ]),
-              SizedBox(
-                height: size.height * 0.05,
-              ),
-              SizedBox(
-                height: size.height * 0.05,
-              ),
-              Container(
-                height: 50,
-                width: 250,
-                decoration: BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: BorderRadius.circular(20)),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: primaryColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20))),
-                  onPressed: () {
-                    if (this.nameController.text.isNotEmpty &&
-                        this.addressController.text.isNotEmpty &&
-                        this.cityController.text.isNotEmpty) {
-                      saveInfo();
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('Error: Complete all the requested data'),
-                        backgroundColor: Colors.red.shade300,
-                      ));
-                    }
-                  },
-                  child: Row(
+                  ),
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'Confirm ',
-                          style: TextStyle(color: Colors.white, fontSize: 25),
+                          'Shipping Info >> ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
                         ),
-                        Icon(Icons.double_arrow_outlined),
+                        Text(
+                          'Payment >> ',
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'Confirmation',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
+                        ),
                       ]),
-                ),
-              ),
-            ])));
+                  SizedBox(
+                    height: size.height * 0.05,
+                  ),
+                  SizedBox(
+                    height: size.height * 0.05,
+                  ),
+                  Container(
+                    height: 50,
+                    width: 250,
+                    decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: primaryColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20))),
+                      onPressed: () {
+                        if (this.nameController.text.isNotEmpty &&
+                            this.addressController.text.isNotEmpty &&
+                            this.cityController.text.isNotEmpty) {
+                          saveInfo();
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content:
+                                Text('Error: Complete all the requested data'),
+                            backgroundColor: Colors.red.shade300,
+                          ));
+                        }
+                      },
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Confirm ',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 25),
+                            ),
+                            Icon(Icons.double_arrow_outlined),
+                          ]),
+                    ),
+                  ),
+                ]))));
   }
 }
