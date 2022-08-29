@@ -11,27 +11,28 @@ import '../../widgets/app_bar.dart';
 
 class ChatScreen extends StatefulWidget {
   final String fullname;
-  const ChatScreen(String this.fullname, {super.key});
+  final String sellerId;
+  const ChatScreen(String this.fullname, String this.sellerId, {super.key});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
-ChatUser user = ChatUser(id: '0');
-ChatUser user2 = ChatUser(id: '2', firstName: '');
+final ChatUser user1 = ChatUser(id: '0');
+final ChatUser user2 = ChatUser(id: '2', firstName: '');
 
-List<ChatMessage> messages = <ChatMessage>[];
-DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+final List<ChatMessage> messages = <ChatMessage>[];
+final DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
 
-ChatMessage mess = new ChatMessage(
+final ChatMessage mess = new ChatMessage(
   text: '',
   user: user2,
   createdAt: DateTime.now(),
 );
 
 class _ChatScreenState extends State<ChatScreen> {
-  String userIdMittente =
-      '6308c9876991b40012a08682'; //COMPRATORE il mio id, verifico se mi arrivano messaggi
+  final String userIdMittente =
+      user.userId; //COMPRATORE il mio id, verifico se mi arrivano messaggi
 
   Future<Message> getMessage() async {
     final response = await http
@@ -51,31 +52,29 @@ class _ChatScreenState extends State<ChatScreen> {
     }).asyncMap((event) async => await event);
   }
 
-  String userIdDestinatario =
-      '6308c9956991b40012a08684'; //VENDITORE quando clicco prendo l'id
-
-  Future<http.Response> createChat() {
-    return http.post(
-      Uri.parse(url + ':3004/chat/'),
-      body: (<String, String>{
-        'content': ' ',
-        'userId': userIdDestinatario,
-        'idConversation': userIdMittente
-      }),
-    );
-  }
-
-  // String idChat = ''; //ID della chat quando è stata creata con la post
-
-  Future<http.Response> sendMessage(String content, String date) {
-    return http.put(
-      Uri.parse(url + ':3004/chat/' + userIdDestinatario),
-      body: (<String, String>{'content': content, 'created_at': date}),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final String userIdDestinatario =
+        widget.sellerId; //VENDITORE quando clicco prendo l'id
+
+    Future<http.Response> createChat() {
+      return http.post(
+        Uri.parse(url + ':3004/chat/'),
+        body: (<String, String>{
+          'content': ' ',
+          'userId': userIdDestinatario,
+          'idConversation': userIdMittente
+        }),
+      );
+    }
+
+    Future<http.Response> sendMessage(String content, String date) {
+      return http.put(
+        Uri.parse(url + ':3004/chat/' + userIdDestinatario),
+        body: (<String, String>{'content': content, 'created_at': date}),
+      );
+    }
+
     user2.firstName = widget.fullname;
     var size = MediaQuery.of(context).size;
     createChat();
@@ -98,7 +97,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 preferredSize: Size.fromHeight(size.height * 0.1),
                 child: appBarWidget(size, true)),
             body: DashChat(
-              currentUser: user,
+              currentUser: user1,
               onSend: (ChatMessage m) {
                 setState(() {
                   messages.insert(0, m);

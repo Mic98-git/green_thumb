@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:green_thumb/config/global_variables.dart';
 import 'package:green_thumb/models/article.dart';
+import 'package:green_thumb/screens/chat/chat.dart';
 import '../widgets/app_bar.dart';
 
 class ArticleScreen extends StatefulWidget {
@@ -88,7 +89,13 @@ class _ArticleScreenState extends State<ArticleScreen> {
     );
   }
 
-  void contactSeller() {}
+  void contactSeller() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ChatScreen(
+                widget.article.sellerName, widget.article.sellerId)));
+  }
 
   @override
   Widget build(BuildContext context) {

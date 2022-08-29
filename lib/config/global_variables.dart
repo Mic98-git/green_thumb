@@ -28,4 +28,15 @@ class User {
     required this.userId,
     required this.token,
   }) : super();
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+        isCustomer: json['user']['isCustomer'],
+        fullname: json['user']['fullname'],
+        birth: json['user']['birth'],
+        fiscalcode: json['user']['fiscalcode'],
+        email: json['user']['email'],
+        userId: json['user']['id'],
+        token: json['user']['token']);
+  }
 }

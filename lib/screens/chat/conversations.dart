@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:green_thumb/models/message.dart';
-import 'package:green_thumb/models/user.dart';
 import 'package:green_thumb/screens/chat/chat.dart';
+import 'package:green_thumb/config/global_variables.dart';
 import 'package:http/http.dart' as http;
 
 import '../../widgets/app_bar.dart';
@@ -26,13 +26,12 @@ class ConversationScreen extends StatefulWidget {
 }
 
 class _ConversationScreenState extends State<ConversationScreen> {
-  String mioId =
-      '6308c9956991b40012a08684'; //VENDITORE quando clicco prendo l'id
+  String mioId = user.userId;
 
   Future<Message> getMessage() async {
     final response = await http
         // ignore: prefer_interpolation_to_compose_strings
-        .get(Uri.parse('http://10.0.2.2:3005/chat/' + mioId));
+        .get(Uri.parse(url + ':3004/chat/' + mioId));
 
     if (response.statusCode == 200) {
       return Message.fromJson(jsonDecode(response.body));
@@ -44,7 +43,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   Future<User> getUsername(idMittente) async {
     final response = await http
         // ignore: prefer_interpolation_to_compose_strings
-        .get(Uri.parse('http://10.0.2.2:3000/users/' + idMittente));
+        .get(Uri.parse(url + ':3000/users/' + idMittente));
 
     if (response.statusCode == 200) {
       //print(response.body);
@@ -105,8 +104,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
                                     onTap: () async {
                                       await Navigator.of(context).push(
                                           MaterialPageRoute(
-                                              builder: (_) =>
-                                                  ChatScreen(fullname)));
+                                              builder: (_) => ChatScreen(
+                                                  fullname,
+                                                  snapshot
+                                                      .data!.idConversation)));
                                     }))
                             : Text("No message here",
                                 style: TextStyle(fontSize: 20)),
