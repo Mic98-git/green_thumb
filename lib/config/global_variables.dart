@@ -20,7 +20,7 @@ class User {
   final String fiscalcode;
   final String email;
   final String userId;
-  final String token;
+  //final String token;
   const User({
     Key? key,
     required this.isCustomer,
@@ -29,17 +29,18 @@ class User {
     required this.fiscalcode,
     required this.email,
     required this.userId,
-    required this.token,
+    //required this.token,
   }) : super();
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-        isCustomer: json['user']['isCustomer'],
-        fullname: json['user']['fullname'],
-        birth: json['user']['birth'],
-        fiscalcode: json['user']['fiscalcode'],
-        email: json['user']['email'],
-        userId: json['user']['id'],
-        token: json['user']['token']);
+      isCustomer: json['user']['isCustomer'],
+      fullname: json['user']['fullname'],
+      birth: json['user']['birth'],
+      fiscalcode: json['user']['fiscalcode'],
+      email: json['user']['email'],
+      userId: json['user']['id'],
+      //token: json['user']['token']
+    );
   }
 }

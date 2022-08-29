@@ -39,13 +39,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (res['error'] == null) {
         user = new User(
-            isCustomer: res['isCustomer'],
-            fullname: res['fullname'],
-            birth: res['birth'],
-            fiscalcode: res['fiscalcode'],
-            email: res['email'],
-            userId: res['id'],
-            token: res['token']);
+          isCustomer: res['isCustomer'],
+          fullname: res['fullname'],
+          birth: res['birth'],
+          fiscalcode: res['fiscalcode'],
+          email: res['email'],
+          userId: res['id'],
+          //token: res['token']
+        );
         showAlertDialog(context);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const MyAccountScreen()));
