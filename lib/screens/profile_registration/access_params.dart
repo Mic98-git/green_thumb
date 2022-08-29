@@ -47,6 +47,8 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
       dynamic res = await _apiClient.registerUser(userData);
 
       if (res['error'] == null) {
+        registeredFullname = res['user']['fullname'];
+        registeredUserId = res['user']['id'];
         Navigator.push(
             context,
             MaterialPageRoute(

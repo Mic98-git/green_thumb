@@ -9,6 +9,9 @@ String url = 'http://valeriobob.ddns.net';
 
 late final User user;
 
+String registeredUserId = '';
+String registeredFullname = '';
+
 class User {
   final bool isCustomer;
   // final bool isSeller;

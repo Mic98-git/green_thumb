@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/api_client.dart';
 import './activity_registration_completed.dart';
 import '../../config/global_variables.dart';
 
@@ -21,6 +22,33 @@ class FiscalDetailsScreen extends StatefulWidget {
 class _FiscalDetailsScreenState extends State<FiscalDetailsScreen> {
   final TextEditingController VATController = TextEditingController();
   final TextEditingController IBANController = TextEditingController();
+
+  final ApiClient _apiClient = ApiClient();
+  Future<void> updateFiscalDetails() async {
+    Map<String, dynamic> userData = {
+      "activityName": widget.activityName,
+      "fiscalAddress": widget.fiscalAddress,
+      "city": widget.city,
+      "vatNumber": VATController.text,
+      "ibanCode": IBANController.text,
+    };
+
+    dynamic res = await _apiClient.updateUser(registeredUserId, userData);
+
+    if (res['error'] == null) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ActivityRegistrationCompletedScreen(
+                    activityName: widget.activityName,
+                  )));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: ${res['error']}'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
+  }
 
   void saveInfo() {
     //check errors or nullable values to eraise dialogs
@@ -208,12 +236,7 @@ class _FiscalDetailsScreenState extends State<FiscalDetailsScreen> {
                   onPressed: () {
                     if (this.VATController.text.isNotEmpty &&
                         this.IBANController.text.isNotEmpty) {
-                      saveInfo();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const ActivityRegistrationCompletedScreen()));
+                      updateFiscalDetails();
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text('Error: Complete all the requested data'),
