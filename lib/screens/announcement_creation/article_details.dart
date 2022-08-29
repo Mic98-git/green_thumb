@@ -106,332 +106,338 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
             backgroundColor: Colors.white,
-            body: Column(children: <Widget>[
-              SizedBox(
-                height: size.height * 0.03,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.arrow_back_ios_new_outlined),
-                    onPressed: Navigator.of(context).pop,
+            body: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(children: <Widget>[
+                  SizedBox(
+                    height: size.height * 0.03,
                   ),
-                  TextButton(
-                      onPressed: () {
-                        showAlertDialog(context);
-                      },
-                      child: Text(
-                        'X Close',
-                        style: TextStyle(
-                            color: primaryColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.arrow_back_ios_new_outlined),
+                        onPressed: Navigator.of(context).pop,
                       ),
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                      )),
-                ],
-              ),
-              Center(
-                child: Text(
-                  'New Article',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(
-                height: size.height * 0.03,
-              ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text('New Article >> ',
+                      TextButton(
+                          onPressed: () {
+                            showAlertDialog(context);
+                          },
+                          child: Text(
+                            'X Close',
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.symmetric(horizontal: 15),
+                          )),
+                    ],
+                  ),
+                  Center(
+                    child: Text(
+                      'New Article',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text('New Article >> ',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                            )),
+                        Text(
+                          'Details >> ',
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'Confirmation',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ]),
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Icon(
+                        Icons.water_drop_outlined,
+                        color: Colors.blue,
+                        size: 30,
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      DropdownButton(
+                          value: waterFrequency,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              waterFrequency = newValue!;
+                            });
+                          },
+                          items: dropdownItems),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text(
+                        'water frequency',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 15,
-                        )),
-                    Text(
-                      'Details >> ',
-                      style: TextStyle(
-                          color: primaryColor,
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Container(
+                        width: 30,
+                        height: 30,
+                        child: Image.asset('assets/icons/oxygen.png'),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Container(
+                        width: 200,
+                        height: 50,
+                        child: TextFormField(
+                          controller: oxygenController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: "Oxygen production",
+                            isDense: true,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'grams/day',
+                        style: TextStyle(
+                          color: Colors.black,
                           fontSize: 15,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      'Confirmation',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 20,
                       ),
-                    ),
-                  ]),
-              SizedBox(
-                height: size.height * 0.03,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
+                      Icon(
+                        Icons.sunny,
+                        color: Colors.yellow,
+                        size: 30,
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Container(
+                        width: 200,
+                        height: 50,
+                        child: TextFormField(
+                          controller: lightController,
+                          decoration: InputDecoration(
+                            hintText: "Sunlight exposition",
+                            isDense: true,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   SizedBox(
-                    width: 20,
+                    height: size.height * 0.03,
                   ),
-                  Icon(
-                    Icons.water_drop_outlined,
-                    color: Colors.blue,
-                    size: 30,
+                  Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Icon(
+                        Icons.euro,
+                        size: 30,
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Container(
+                        width: 200,
+                        height: 50,
+                        child: TextFormField(
+                          controller: priceController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: "Price",
+                            isDense: true,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
-                    width: 20,
+                    height: size.height * 0.03,
                   ),
-                  DropdownButton(
-                      value: waterFrequency,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          waterFrequency = newValue!;
-                        });
+                  Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Container(
+                        width: 30,
+                        height: 30,
+                        child: Image.asset('assets/icons/leaf.png'),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Container(
+                        width: 200,
+                        height: 50,
+                        child: TextFormField(
+                          controller: availablePiecesController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: "Available pieces",
+                            isDense: true,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: size.height * 0.02,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Icon(
+                        Icons.add_a_photo,
+                        size: 30,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                          width: 250,
+                          height: 50,
+                          child: TextButton(
+                            child: Text('Pick image from gallery *',
+                                style: TextStyle(fontSize: 20)),
+                            style:
+                                TextButton.styleFrom(padding: EdgeInsets.zero),
+                            onPressed: () {
+                              pickImage();
+                            },
+                          )),
+                      if (this.articleImage != null)
+                        Icon(
+                          Icons.verified,
+                          color: primaryColor,
+                        ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  Container(
+                    height: 50,
+                    width: 250,
+                    decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: primaryColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20))),
+                      onPressed: () {
+                        if (this.oxygenController.text.isNotEmpty &&
+                            this.lightController.text.isNotEmpty &&
+                            this.priceController.text.isNotEmpty &&
+                            this.availablePiecesController.text.isNotEmpty &&
+                            this.articleImage != null) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ArticleReviewScreen(
+                                        water: this.waterFrequency,
+                                        oxygen: this.oxygenController.text,
+                                        sun: this.lightController.text,
+                                        price: this.priceController.text,
+                                        pieces:
+                                            this.availablePiecesController.text,
+                                        image: this.articleImage!,
+                                        imageString: this.imageString!,
+                                        fullName: widget.fullName,
+                                        latinName: widget.latinName,
+                                        description: widget.description,
+                                        category: widget.category,
+                                      )));
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content:
+                                Text('Error: Complete all the requested data'),
+                            backgroundColor: Colors.red.shade300,
+                          ));
+                        }
                       },
-                      items: dropdownItems),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Text(
-                    'water frequency',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: size.height * 0.03,
-              ),
-              Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Container(
-                    width: 30,
-                    height: 30,
-                    child: Image.asset('assets/icons/oxygen.png'),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Container(
-                    width: 200,
-                    height: 50,
-                    child: TextFormField(
-                      controller: oxygenController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        hintText: "Oxygen production",
-                        isDense: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Confirm ',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 25),
+                            ),
+                            Icon(Icons.double_arrow_outlined),
+                          ]),
                     ),
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    'grams/day',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: size.height * 0.03,
-              ),
-              Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Icon(
-                    Icons.sunny,
-                    color: Colors.yellow,
-                    size: 30,
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Container(
-                    width: 200,
-                    height: 50,
-                    child: TextFormField(
-                      controller: lightController,
-                      decoration: InputDecoration(
-                        hintText: "Sunlight exposition",
-                        isDense: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: size.height * 0.03,
-              ),
-              Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Icon(
-                    Icons.euro,
-                    size: 30,
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Container(
-                    width: 200,
-                    height: 50,
-                    child: TextFormField(
-                      controller: priceController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        hintText: "Price",
-                        isDense: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: size.height * 0.03,
-              ),
-              Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Container(
-                    width: 30,
-                    height: 30,
-                    child: Image.asset('assets/icons/leaf.png'),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Container(
-                    width: 200,
-                    height: 50,
-                    child: TextFormField(
-                      controller: availablePiecesController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        hintText: "Available pieces",
-                        isDense: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Icon(
-                    Icons.add_a_photo,
-                    size: 30,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                      width: 250,
-                      height: 50,
-                      child: TextButton(
-                        child: Text('Pick image from gallery *',
-                            style: TextStyle(fontSize: 20)),
-                        style: TextButton.styleFrom(padding: EdgeInsets.zero),
-                        onPressed: () {
-                          pickImage();
-                        },
-                      )),
-                  if (this.articleImage != null)
-                    Icon(
-                      Icons.verified,
-                      color: primaryColor,
-                    ),
-                ],
-              ),
-              SizedBox(
-                height: size.height * 0.03,
-              ),
-              Container(
-                height: 50,
-                width: 250,
-                decoration: BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: BorderRadius.circular(20)),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: primaryColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15))),
-                  onPressed: () {
-                    if (this.oxygenController.text.isNotEmpty &&
-                        this.lightController.text.isNotEmpty &&
-                        this.priceController.text.isNotEmpty &&
-                        this.availablePiecesController.text.isNotEmpty &&
-                        this.articleImage != null) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ArticleReviewScreen(
-                                    water: this.waterFrequency,
-                                    oxygen: this.oxygenController.text,
-                                    sun: this.lightController.text,
-                                    price: this.priceController.text,
-                                    pieces: this.availablePiecesController.text,
-                                    image: this.articleImage!,
-                                    imageString: this.imageString!,
-                                    fullName: widget.fullName,
-                                    latinName: widget.latinName,
-                                    description: widget.description,
-                                    category: widget.category,
-                                  )));
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('Error: Complete all the requested data'),
-                        backgroundColor: Colors.red.shade300,
-                      ));
-                    }
-                  },
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'Confirm ',
-                          style: TextStyle(color: Colors.white, fontSize: 25),
-                        ),
-                        Icon(Icons.double_arrow_outlined),
-                      ]),
-                ),
-              ),
-            ])));
+                ]))));
   }
 }

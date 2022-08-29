@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
-import './access_params.dart';
-import '../login_page.dart';
 import '../../config/global_variables.dart';
+import 'payment.dart';
 
-class UserInfoScreen extends StatefulWidget {
-  static String id = "user_info_screen";
-  const UserInfoScreen({Key? key}) : super(key: key);
+class ShippingInfoScreen extends StatefulWidget {
+  static String id = "shipping_info_screen";
+  const ShippingInfoScreen({Key? key}) : super(key: key);
 
   @override
-  State<UserInfoScreen> createState() => _UserInfoScreenState();
+  State<ShippingInfoScreen> createState() => _ShippingInfoScreenState();
 }
 
-class _UserInfoScreenState extends State<UserInfoScreen> {
+class _ShippingInfoScreenState extends State<ShippingInfoScreen> {
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController birthDateController = TextEditingController();
-  final TextEditingController fiscalCodeController = TextEditingController();
-  bool isCustomer = true;
-  late DateTime birthDate;
+  final TextEditingController cityController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
 
   void saveInfo() {
     //check errors or nullable values to eraise dialogs
@@ -34,8 +31,9 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     Widget okButton = TextButton(
       child: Text("Yes"),
       onPressed: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const LoginScreen()));
+        Navigator.of(context)
+          ..pop()
+          ..pop();
       },
     );
 
@@ -72,12 +70,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                     height: size.height * 0.03,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.arrow_back_ios_new_outlined),
-                        onPressed: Navigator.of(context).pop,
-                      ),
                       TextButton(
                           onPressed: () {
                             showAlertDialog(context);
@@ -96,7 +90,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                   ),
                   Center(
                     child: Text(
-                      'About You',
+                      'Checkout',
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 40,
@@ -110,14 +104,21 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'Personal Info >> ',
+                          'Shipping Info >> ',
                           style: TextStyle(
                               color: primaryColor,
                               fontSize: 15,
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          'Access Parameters',
+                          'Payment >> ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Text(
+                          'Confirmation',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 15,
@@ -125,36 +126,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                         ),
                       ]),
                   SizedBox(
-                    height: size.height * 0.02,
-                  ),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'I am a customer',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: isCustomer ? FontWeight.bold : null),
-                        ),
-                        Switch(
-                          value: !isCustomer,
-                          onChanged: (value) {
-                            setState(() {
-                              isCustomer = !value;
-                            });
-                          },
-                        ),
-                        Text(
-                          'I am a seller',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: !isCustomer ? FontWeight.bold : null),
-                        ),
-                      ]),
-                  SizedBox(
-                    height: size.height * 0.03,
+                    height: size.height * 0.05,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
@@ -177,7 +149,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                       child: TextFormField(
                         controller: nameController,
                         decoration: InputDecoration(
-                          hintText: "Name",
+                          hintText: "Full name",
                           isDense: true,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -192,7 +164,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Birth Date (dd/mm/yyyy)",
+                        "Address",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
@@ -206,32 +178,9 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                   Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: TextFormField(
-                        controller: birthDateController,
+                        controller: addressController,
                         decoration: InputDecoration(
-                          suffixIcon: GestureDetector(
-                            onTap: () async {
-                              final datePick = await showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(1900),
-                                  lastDate: DateTime(2100));
-                              if (datePick != null) {
-                                setState(() {
-                                  this.birthDate = datePick;
-                                });
-                                final date =
-                                    "${birthDate.day}/${birthDate.month}/${birthDate.year}";
-                                birthDateController.value = birthDateController
-                                    .value
-                                    .copyWith(text: date);
-                              }
-                            },
-                            child: Icon(
-                              Icons.calendar_month_sharp,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          hintText: "dd/mm/yyyy",
+                          hintText: "Address",
                           isDense: true,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -246,7 +195,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Fiscal Code",
+                        "City",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
@@ -260,9 +209,9 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                   Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: TextFormField(
-                        controller: fiscalCodeController,
+                        controller: cityController,
                         decoration: InputDecoration(
-                          hintText: "Fiscal Code",
+                          hintText: "City",
                           isDense: true,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -270,7 +219,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                         ),
                       )),
                   SizedBox(
-                    height: size.height * 0.04,
+                    height: size.height * 0.05,
                   ),
                   Container(
                     height: 50,
@@ -285,20 +234,16 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                               borderRadius: BorderRadius.circular(20))),
                       onPressed: () {
                         if (this.nameController.text.isNotEmpty &&
-                            this.birthDateController.text.isNotEmpty &&
-                            this.fiscalCodeController.text.isNotEmpty) {
+                            this.addressController.text.isNotEmpty &&
+                            this.cityController.text.isNotEmpty) {
                           saveInfo();
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AccessParamsScreen(
-                                        isCustomer: this.isCustomer,
-                                        name: this.nameController.text,
-                                        birthDate:
-                                            this.birthDateController.text,
-                                        fiscalCode:
-                                            this.fiscalCodeController.text,
-                                      )));
+                                  builder: (context) => PaymentScreen(
+                                      name: this.nameController.text,
+                                      address: this.addressController.text,
+                                      city: this.cityController.text)));
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content:
@@ -311,7 +256,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              'Continue ',
+                              'Confirm ',
                               style:
                                   TextStyle(color: Colors.white, fontSize: 25),
                             ),

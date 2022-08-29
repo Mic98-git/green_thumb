@@ -110,7 +110,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
                                                       .data!.idConversation)));
                                     }))
                             : Text("No message here",
-                                style: TextStyle(fontSize: 20)),
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.grey)),
                       ])));
             }));
   }

@@ -62,8 +62,11 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
 
     if (res['ErrorCode'] == null) {
       //product added
-      // Navigator.push(context,
-      //     MaterialPageRoute(builder: (context) => const LoginScreen()));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  const AnnouncementCreationCompletedScreen()));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Error: ${res['Message']}'),
@@ -117,176 +120,198 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
             backgroundColor: Colors.white,
-            body: Column(children: <Widget>[
-              SizedBox(
-                height: size.height * 0.03,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.arrow_back_ios_new_outlined),
-                    onPressed: Navigator.of(context).pop,
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        showAlertDialog(context);
-                      },
-                      child: Text(
-                        'X Close',
-                        style: TextStyle(
-                            color: primaryColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                      )),
-                ],
-              ),
-              Center(
-                child: Text(
-                  'New Article',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(
-                height: size.height * 0.03,
-              ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text('New Article >> ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                        )),
-                    Text(
-                      'Details >> ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                      ),
-                    ),
-                    Text(
-                      'Confirmation',
-                      style: TextStyle(
-                          color: primaryColor,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ]),
-              SizedBox(
-                height: size.height * 0.05,
-              ),
-              Stack(
-                alignment: Alignment.topRight,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(left: 20),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Container(
-                        height: size.height * 0.20,
-                        width: size.width * 0.35,
-                        child: AspectRatio(
-                          aspectRatio: 4 / 3,
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: FittedBox(
-                                child: widget.image,
-                                fit: BoxFit.cover,
-                              )),
-                        ),
-                        decoration: BoxDecoration(
-                            color: articleBoxColor,
-                            borderRadius: BorderRadius.circular(20)),
-                      ),
-                    ),
-                  ),
-                  Container(
-                      height: size.height * 0.27,
-                      width: size.width * 0.55,
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: size.height * 0.01,
-                          ),
-                          Text(
-                            widget.fullName,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 25,
-                            ),
-                          ),
-                          SizedBox(height: size.height * 0.03),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('Price: ' + widget.price,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                  )),
-                              Icon(Icons.euro),
-                            ],
-                          ),
-                          SizedBox(height: size.height * 0.03),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('Available items: ' + widget.pieces,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                  )),
-                              Container(
-                                width: 25,
-                                height: 25,
-                                child: Image.asset('assets/icons/leaf.png'),
-                              ),
-                            ],
-                          ),
-                        ],
-                      )),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
+            body: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(children: <Widget>[
                   SizedBox(
-                    width: 20,
-                  ),
-                  Icon(
-                    Icons.water_drop_outlined,
-                    color: Colors.blue,
-                    size: 30,
-                  ),
-                  Text(
-                    ' ' + widget.water,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
+                    height: size.height * 0.03,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.arrow_back_ios_new_outlined),
+                        onPressed: Navigator.of(context).pop,
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            showAlertDialog(context);
+                          },
+                          child: Text(
+                            'X Close',
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.symmetric(horizontal: 15),
+                          )),
+                    ],
+                  ),
+                  Center(
+                    child: Text(
+                      'New Article',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text('New Article >> ',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                            )),
+                        Text(
+                          'Details >> ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Text(
+                          'Confirmation',
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ]),
+                  SizedBox(
+                    height: size.height * 0.05,
+                  ),
+                  Stack(
+                    alignment: Alignment.topRight,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            height: size.height * 0.20,
+                            width: size.width * 0.35,
+                            child: AspectRatio(
+                              aspectRatio: 4 / 3,
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: FittedBox(
+                                    child: widget.image,
+                                    fit: BoxFit.cover,
+                                  )),
+                            ),
+                            decoration: BoxDecoration(
+                                color: articleBoxColor,
+                                borderRadius: BorderRadius.circular(20)),
+                          ),
+                        ),
+                      ),
+                      Container(
+                          height: size.height * 0.27,
+                          width: size.width * 0.55,
+                          child: Column(
+                            children: <Widget>[
+                              SizedBox(
+                                height: size.height * 0.01,
+                              ),
+                              Text(
+                                widget.fullName,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 25,
+                                ),
+                              ),
+                              SizedBox(height: size.height * 0.03),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('Price: ' + widget.price,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                      )),
+                                  Icon(Icons.euro),
+                                ],
+                              ),
+                              SizedBox(height: size.height * 0.03),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('Available items: ' + widget.pieces,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                      )),
+                                ],
+                              ),
+                            ],
+                          )),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       SizedBox(
                         width: 20,
                       ),
-                      Container(
-                        width: 30,
-                        height: 30,
-                        child: Image.asset('assets/icons/oxygen.png'),
+                      Icon(
+                        Icons.water_drop_outlined,
+                        color: Colors.blue,
+                        size: 30,
                       ),
                       Text(
-                        '  ' + widget.oxygen + ' grams/day',
+                        ' ' + widget.water,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Container(
+                            width: 30,
+                            height: 30,
+                            child: Image.asset('assets/icons/oxygen.png'),
+                          ),
+                          Text(
+                            '  ' + widget.oxygen + ' grams/day',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Icon(
+                        Icons.sunny,
+                        color: Colors.yellow,
+                        size: 30,
+                      ),
+                      Text(
+                        ' ' + widget.sun,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
@@ -294,74 +319,44 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
                       ),
                     ],
                   ),
-                ],
-              ),
-              SizedBox(
-                height: size.height * 0.03,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
                   SizedBox(
-                    width: 20,
+                    height: size.height * 0.04,
                   ),
-                  Icon(
-                    Icons.sunny,
-                    color: Colors.yellow,
-                    size: 30,
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: Text(widget.description,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                          ))),
+                  SizedBox(
+                    height: size.height * 0.05,
                   ),
-                  Text(
-                    ' ' + widget.sun,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
+                  Container(
+                    height: 50,
+                    width: 250,
+                    decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: primaryColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20))),
+                      onPressed: () {
+                        saveInfo();
+                      },
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Post Article ',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 25),
+                            ),
+                          ]),
                     ),
                   ),
-                ],
-              ),
-              SizedBox(
-                height: size.height * 0.04,
-              ),
-              Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
-                  child: Text(widget.description,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ))),
-              SizedBox(
-                height: size.height * 0.05,
-              ),
-              Container(
-                height: 50,
-                width: 250,
-                decoration: BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: BorderRadius.circular(20)),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: primaryColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15))),
-                  onPressed: () {
-                    saveInfo();
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const AnnouncementCreationCompletedScreen()));
-                  },
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'Post Article ',
-                          style: TextStyle(color: Colors.white, fontSize: 25),
-                        ),
-                        Icon(Icons.double_arrow_outlined),
-                      ]),
-                ),
-              ),
-            ])));
+                ]))));
   }
 }

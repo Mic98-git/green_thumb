@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:green_thumb/config/global_variables.dart';
 import 'package:green_thumb/screens/chat/conversations.dart';
 import 'package:green_thumb/screens/my_account.dart';
+import 'package:green_thumb/screens/shopping_cart.dart';
 
 class BottomNavigationBarScreen extends StatefulWidget {
   static String id = "BottomNavigationBar_screen";
@@ -24,7 +26,7 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
 
   final List<Widget> _routes = [
     MyAccountScreen(),
-    MyAccountScreen(),
+    ShoppingCartScreen(),
     ConversationScreen(),
     MyAccountScreen()
   ];
@@ -33,13 +35,39 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      items: const <BottomNavigationBarItem>[
+      items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart),
+          icon: Stack(
+            children: <Widget>[
+              Icon(Icons.shopping_cart_rounded),
+              Positioned(
+                right: 0,
+                child: Container(
+                  padding: EdgeInsets.all(1),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  constraints: BoxConstraints(
+                    minWidth: 12,
+                    minHeight: 12,
+                  ),
+                  child: Text(
+                    shoppingCartItems.length.toString(),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 8,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
+            ],
+          ),
           label: 'Shopping cart',
         ),
         BottomNavigationBarItem(

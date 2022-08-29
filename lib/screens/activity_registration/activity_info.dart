@@ -222,7 +222,7 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
                   style: ElevatedButton.styleFrom(
                       primary: primaryColor,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15))),
+                          borderRadius: BorderRadius.circular(20))),
                   onPressed: () {
                     if (this.nameController.text.isNotEmpty &&
                         this.fiscalAddressController.text.isNotEmpty &&

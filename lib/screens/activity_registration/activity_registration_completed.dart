@@ -50,13 +50,15 @@ class _ActivityRegistrationCompletedScreenState
                 height: size.height * 0.05,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30),
-                child: Text(widget.activityName + " registered!",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    )),
-              ),
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(widget.activityName + " registered!",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
+                  )),
               SizedBox(
                 height: size.height * 0.02,
               ),
@@ -84,7 +86,7 @@ class _ActivityRegistrationCompletedScreenState
                   style: ElevatedButton.styleFrom(
                       primary: primaryColor,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15))),
+                          borderRadius: BorderRadius.circular(20))),
                   onPressed: () {
                     Navigator.push(
                         context,
@@ -92,10 +94,10 @@ class _ActivityRegistrationCompletedScreenState
                             builder: (context) => const LoginScreen()));
                   },
                   child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'Login',
+                          'Login ',
                           style: TextStyle(color: Colors.white, fontSize: 25),
                         ),
                         Icon(Icons.double_arrow_outlined, size: 30),
