@@ -70,7 +70,7 @@ class _AnnouncementCreationCompletedScreenState
                   style: ElevatedButton.styleFrom(
                       primary: primaryColor,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15))),
+                          borderRadius: BorderRadius.circular(20))),
                   onPressed: () {
                     Navigator.push(
                         context,
@@ -78,10 +78,10 @@ class _AnnouncementCreationCompletedScreenState
                             builder: (context) => const MyAccountScreen()));
                   },
                   child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'My Account',
+                          'My Account ',
                           style: TextStyle(color: Colors.white, fontSize: 25),
                         ),
                         Icon(

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import './fiscal_details.dart';
 import '../../config/global_variables.dart';
+import 'payment.dart';
 
-class ActivityInfoScreen extends StatefulWidget {
-  static String id = "activity_info_screen";
-  const ActivityInfoScreen({Key? key}) : super(key: key);
+class ShippingInfoScreen extends StatefulWidget {
+  static String id = "shipping_info_screen";
+  const ShippingInfoScreen({Key? key}) : super(key: key);
 
   @override
-  State<ActivityInfoScreen> createState() => _ActivityInfoScreenState();
+  State<ShippingInfoScreen> createState() => _ShippingInfoScreenState();
 }
 
-class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
+class _ShippingInfoScreenState extends State<ShippingInfoScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
-  final TextEditingController fiscalAddressController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
 
   void saveInfo() {
     //check errors or nullable values to eraise dialogs
@@ -88,7 +88,7 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
               ),
               Center(
                 child: Text(
-                  'Your activity',
+                  'Checkout',
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 40,
@@ -102,14 +102,21 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      'Activity Info >> ',
+                      'Shipping Info >> ',
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 15,
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      'Fiscal Details',
+                      'Payment >> ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
+                    ),
+                    Text(
+                      'Confirmation',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,
@@ -124,7 +131,7 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Activity Name",
+                    "Full Name",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,
@@ -140,7 +147,7 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
                   child: TextFormField(
                     controller: nameController,
                     decoration: InputDecoration(
-                      hintText: "Activity name",
+                      hintText: "Full name",
                       isDense: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -155,7 +162,7 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Fiscal Address",
+                    "Address",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,
@@ -169,9 +176,9 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: TextFormField(
-                    controller: fiscalAddressController,
+                    controller: addressController,
                     decoration: InputDecoration(
-                      hintText: "Fiscal address",
+                      hintText: "Address",
                       isDense: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -225,16 +232,15 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
                           borderRadius: BorderRadius.circular(20))),
                   onPressed: () {
                     if (this.nameController.text.isNotEmpty &&
-                        this.fiscalAddressController.text.isNotEmpty &&
+                        this.addressController.text.isNotEmpty &&
                         this.cityController.text.isNotEmpty) {
                       saveInfo();
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => FiscalDetailsScreen(
-                                  activityName: this.nameController.text,
-                                  fiscalAddress:
-                                      this.fiscalAddressController.text,
+                              builder: (context) => PaymentScreen(
+                                  name: this.nameController.text,
+                                  address: this.addressController.text,
                                   city: this.cityController.text)));
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

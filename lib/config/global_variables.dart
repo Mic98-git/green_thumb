@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:green_thumb/models/article.dart';
 
 const primaryColor = Color.fromRGBO(51, 153, 0, 1);
 const articleBoxColor = Color.fromRGBO(247, 234, 213, 1);
@@ -43,3 +44,5 @@ class User {
         token: json['user']['token']);
   }
 }
+
+var shoppingCartItems = Map<String, Article>(); //<articleId, Article>

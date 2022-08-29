@@ -24,6 +24,7 @@ class _FiscalDetailsScreenState extends State<FiscalDetailsScreen> {
   final TextEditingController IBANController = TextEditingController();
 
   final ApiClient _apiClient = ApiClient();
+
   Future<void> updateFiscalDetails() async {
     Map<String, dynamic> userData = {
       "activityName": widget.activityName,
@@ -48,11 +49,6 @@ class _FiscalDetailsScreenState extends State<FiscalDetailsScreen> {
         backgroundColor: Colors.red.shade300,
       ));
     }
-  }
-
-  void saveInfo() {
-    //check errors or nullable values to eraise dialogs
-    //paras are : widget.activityName ecc
   }
 
   showAlertDialog(BuildContext context) {
@@ -232,7 +228,7 @@ class _FiscalDetailsScreenState extends State<FiscalDetailsScreen> {
                   style: ElevatedButton.styleFrom(
                       primary: primaryColor,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15))),
+                          borderRadius: BorderRadius.circular(20))),
                   onPressed: () {
                     if (this.VATController.text.isNotEmpty &&
                         this.IBANController.text.isNotEmpty) {

@@ -90,7 +90,7 @@ class _PasswordForgottenScreenState extends State<PasswordForgottenScreen> {
                       style: ElevatedButton.styleFrom(
                           primary: primaryColor,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15))),
+                              borderRadius: BorderRadius.circular(20))),
                       onPressed: () {
                         resetPassword();
                       },

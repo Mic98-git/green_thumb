@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:green_thumb/screens/my_account.dart';
 import 'package:green_thumb/utils/validator.dart';
@@ -224,7 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: ElevatedButton.styleFrom(
                             primary: primaryColor,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15))),
+                                borderRadius: BorderRadius.circular(20))),
                         onPressed: login,
                         child: Text(
                           'Login',

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:green_thumb/screens/login_page.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:green_thumb/screens/my_account.dart';
 import 'config/custom_material_color.dart';
 
 void main() {

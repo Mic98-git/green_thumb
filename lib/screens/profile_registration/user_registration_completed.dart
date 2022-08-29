@@ -94,7 +94,7 @@ class _UserRegistrationCompletedScreenState
                   style: ElevatedButton.styleFrom(
                       primary: primaryColor,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15))),
+                          borderRadius: BorderRadius.circular(20))),
                   onPressed: () {
                     widget.isCustomer
                         ? Navigator.push(

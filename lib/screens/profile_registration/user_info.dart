@@ -279,7 +279,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                   style: ElevatedButton.styleFrom(
                       primary: primaryColor,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15))),
+                          borderRadius: BorderRadius.circular(20))),
                   onPressed: () {
                     if (this.nameController.text.isNotEmpty &&
                         this.birthDateController.text.isNotEmpty &&

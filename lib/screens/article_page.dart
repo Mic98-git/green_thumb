@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:green_thumb/config/global_variables.dart';
 import 'package:green_thumb/models/article.dart';
 import 'package:green_thumb/screens/chat/chat.dart';
+import 'package:green_thumb/screens/shopping_cart.dart';
 import '../widgets/app_bar.dart';
 
 class ArticleScreen extends StatefulWidget {
@@ -14,31 +15,39 @@ class ArticleScreen extends StatefulWidget {
 }
 
 class _ArticleScreenState extends State<ArticleScreen> {
-  bool addedToCart = false;
+  void addItemToCart() {
+    shoppingCartItems.addEntries(
+        (<String, Article>{widget.article.articleId: widget.article}).entries);
+    showAddAlertDialog(context);
+  }
+
+  void removeItemFromCart() {
+    shoppingCartItems.remove(widget.article.articleId);
+  }
 
   showRemoveAlertDialog(BuildContext context) {
     // set up the button
     Widget okButton = TextButton(
-      child: Text("Ok"),
+      child: Text("Yes"),
       onPressed: () {
+        removeItemFromCart();
         Navigator.of(context, rootNavigator: true).pop('dialog');
+        setState(() {});
       },
     );
 
     Widget undoButton = TextButton(
-      child: Text("Undo"),
+      child: Text("Cancel"),
       onPressed: () {
-        setState(() {
-          addedToCart = true;
-        });
         Navigator.of(context, rootNavigator: true).pop('dialog');
       },
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Congratulations"),
-      content: Text("The item has been removed from your shopping cart"),
+      title: Text("Attention"),
+      content: Text(
+          "Are you sure you want to remove the item from your shopping cart?"),
       actions: [
         okButton,
         undoButton,
@@ -59,13 +68,19 @@ class _ArticleScreenState extends State<ArticleScreen> {
     // set up the button
     Widget purchaseButton = TextButton(
       child: Text("Purchase"),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const ShoppingCartScreen()));
+      },
     );
 
     Widget continueButton = TextButton(
       child: Text("Continue shopping"),
       onPressed: () {
         Navigator.of(context, rootNavigator: true).pop('dialog');
+        setState(() {});
       },
     );
 
@@ -250,52 +265,54 @@ class _ArticleScreenState extends State<ArticleScreen> {
                       Icon(Icons.euro, size: 25),
                     ],
                   ),
-                  Row(
-                    children: [
-                      Container(
-                        height: 40,
-                        width: 100,
-                        decoration: BoxDecoration(
-                            color: primaryColor,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: primaryColor,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20))),
-                          onPressed: () {
-                            addedToCart
-                                ? showRemoveAlertDialog(context)
-                                : showAddAlertDialog(context);
-                            setState(() {
-                              addedToCart = !addedToCart;
-                            });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                Icons.shopping_cart,
-                                size: 35,
+                  widget.article.sellerId != user.userId
+                      ? Row(
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                  color: primaryColor,
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: primaryColor,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20))),
+                                onPressed: () {
+                                  shoppingCartItems
+                                          .containsKey(widget.article.articleId)
+                                      ? showRemoveAlertDialog(context)
+                                      : this.addItemToCart();
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.shopping_cart,
+                                      size: 35,
+                                    ),
+                                    shoppingCartItems.containsKey(
+                                            widget.article.articleId)
+                                        ? Icon(
+                                            Icons.remove,
+                                            size: 15,
+                                          )
+                                        : Icon(
+                                            Icons.add,
+                                            size: 15,
+                                          )
+                                  ],
+                                ),
                               ),
-                              addedToCart
-                                  ? Icon(
-                                      Icons.remove,
-                                      size: 15,
-                                    )
-                                  : Icon(
-                                      Icons.add,
-                                      size: 15,
-                                    )
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                    ],
-                  ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                          ],
+                        )
+                      : Row(),
                 ],
               ),
               SizedBox(

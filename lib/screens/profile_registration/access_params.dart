@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'user_registration_completed.dart';
 import 'package:green_thumb/utils/validator.dart';
@@ -261,7 +259,7 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
                       style: ElevatedButton.styleFrom(
                           primary: primaryColor,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15))),
+                              borderRadius: BorderRadius.circular(20))),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           registerUsers();

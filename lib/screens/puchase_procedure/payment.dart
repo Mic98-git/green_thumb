@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
-import './fiscal_details.dart';
 import '../../config/global_variables.dart';
 
-class ActivityInfoScreen extends StatefulWidget {
-  static String id = "activity_info_screen";
-  const ActivityInfoScreen({Key? key}) : super(key: key);
+class PaymentScreen extends StatefulWidget {
+  static String id = "shipping_info_screen";
+  final String name;
+  final String address;
+  final String city;
+  const PaymentScreen(
+      {Key? key, required this.name, required this.address, required this.city})
+      : super(key: key);
 
   @override
-  State<ActivityInfoScreen> createState() => _ActivityInfoScreenState();
+  State<PaymentScreen> createState() => _PaymentScreenState();
 }
 
-class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
+class _PaymentScreenState extends State<PaymentScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
-  final TextEditingController fiscalAddressController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
 
   void saveInfo() {
     //check errors or nullable values to eraise dialogs
@@ -32,6 +36,7 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
       child: Text("Yes"),
       onPressed: () {
         Navigator.of(context)
+          ..pop()
           ..pop()
           ..pop();
       },
@@ -68,8 +73,12 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
                 height: size.height * 0.03,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.arrow_back_ios_new_outlined),
+                    onPressed: Navigator.of(context).pop,
+                  ),
                   TextButton(
                       onPressed: () {
                         showAlertDialog(context);
@@ -88,7 +97,7 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
               ),
               Center(
                 child: Text(
-                  'Your activity',
+                  'Checkuout',
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 40,
@@ -102,14 +111,21 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      'Activity Info >> ',
+                      'Shipping Info >> ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
+                    ),
+                    Text(
+                      'Payment >> ',
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 15,
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      'Fiscal Details',
+                      'Confirmation',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,
@@ -119,96 +135,6 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
               SizedBox(
                 height: size.height * 0.05,
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Activity Name",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: TextFormField(
-                    controller: nameController,
-                    decoration: InputDecoration(
-                      hintText: "Activity name",
-                      isDense: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  )),
-              SizedBox(
-                height: size.height * 0.03,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Fiscal Address",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: TextFormField(
-                    controller: fiscalAddressController,
-                    decoration: InputDecoration(
-                      hintText: "Fiscal address",
-                      isDense: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  )),
-              SizedBox(
-                height: size.height * 0.03,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "City",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: TextFormField(
-                    controller: cityController,
-                    decoration: InputDecoration(
-                      hintText: "City",
-                      isDense: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  )),
               SizedBox(
                 height: size.height * 0.05,
               ),
@@ -225,17 +151,9 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
                           borderRadius: BorderRadius.circular(20))),
                   onPressed: () {
                     if (this.nameController.text.isNotEmpty &&
-                        this.fiscalAddressController.text.isNotEmpty &&
+                        this.addressController.text.isNotEmpty &&
                         this.cityController.text.isNotEmpty) {
                       saveInfo();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FiscalDetailsScreen(
-                                  activityName: this.nameController.text,
-                                  fiscalAddress:
-                                      this.fiscalAddressController.text,
-                                  city: this.cityController.text)));
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text('Error: Complete all the requested data'),

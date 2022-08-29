@@ -289,7 +289,7 @@ class _NewArticleScreenState extends State<NewArticleScreen> {
                   style: ElevatedButton.styleFrom(
                       primary: primaryColor,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15))),
+                          borderRadius: BorderRadius.circular(20))),
                   onPressed: () {
                     if (this.nameController.text.isNotEmpty &&
                         this.latinNameController.text.isNotEmpty &&

@@ -391,7 +391,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                   style: ElevatedButton.styleFrom(
                       primary: primaryColor,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15))),
+                          borderRadius: BorderRadius.circular(20))),
                   onPressed: () {
                     if (this.oxygenController.text.isNotEmpty &&
                         this.lightController.text.isNotEmpty &&
