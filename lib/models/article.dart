@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Article {
+  late String articleId;
   late String sellerId;
   late String sellerName;
   late String name;
@@ -14,6 +15,7 @@ class Article {
   late Image picture; //todo
 
   Article(
+      String articleId,
       String sellerId,
       String sellerName,
       String articleName,
@@ -25,7 +27,7 @@ class Article {
       String articleSunlight,
       String articlePrice,
       Image articlePicture) {
-    //todo
+    this.articleId = articleId;
     this.sellerId = sellerId;
     this.sellerName = sellerName;
     this.name = articleName;

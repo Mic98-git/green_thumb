@@ -14,6 +14,7 @@ class articleList {
       final base64String = p['picture'];
       Image articleImage = Image.memory(base64Decode(base64String));
       list.add(new Article(
+          p['_id'],
           p['sellerId'],
           p['sellerName'],
           p['name'],

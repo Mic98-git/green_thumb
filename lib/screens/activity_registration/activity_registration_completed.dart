@@ -4,7 +4,10 @@ import '../login_page.dart';
 
 class ActivityRegistrationCompletedScreen extends StatefulWidget {
   static String id = "registration_completed_screen";
-  const ActivityRegistrationCompletedScreen({Key? key}) : super(key: key);
+  final String activityName;
+  const ActivityRegistrationCompletedScreen(
+      {Key? key, required this.activityName})
+      : super(key: key);
 
   @override
   State<ActivityRegistrationCompletedScreen> createState() =>
@@ -13,7 +16,6 @@ class ActivityRegistrationCompletedScreen extends StatefulWidget {
 
 class _ActivityRegistrationCompletedScreenState
     extends State<ActivityRegistrationCompletedScreen> {
-  String activityName = "";
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -49,7 +51,7 @@ class _ActivityRegistrationCompletedScreenState
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30),
-                child: Text(activityName + "registered!",
+                child: Text(widget.activityName + " registered!",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,
