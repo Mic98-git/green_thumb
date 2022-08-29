@@ -3,52 +3,27 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:green_thumb/config/global_variables.dart';
 import 'package:green_thumb/core/api_client.dart';
 import 'package:http/http.dart' as http;
+import 'package:green_thumb/models/order.dart';
 
 final ApiClient apiClient = ApiClient();
+
+//PASSARE L'ID DELL'ORDINE
+
 String id = '62fe30f5e7d2a2e6d06ef826';
 
 Future<Order> fetchOrder() async {
   final response = await http
       // ignore: prefer_interpolation_to_compose_strings
-      .get(Uri.parse('http://10.0.2.2:3003/order/' + id));
+      .get(Uri.parse(url + ':3003/order/' + id));
 
   if (response.statusCode == 200) {
     print(response.body);
     return Order.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to load album');
-  }
-}
-
-class Order {
-  final String userId;
-  final int total;
-  final String createdAt;
-  final double latitude;
-  final double longitude;
-  final String productId;
-  final int quantity;
-
-  const Order(
-      {required this.userId,
-      required this.total,
-      required this.createdAt,
-      required this.latitude,
-      required this.longitude,
-      required this.productId,
-      required this.quantity});
-
-  factory Order.fromJson(Map<String, dynamic> json) {
-    return Order(
-        userId: json['ord']['user'],
-        total: json['ord']['total'],
-        createdAt: json['ord']['created_at'],
-        latitude: json['ord']['latitude'],
-        longitude: json['ord']['longitude'],
-        productId: json['ord']['orderItems'][0]['product'],
-        quantity: json['ord']['orderItems'][0]['qty']);
+    throw Exception('Failed to load order');
   }
 }
 
