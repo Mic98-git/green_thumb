@@ -70,6 +70,16 @@ class ApiClient {
     }
   }
 
+  Future<dynamic> listofProducts(List<String> products) async {
+    try {
+      Response response = await _dio
+          .post(url + ':3002/products/list', data: {'products': products});
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
   Future<dynamic> getSellersProducts(String userId) async {
     try {
       Response response = await _dio.get(

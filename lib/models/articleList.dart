@@ -26,7 +26,7 @@ class articleList {
           p['sunlight'],
           p['price'].toString(),
           articleImage,
-          p['quantity'].toString()));
+          p['quantityStock'].toString()));
     }
   }
 }

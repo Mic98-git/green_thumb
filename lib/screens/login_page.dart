@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:green_thumb/models/article.dart';
 import 'package:green_thumb/screens/my_account.dart';
 import 'package:green_thumb/utils/validator.dart';
 import 'package:green_thumb/core/api_client.dart';
@@ -20,6 +23,50 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
   final ApiClient _apiClient = ApiClient();
   bool _showPassword = false;
+
+  Future<dynamic> getCart(String cartId) async {
+    dynamic res = await _apiClient.getCart(cartId);
+    List<String> products = [];
+    if (res['error'] == null) {
+      for (var p in res['cart'][0]['cartItems']) {
+        products.add(p['product']);
+      }
+
+      dynamic res1 = await _apiClient.listofProducts(products);
+      if (res1['error'] == null) {
+        for (var a in res1['products']) {
+          final base64String = a['picture'];
+          Image articleImage = Image.memory(base64Decode(base64String));
+          shoppingCartItems.addEntries((<String, Article>{
+            a['_id']: new Article(
+                a['_id'],
+                a['sellerId'],
+                a['sellerName'],
+                a['name'],
+                a['latin'],
+                a['description'],
+                a['category'],
+                a['water'],
+                a['oxygen'].toString(),
+                a['sunlight'],
+                a['price'].toString(),
+                articleImage,
+                a['quantityStock'].toString())
+          }).entries);
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Error: ${res1['error']}'),
+          backgroundColor: Colors.red.shade300,
+        ));
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: ${res['error']}'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
+  }
 
   Future<void> login() async {
     if (_formKey.currentState!.validate()) {
@@ -45,6 +92,10 @@ class _LoginScreenState extends State<LoginScreen> {
           userId: res['id'],
           //token: res['token']
         );
+
+        print(user.userId);
+        getCart(user.userId);
+
         showAlertDialog(context);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const MyAccountScreen()));
