@@ -12,7 +12,8 @@ class Article {
   late String oxygen;
   late String sunlight;
   late String price;
-  late Image picture; //todo
+  late Image picture;
+  late String quantity;
 
   Article(
       String articleId,
@@ -26,7 +27,8 @@ class Article {
       String articleOxygen,
       String articleSunlight,
       String articlePrice,
-      Image articlePicture) {
+      Image articlePicture,
+      String quantity) {
     this.articleId = articleId;
     this.sellerId = sellerId;
     this.sellerName = sellerName;
@@ -39,5 +41,6 @@ class Article {
     this.sunlight = articleSunlight;
     this.price = articlePrice;
     this.picture = articlePicture;
+    this.quantity = quantity;
   }
 }
