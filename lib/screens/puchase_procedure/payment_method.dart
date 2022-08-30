@@ -8,8 +8,13 @@ class PaymentScreen extends StatefulWidget {
   final String name;
   final String address;
   final String city;
+  final double itemsPrice;
   const PaymentScreen(
-      {Key? key, required this.name, required this.address, required this.city})
+      {Key? key,
+      required this.name,
+      required this.address,
+      required this.city,
+      required this.itemsPrice})
       : super(key: key);
 
   @override
@@ -222,9 +227,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const PaypalPayment(
-                                    amount: 5.99,
-                                    currency: 'USD',
+                                  builder: (context) => PaypalPayment(
+                                    amount: widget.itemsPrice,
+                                    currency: 'EUR',
                                   ),
                                 ));
                           } else {

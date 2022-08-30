@@ -4,7 +4,9 @@ import 'payment_method.dart';
 
 class ShippingInfoScreen extends StatefulWidget {
   static String id = "shipping_info_screen";
-  const ShippingInfoScreen({Key? key}) : super(key: key);
+  final double itemsPrice;
+  const ShippingInfoScreen({Key? key, required this.itemsPrice})
+      : super(key: key);
 
   @override
   State<ShippingInfoScreen> createState() => _ShippingInfoScreenState();
@@ -241,9 +243,11 @@ class _ShippingInfoScreenState extends State<ShippingInfoScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => PaymentScreen(
-                                      name: this.nameController.text,
-                                      address: this.addressController.text,
-                                      city: this.cityController.text)));
+                                        name: this.nameController.text,
+                                        address: this.addressController.text,
+                                        city: this.cityController.text,
+                                        itemsPrice: widget.itemsPrice,
+                                      )));
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content:

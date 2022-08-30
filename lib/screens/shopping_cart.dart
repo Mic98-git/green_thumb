@@ -351,7 +351,9 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const ShippingInfoScreen()));
+                                                  ShippingInfoScreen(
+                                                    itemsPrice: itemsPrice,
+                                                  )));
                                     },
                                     child: Row(
                                         mainAxisAlignment:
