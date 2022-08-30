@@ -213,8 +213,7 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
                         ),
                       ),
                       Container(
-                          height: size.height * 0.27,
-                          width: size.width * 0.55,
+                          width: size.width * 0.6,
                           child: Column(
                             children: <Widget>[
                               SizedBox(
@@ -254,6 +253,7 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
                           )),
                     ],
                   ),
+                  SizedBox(height: size.height * 0.05),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[

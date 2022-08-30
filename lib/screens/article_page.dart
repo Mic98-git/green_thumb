@@ -265,54 +265,51 @@ class _ArticleScreenState extends State<ArticleScreen> {
                       Icon(Icons.euro, size: 25),
                     ],
                   ),
-                  widget.article.sellerId != user.userId
-                      ? Row(
-                          children: [
-                            Container(
-                              height: 40,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                  color: primaryColor,
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: primaryColor,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20))),
-                                onPressed: () {
-                                  shoppingCartItems
-                                          .containsKey(widget.article.articleId)
-                                      ? showRemoveAlertDialog(context)
-                                      : this.addItemToCart();
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.shopping_cart,
-                                      size: 35,
-                                    ),
-                                    shoppingCartItems.containsKey(
-                                            widget.article.articleId)
-                                        ? Icon(
-                                            Icons.remove,
-                                            size: 15,
-                                          )
-                                        : Icon(
-                                            Icons.add,
-                                            size: 15,
-                                          )
-                                  ],
-                                ),
+                  Row(
+                    children: [
+                      Container(
+                        height: 40,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: primaryColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20))),
+                          onPressed: () {
+                            shoppingCartItems
+                                    .containsKey(widget.article.articleId)
+                                ? showRemoveAlertDialog(context)
+                                : this.addItemToCart();
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.shopping_cart,
+                                size: 35,
                               ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                          ],
-                        )
-                      : Row(),
+                              shoppingCartItems
+                                      .containsKey(widget.article.articleId)
+                                  ? Icon(
+                                      Icons.remove,
+                                      size: 15,
+                                    )
+                                  : Icon(
+                                      Icons.add,
+                                      size: 15,
+                                    )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                    ],
+                  )
                 ],
               ),
               SizedBox(

@@ -17,8 +17,8 @@ class ShoppingCartScreen extends StatefulWidget {
 
 class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   var shoppingItems = <Article>[];
-  int itemsPrice = 0;
-  int shipping = 5;
+  double itemsPrice = 0.00;
+  double shipping = 5;
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       shoppingItems.add(item);
     }
     for (var item in shoppingItems) {
-      itemsPrice += int.parse(item.price);
+      itemsPrice += double.parse(item.price);
     }
   }
 
@@ -35,7 +35,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     shoppingCartItems.remove(item.articleId);
     shoppingItems.removeAt(index);
     setState(() {
-      this.itemsPrice -= int.parse(item.price);
+      this.itemsPrice -= double.parse(item.price);
     });
   }
 
@@ -99,27 +99,33 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                   color: articleBoxColor,
                   borderRadius: BorderRadius.circular(20)),
             ),
-            SizedBox(width: size.width * 0.05),
+            SizedBox(width: size.width * 0.03),
             Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Row(
                     children: [
-                      Text(
-                        item.name,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
+                      Container(
+                        width: size.width * 0.3,
+                        child: Text(
+                          item.name,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                          ),
                         ),
                       ),
+                      IconButton(
+                          onPressed: () {
+                            showRemoveAlertDialog(context, item, index);
+                          },
+                          icon: Icon(CupertinoIcons.delete_simple,
+                              size: 25, color: Colors.red)),
                     ],
                   ),
-                  IconButton(
-                      onPressed: () {
-                        showRemoveAlertDialog(context, item, index);
-                      },
-                      icon: Icon(CupertinoIcons.delete_simple,
-                          size: 25, color: Colors.red)),
+                  SizedBox(
+                    height: size.height * 0.01,
+                  ),
                   Row(
                     children: [
                       Text(
@@ -191,8 +197,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                             children: [
                               Padding(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: size.width * 0.05,
-                                      vertical: size.height * 0.05),
+                                      horizontal: size.width * 0.04,
+                                      vertical: size.height * 0.04),
                                   child: Container(
                                       width: size.width,
                                       decoration: BoxDecoration(

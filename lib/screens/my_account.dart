@@ -49,6 +49,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Expanded(
             child: Container(
+                width: size.width * 0.35,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -69,9 +70,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   ),
                 )),
           ),
-          SizedBox(height: size.height * 0.01),
+          SizedBox(height: size.height * 0.02),
           Container(
               width: size.width * 0.35,
+              height: size.height * 0.1,
               child: GestureDetector(
                   onTap: () {
                     showArticleDetails(item);
@@ -139,13 +141,16 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     SizedBox(
                                       width: size.width * 0.03,
                                     ),
-                                    Text(
-                                      user.fullname,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20,
+                                    Container(
+                                      width: size.width * 0.4,
+                                      child: Text(
+                                        user.fullname,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                        ),
                                       ),
-                                    ),
+                                    )
                                   ],
                                 ),
                                 SizedBox(height: size.height * 0.02),
@@ -228,7 +233,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                             ),
                           ],
                         )),
-                    SizedBox(height: size.height * 0.03),
+                    SizedBox(height: size.height * 0.04),
                     if (user.isCustomer)
                       Column(
                         children: <Widget>[
@@ -288,7 +293,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               : Column(children: [
                                   SizedBox(height: size.height * 0.02),
                                   Container(
-                                      height: size.height * 0.2,
+                                      height: size.height * 0.3,
                                       child: ListView.separated(
                                         shrinkWrap: true,
                                         padding: EdgeInsets.symmetric(
@@ -300,12 +305,12 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                                 item: this.myArticles[index],
                                                 size: size),
                                         separatorBuilder: (context, _) =>
-                                            SizedBox(width: size.width * 0.03),
+                                            SizedBox(width: size.width * 0.05),
                                       ))
                                 ]),
                           myArticles.isEmpty && check
                               ? SizedBox(height: size.height * 0.09)
-                              : SizedBox(height: size.height * 0.03),
+                              : SizedBox(height: size.height * 0.01),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
@@ -328,7 +333,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           ),
                           SizedBox(height: size.height * 0.02),
                           Container(
-                              height: size.height * 0.2,
+                              height: size.height * 0.3,
                               child: ListView.separated(
                                 shrinkWrap: true,
                                 padding: EdgeInsets.symmetric(
