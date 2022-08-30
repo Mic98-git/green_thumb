@@ -100,16 +100,19 @@ class _ConversationScreenState extends State<ConversationScreen> {
                             ? ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: 1,
-                                itemBuilder: (context, i) => ListTile(
-                                    title: Text(fullname),
-                                    onTap: () async {
-                                      await Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (_) => ChatScreen(
-                                                  fullname,
-                                                  snapshot
-                                                      .data!.idConversation)));
-                                    }))
+                                itemBuilder: (context, i) => Card(
+                                    child: ListTile(
+                                        leading: Image.asset(
+                                            'assets/images/image.png'),
+                                        title: Text(fullname),
+                                        onTap: () async {
+                                          await Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (_) => ChatScreen(
+                                                      fullname,
+                                                      snapshot.data!
+                                                          .idConversation)));
+                                        })))
                             : Text("No message here",
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.grey)),
