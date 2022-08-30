@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:green_thumb/config/global_variables.dart';
+import 'package:green_thumb/screens/puchase_procedure/order_completed.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PaypalPayment extends StatelessWidget {
@@ -33,7 +34,10 @@ class PaypalPayment extends StatelessWidget {
         navigationDelegate: (NavigationRequest request) async {
           if (request.url.contains('http://return_url/?status=success')) {
             print('return url on success');
-            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const OrderCompletedScreen()));
           }
           if (request.url.contains('http://cancel_url')) {
             Navigator.pop(context);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:green_thumb/config/global_variables.dart';
+import 'package:green_thumb/screens/puchase_procedure/order_completed.dart';
 
 class CreditCardInfo extends StatefulWidget {
   const CreditCardInfo({Key? key}) : super(key: key);
@@ -210,7 +211,11 @@ class CreditCardInfoState extends State<CreditCardInfo> {
                               ]),
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
-                              print('valid!');
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const OrderCompletedScreen()));
                             }
                           },
                         )),

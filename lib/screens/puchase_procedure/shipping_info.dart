@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../config/global_variables.dart';
+import '../../models/article.dart';
 import 'payment_method.dart';
 
 class ShippingInfoScreen extends StatefulWidget {
   static String id = "shipping_info_screen";
   final double itemsPrice;
-  const ShippingInfoScreen({Key? key, required this.itemsPrice})
+  final List<Article> articlesList;
+  const ShippingInfoScreen(
+      {Key? key, required this.itemsPrice, required this.articlesList})
       : super(key: key);
 
   @override
@@ -16,10 +19,6 @@ class _ShippingInfoScreenState extends State<ShippingInfoScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
-
-  void saveInfo() {
-    //check errors or nullable values to eraise dialogs
-  }
 
   showAlertDialog(BuildContext context) {
     // set up the button
@@ -238,7 +237,6 @@ class _ShippingInfoScreenState extends State<ShippingInfoScreen> {
                         if (this.nameController.text.isNotEmpty &&
                             this.addressController.text.isNotEmpty &&
                             this.cityController.text.isNotEmpty) {
-                          saveInfo();
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -247,6 +245,7 @@ class _ShippingInfoScreenState extends State<ShippingInfoScreen> {
                                         address: this.addressController.text,
                                         city: this.cityController.text,
                                         itemsPrice: widget.itemsPrice,
+                                        articlesList: widget.articlesList,
                                       )));
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(

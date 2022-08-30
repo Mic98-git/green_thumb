@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:green_thumb/screens/puchase_procedure/confirmation.dart';
 import 'package:green_thumb/screens/puchase_procedure/credit_card_info.dart';
 import 'package:green_thumb/screens/puchase_procedure/paypal.dart';
 import '../../config/global_variables.dart';
+import '../../models/article.dart';
 
 class PaymentScreen extends StatefulWidget {
   static String id = "payment_method_screen";
@@ -9,12 +11,14 @@ class PaymentScreen extends StatefulWidget {
   final String address;
   final String city;
   final double itemsPrice;
+  final List<Article> articlesList;
   const PaymentScreen(
       {Key? key,
       required this.name,
       required this.address,
       required this.city,
-      required this.itemsPrice})
+      required this.itemsPrice,
+      required this.articlesList})
       : super(key: key);
 
   @override
@@ -23,10 +27,6 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   String paymentMethod = "";
-
-  void saveInfo() {
-    //check errors or nullable values to eraise dialogs
-  }
 
   showAlertDialog(BuildContext context) {
     // set up the button
@@ -147,13 +147,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     child: IconButton(
                       onPressed: () {
                         setState(() {
-                          this.paymentMethod = "paypal";
+                          this.paymentMethod = "Paypal";
                         });
                       },
                       icon: Icon(
                         Icons.paypal,
                         size: 50,
-                        color: this.paymentMethod == "paypal"
+                        color: this.paymentMethod == "Paypal"
                             ? primaryColor
                             : Colors.grey,
                       ),
@@ -193,13 +193,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     child: IconButton(
                       onPressed: () {
                         setState(() {
-                          this.paymentMethod = "credit card";
+                          this.paymentMethod = "Credit card";
                         });
                       },
                       icon: Icon(
                         Icons.credit_card,
                         size: 50,
-                        color: this.paymentMethod == "credit card"
+                        color: this.paymentMethod == "Credit card"
                             ? primaryColor
                             : Colors.grey,
                       ),
@@ -223,22 +223,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               borderRadius: BorderRadius.circular(20))),
                       onPressed: () {
                         if (this.paymentMethod != "") {
-                          if (this.paymentMethod == "paypal") {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => PaypalPayment(
-                                    amount: widget.itemsPrice,
-                                    currency: 'EUR',
-                                  ),
-                                ));
-                          } else {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const CreditCardInfo()));
-                          }
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => OrderConfirmationScreen(
+                                      name: widget.name,
+                                      address: widget.address,
+                                      city: widget.city,
+                                      totalPrice: widget.itemsPrice,
+                                      paymentMethod: this.paymentMethod,
+                                      articlesList: widget.articlesList)));
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text('Error: Select one payment method'),

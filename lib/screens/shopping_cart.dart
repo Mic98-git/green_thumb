@@ -352,7 +352,10 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   ShippingInfoScreen(
-                                                    itemsPrice: itemsPrice,
+                                                    itemsPrice: itemsPrice +
+                                                        this.shipping,
+                                                    articlesList:
+                                                        this.shoppingItems,
                                                   )));
                                     },
                                     child: Row(
