@@ -227,7 +227,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => OrderConfirmationScreen(
-                                      name: widget.name,
+                                      fullname: widget.name,
                                       address: widget.address,
                                       city: widget.city,
                                       totalPrice: widget.itemsPrice,

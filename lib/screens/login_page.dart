@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:green_thumb/models/article.dart';
@@ -27,7 +28,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<dynamic> getCart(String cartId) async {
     dynamic res = await _apiClient.getCart(cartId);
     List<String> products = [];
-    if (res['error'] == null) {
+
+    if (res['error'] == null && res['cart'].length > 0) {
+      shoppingCartRequest = res['cart'][0]['cartItems'];
       for (var p in res['cart'][0]['cartItems']) {
         products.add(p['product']);
       }
@@ -59,6 +62,8 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: Colors.red.shade300,
         ));
       }
+    } else if (res['cart'].length == 0) {
+      return;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Error: ${res['error']}'),

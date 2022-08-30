@@ -6,7 +6,7 @@ import '../../models/article.dart';
 
 class OrderConfirmationScreen extends StatefulWidget {
   static String id = "shipping_info_screen";
-  final String name;
+  final String fullname;
   final String address;
   final String city;
   final double totalPrice;
@@ -14,7 +14,7 @@ class OrderConfirmationScreen extends StatefulWidget {
   final List<Article> articlesList;
   const OrderConfirmationScreen(
       {Key? key,
-      required this.name,
+      required this.fullname,
       required this.address,
       required this.city,
       required this.totalPrice,
@@ -240,7 +240,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                                           MainAxisAlignment.start,
                                       children: [
                                         Text(
-                                          widget.name,
+                                          widget.fullname,
                                           style: TextStyle(
                                             fontSize: 20,
                                           ),
@@ -448,6 +448,10 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                                 builder: (context) => PaypalPayment(
                                   amount: widget.totalPrice,
                                   currency: 'EUR',
+                                  userId: user.userId,
+                                  fullname: widget.fullname,
+                                  address: widget.address,
+                                  city: widget.city,
                                 ),
                               ));
                         } else {

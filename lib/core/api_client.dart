@@ -181,6 +181,39 @@ class ApiClient {
       return e.response!.data;
     }
   }
+
+  Future<dynamic> getOrder(String orderId) async {
+    try {
+      Response response = await _dio.get(
+        url + ':3003/order/' + orderId,
+      );
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
+  Future<dynamic> getUserOrders(String orderId) async {
+    try {
+      Response response = await _dio.get(
+        url + ':3003/order/user' + orderId,
+      );
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
+  Future<dynamic> addOrder(String userId, Map<String, dynamic>? data) async {
+    try {
+      Response response =
+          await _dio.post(url + ':3003/order/' + userId, data: data);
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
   // Future<dynamic> getUserProfileData(String accessToken) async {
   //   try {
   //     Response response = await _dio.get(

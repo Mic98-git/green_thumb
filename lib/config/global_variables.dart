@@ -48,3 +48,5 @@ class User {
 }
 
 var shoppingCartItems = Map<String, Article>(); //<articleId, Article>
+
+List<dynamic> shoppingCartRequest = [];
