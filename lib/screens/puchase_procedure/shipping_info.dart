@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/global_variables.dart';
-import 'payment.dart';
+import 'payment_method.dart';
 
 class ShippingInfoScreen extends StatefulWidget {
   static String id = "shipping_info_screen";

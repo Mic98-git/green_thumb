@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:green_thumb/models/article.dart';
 
 const primaryColor = Color.fromRGBO(51, 153, 0, 1);
+const backgroundColor = Color.fromRGBO(220, 230, 217, 1.0);
 const articleBoxColor = Color.fromRGBO(247, 234, 213, 1);
 final bool isLoggedIn = false;
 

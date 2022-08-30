@@ -75,7 +75,7 @@ class CreditCardInfoState extends State<CreditCardInfo> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Color.fromRGBO(220, 230, 217, 1.0),
+      backgroundColor: backgroundColor,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(

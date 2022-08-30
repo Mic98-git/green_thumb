@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:green_thumb/screens/puchase_procedure/credit_card_info.dart';
 import 'package:green_thumb/screens/puchase_procedure/paypal.dart';
 import '../../config/global_variables.dart';
-import 'package:flutter_credit_card/flutter_credit_card.dart';
 
 class PaymentScreen extends StatefulWidget {
-  static String id = "shipping_info_screen";
+  static String id = "payment_method_screen";
   final String name;
   final String address;
   final String city;
