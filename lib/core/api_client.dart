@@ -127,6 +127,50 @@ class ApiClient {
     }
   }
 
+  Future<dynamic> getCart(String cartId) async {
+    try {
+      Response response = await _dio.get(
+        url + ':3003/cart/' + cartId,
+      );
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
+  Future<dynamic> addProductInCart(
+      Map<String, dynamic>? data, String cartId, String productId) async {
+    try {
+      Response response = await _dio
+          .post(url + ':3003/cart/' + cartId + '/' + productId, data: data);
+      return response.data;
+    } on DioError catch (e) {
+      log(e.toString());
+      return e.response!.data;
+    }
+  }
+
+  Future<dynamic> deleteProductInCart(String cartId, String productId) async {
+    try {
+      Response response = await _dio.delete(
+        url + ':3003/cart/' + cartId + '/' + productId,
+      );
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
+  Future<dynamic> deleteCart(String cartId) async {
+    try {
+      Response response = await _dio.delete(
+        url + ':3003/cart/' + cartId,
+      );
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
   // Future<dynamic> getUserProfileData(String accessToken) async {
   //   try {
   //     Response response = await _dio.get(
