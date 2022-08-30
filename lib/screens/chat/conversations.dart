@@ -98,6 +98,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                         ),
                         snapshot.hasData
                             ? ListView.builder(
+                                shrinkWrap: true,
                                 itemCount: 1,
                                 itemBuilder: (context, i) => ListTile(
                                     title: Text(fullname),
