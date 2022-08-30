@@ -70,7 +70,7 @@ class ApiClient {
     }
   }
 
-  Future<dynamic> listofProducts(List<String> products) async {
+  Future<dynamic> getProductsByList(List<String> products) async {
     try {
       Response response = await _dio
           .post(url + ':3002/products/list', data: {'products': products});
@@ -160,7 +160,7 @@ class ApiClient {
     }
   }
 
-  Future<dynamic> deleteProductInCart(String cartId, String productId) async {
+  Future<dynamic> deleteProductFromCart(String cartId, String productId) async {
     try {
       Response response = await _dio.delete(
         url + ':3003/cart/' + cartId + '/' + productId,

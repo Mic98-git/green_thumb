@@ -31,8 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
       for (var p in res['cart'][0]['cartItems']) {
         products.add(p['product']);
       }
-
-      dynamic res1 = await _apiClient.listofProducts(products);
+      dynamic res1 = await _apiClient.getProductsByList(products);
       if (res1['error'] == null) {
         for (var a in res1['products']) {
           final base64String = a['picture'];

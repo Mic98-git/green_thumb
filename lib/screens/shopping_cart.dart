@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:green_thumb/config/global_variables.dart';
+import 'package:green_thumb/core/api_client.dart';
 import 'package:green_thumb/screens/puchase_procedure/shipping_info.dart';
 import 'package:green_thumb/widgets/app_bar.dart';
 import 'package:green_thumb/widgets/navigation_bar.dart';
@@ -19,6 +20,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   var shoppingItems = <Article>[];
   double itemsPrice = 0.00;
   double shipping = 5;
+  final ApiClient _apiClient = ApiClient();
 
   @override
   void initState() {
@@ -31,12 +33,24 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     }
   }
 
-  void removeItemFromCart(Article item, int index) {
-    shoppingCartItems.remove(item.articleId);
-    shoppingItems.removeAt(index);
-    setState(() {
-      this.itemsPrice -= double.parse(item.price);
-    });
+  Future<dynamic> removeItemFromCartDB(String cartId, String productId) async {
+    return _apiClient.deleteProductFromCart(cartId, productId);
+  }
+
+  void removeItemFromCart(Article item, int index) async {
+    dynamic res = await removeItemFromCartDB(user.userId, item.articleId);
+    if (res['error'] == null) {
+      shoppingCartItems.remove(item.articleId);
+      shoppingItems.removeAt(index);
+      setState(() {
+        this.itemsPrice -= double.parse(item.price);
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: ${res['error']}'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
   }
 
   showRemoveAlertDialog(BuildContext context, Article item, int index) {
