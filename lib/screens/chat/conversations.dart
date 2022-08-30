@@ -33,10 +33,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
         // ignore: prefer_interpolation_to_compose_strings
         .get(Uri.parse(url + ':3004/chat/' + mioId));
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 && response.body.contains('id')) {
       return Message.fromJson(jsonDecode(response.body));
     } else {
-      throw Exception('Failed to load message');
+      return getMessage();
     }
   }
 

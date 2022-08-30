@@ -30,6 +30,8 @@ final ChatMessage mess = new ChatMessage(
   createdAt: DateTime.now(),
 );
 
+bool flagChat = true;
+
 class _ChatScreenState extends State<ChatScreen> {
   final String userIdMittente =
       user.userId; //COMPRATORE il mio id, verifico se mi arrivano messaggi
@@ -39,10 +41,10 @@ class _ChatScreenState extends State<ChatScreen> {
         // ignore: prefer_interpolation_to_compose_strings
         .get(Uri.parse(url + ':3004/chat/' + userIdMittente));
 
-    if (response.statusCode == 200 && !response.body.endsWith('null}')) {
+    if (response.statusCode == 200 && response.body.contains('id')) {
       return Message.fromJson(jsonDecode(response.body));
     } else {
-      throw Exception('Failed to load message, maybe does not exists');
+      return getMessage();
     }
   }
 
@@ -61,7 +63,7 @@ class _ChatScreenState extends State<ChatScreen> {
       return http.post(
         Uri.parse(url + ':3004/chat/'),
         body: (<String, String>{
-          'content': ' ',
+          'content': 'Hello, how can I help you? ',
           'userId': userIdDestinatario,
           'idConversation': userIdMittente
         }),
@@ -77,7 +79,10 @@ class _ChatScreenState extends State<ChatScreen> {
 
     user2.firstName = widget.fullname;
     var size = MediaQuery.of(context).size;
-    createChat();
+    if (flagChat) {
+      createChat();
+      flagChat = false;
+    }
     return new StreamBuilder<Message>(
         stream: getText(),
         builder: (BuildContext context, AsyncSnapshot<Message> snapshot) {
