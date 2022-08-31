@@ -30,9 +30,10 @@ class _LoginScreenState extends State<LoginScreen> {
     List<String> products = [];
 
     if (res['error'] == null && res['cart'].length > 0) {
+      print(res['cart'][0]['cartItems']);
       shoppingCartRequest = res['cart'][0]['cartItems'];
       for (var p in res['cart'][0]['cartItems']) {
-        products.add(p['product']);
+        products.add(p['productId']);
       }
       dynamic res1 = await _apiClient.getProductsByList(products);
       if (res1['error'] == null) {

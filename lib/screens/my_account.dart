@@ -27,6 +27,14 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     super.initState();
     this.getSellersAnnouncements(user.userId);
   }
+  // Future<void> getSellersOrders(String userId) async {
+  //   dynamic res = await _apiClient.getSellersProducts(userId);
+  //   articleList articles = new articleList(res);
+  //   setState(() {
+  //     this.myArticles = articles.list;
+  //     check = true;
+  //   });
+  // }
 
   Future<void> getSellersAnnouncements(String userId) async {
     dynamic res = await _apiClient.getSellersProducts(userId);
