@@ -67,7 +67,8 @@ class _SendPositionScreen extends State<SendPositionScreen> {
 
       //PASSARE L'ID DELL'ORDINE
 
-      dynamic res = await apiClient.updatePosition(body, "idOrder");
+      dynamic res =
+          await apiClient.updatePosition(body, "630eaafb6bd1889494fca53e");
     });
 
     // When we reach here, permissions are granted and we can

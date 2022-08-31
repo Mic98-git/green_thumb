@@ -12,7 +12,7 @@ final ApiClient apiClient = ApiClient();
 
 //PASSARE L'ID DELL'ORDINE
 
-String id = '62fe30f5e7d2a2e6d06ef826';
+String id = '630eaafb6bd1889494fca53e';
 
 Future<Order> fetchOrder() async {
   final response = await http
@@ -29,7 +29,7 @@ Future<Order> fetchOrder() async {
 
 const double ZOOM = 15;
 
-class HomeView extends StatelessWidget {
+class ViewPositionScreen extends StatelessWidget {
   GoogleMapController? mapController;
 
   double longitude = 0;
