@@ -11,6 +11,7 @@ import 'article_page.dart';
 import '../models/article.dart';
 import '../core/api_client.dart';
 import '../models/articleList.dart';
+import 'package:green_thumb/screens/edit_profile.dart';
 
 class MyAccountScreen extends StatefulWidget {
   static String id = "my_account_screen";
@@ -23,14 +24,15 @@ class MyAccountScreen extends StatefulWidget {
 class _MyAccountScreenState extends State<MyAccountScreen> {
   final ApiClient _apiClient = ApiClient();
   List<Article> myArticles = [];
-  bool check = false;
+  bool checkAnnouncements = false;
   Image profileImage = Image.asset('assets/images/image.png');
+  Image pendingOrder = Image.asset('assets/icons/pending_order.png');
   List<Order> orders = [];
+  bool checkOrders = false;
 
   @override
   void initState() {
     super.initState();
-
     if (!user.isCustomer) {
       this.getSellersAnnouncements(user.userId);
     }
@@ -88,6 +90,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           ));
         }
       }
+      setState(() {
+        this.checkOrders = true;
+      });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Error: ${res['error']}'),
@@ -101,7 +106,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     articleList articles = new articleList(res);
     setState(() {
       this.myArticles = articles.list;
-      check = true;
+      this.checkAnnouncements = true;
     });
   }
 
@@ -112,6 +117,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       setState(() {});
     });
   }
+
+  void showOrderDetails(Order o) {}
 
   Widget articleBox({required Article item, required Size size}) => Container(
         child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -153,6 +160,46 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         ]),
       );
 
+  Widget orderBox({required Order order, required Size size}) => Container(
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Expanded(
+            child: Container(
+                width: size.width * 0.35,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: AspectRatio(
+                  aspectRatio: 4 / 3,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Material(
+                        child: Ink.image(
+                      image: this.pendingOrder.image,
+                      fit: BoxFit.cover,
+                      child: InkWell(
+                        onTap: () {
+                          showOrderDetails(order);
+                        },
+                      ),
+                    )),
+                  ),
+                )),
+          ),
+          SizedBox(height: size.height * 0.02),
+          Container(
+              width: size.width * 0.35,
+              height: size.height * 0.1,
+              child: GestureDetector(
+                  onTap: () {
+                    showOrderDetails(order);
+                  },
+                  child: Text(
+                    order.createdAt,
+                    style: TextStyle(fontSize: 20),
+                  )))
+        ]),
+      );
+
   @override
   Widget build(BuildContext context) {
     int _currentIndex = 3;
@@ -185,8 +232,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       height: size.height * 0.03,
                     ),
                     Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: size.width * 0.045),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: size.width * 0.03),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -207,10 +254,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 Row(
                                   children: [
                                     SizedBox(
-                                      width: size.width * 0.03,
+                                      width: size.width * 0.01,
                                     ),
                                     Container(
-                                      width: size.width * 0.4,
+                                      width: size.width * 0.5,
                                       child: Text(
                                         user.fullname,
                                         style: TextStyle(
@@ -225,7 +272,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 Row(
                                   children: [
                                     SizedBox(
-                                      width: size.width * 0.02,
+                                      width: size.width * 0.01,
                                     ),
                                     Container(
                                       height: 40,
@@ -240,7 +287,13 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(20))),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const EditProfileScreen()));
+                                        },
                                         child: Row(
                                           children: <Widget>[
                                             Text(
@@ -264,7 +317,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                   Row(
                                     children: [
                                       SizedBox(
-                                        width: size.width * 0.02,
+                                        width: size.width * 0.01,
                                       ),
                                       Container(
                                         height: 40,
@@ -346,7 +399,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               ),
                             ],
                           ),
-                          myArticles.isEmpty && check
+                          myArticles.isEmpty && checkAnnouncements
                               ? Column(children: [
                                   SizedBox(height: size.height * 0.09),
                                   Padding(
@@ -355,30 +408,35 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                       child: Text(
                                           'No announcement posted. Create your first one!',
                                           style: TextStyle(
-                                            fontSize: 20,
-                                          ))),
+                                              fontSize: 20,
+                                              color: Colors.grey))),
+                                  SizedBox(height: size.height * 0.09)
                                 ])
                               : Column(children: [
                                   SizedBox(height: size.height * 0.02),
-                                  Container(
-                                      height: size.height * 0.3,
-                                      child: ListView.separated(
-                                        shrinkWrap: true,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: size.width * 0.05),
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: this.myArticles.length,
-                                        itemBuilder: (context, index) =>
-                                            articleBox(
-                                                item: this.myArticles[index],
-                                                size: size),
-                                        separatorBuilder: (context, _) =>
-                                            SizedBox(width: size.width * 0.05),
-                                      ))
+                                  Row(
+                                    children: [
+                                      Container(
+                                          height: size.height * 0.3,
+                                          child: ListView.separated(
+                                            shrinkWrap: true,
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: size.width * 0.05),
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: this.myArticles.length,
+                                            itemBuilder: (context, index) =>
+                                                articleBox(
+                                                    item:
+                                                        this.myArticles[index],
+                                                    size: size),
+                                            separatorBuilder: (context, _) =>
+                                                SizedBox(
+                                                    width: size.width * 0.05),
+                                          )),
+                                      SizedBox(height: size.height * 0.01),
+                                    ],
+                                  )
                                 ]),
-                          myArticles.isEmpty && check
-                              ? SizedBox(height: size.height * 0.09)
-                              : SizedBox(height: size.height * 0.01),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
@@ -399,23 +457,45 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(height: size.height * 0.02),
-                          Container(
-                              height: size.height * 0.3,
-                              child: ListView.separated(
-                                shrinkWrap: true,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: size.width * 0.05),
-                                scrollDirection: Axis.horizontal,
-                                itemCount: this.myArticles.length,
-                                itemBuilder: (context, index) => articleBox(
-                                    item: this.myArticles[index], size: size),
-                                separatorBuilder: (context, _) =>
-                                    SizedBox(width: size.width * 0.03),
-                              ))
+                          orders.isEmpty && checkOrders
+                              ? Column(children: [
+                                  SizedBox(height: size.height * 0.09),
+                                  Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 20),
+                                      child: Text(
+                                          'No pending orders. Good job!',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.grey))),
+                                  SizedBox(height: size.height * 0.09)
+                                ])
+                              : Column(children: [
+                                  SizedBox(height: size.height * 0.02),
+                                  Row(
+                                    children: [
+                                      Container(
+                                          height: size.height * 0.3,
+                                          child: ListView.separated(
+                                            shrinkWrap: true,
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: size.width * 0.05),
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: this.orders.length,
+                                            itemBuilder: (context, index) =>
+                                                orderBox(
+                                                    order: this.orders[index],
+                                                    size: size),
+                                            separatorBuilder: (context, _) =>
+                                                SizedBox(
+                                                    width: size.width * 0.05),
+                                          )),
+                                      SizedBox(height: size.height * 0.05)
+                                    ],
+                                  )
+                                ]),
                         ],
                       ),
-                    SizedBox(height: size.height * 0.03),
                   ],
                 ))));
   }
