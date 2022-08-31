@@ -193,10 +193,10 @@ class ApiClient {
     }
   }
 
-  Future<dynamic> getUserOrders(String orderId) async {
+  Future<dynamic> getUserOrders(String userId) async {
     try {
       Response response = await _dio.get(
-        url + ':3003/order/user/' + orderId,
+        url + ':3003/order/user/' + userId,
       );
       return response.data;
     } on DioError catch (e) {

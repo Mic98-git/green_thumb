@@ -30,12 +30,19 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   @override
   void initState() {
     super.initState();
-    this.getSellersAnnouncements(user.userId);
-    this.getSellersOrders(user.userId);
+
+    if (!user.isCustomer) {
+      this.getSellersAnnouncements(user.userId);
+    }
+    this.getOrders(user.userId, user.isCustomer);
   }
 
-  Future<void> getSellersOrders(String userId) async {
-    dynamic res = await _apiClient.getSellerOrders(user.userId);
+  Future<void> getOrders(String userId, bool isCustomer) async {
+    dynamic res;
+    if (isCustomer)
+      res = await _apiClient.getUserOrders(user.userId);
+    else
+      res = await _apiClient.getSellerOrders(user.userId);
     if (res['error'] == null) {
       for (var o in res['orders']) {
         List<String> products = [];
