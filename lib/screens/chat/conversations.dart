@@ -98,21 +98,29 @@ class _ConversationScreenState extends State<ConversationScreen> {
                         ),
                         snapshot.hasData
                             ? ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: 1,
                                 itemBuilder: (context, i) => Card(
-                                    child: ListTile(
-                                        leading: Image.asset(
-                                            'assets/images/image.png'),
-                                        title: Text(fullname),
-                                        onTap: () async {
-                                          await Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (_) => ChatScreen(
-                                                      fullname,
-                                                      snapshot.data!
-                                                          .idConversation)));
-                                        })))
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.all(size.height * 0.005),
+                                      child: ListTile(
+                                          leading: Image.asset(
+                                              'assets/images/image.png'),
+                                          title: Text(fullname),
+                                          onTap: () async {
+                                            await Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (_) => ChatScreen(
+                                                        fullname,
+                                                        snapshot.data!
+                                                            .idConversation)));
+                                          }),
+                                    )))
                             : Text("No message here",
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.grey)),
