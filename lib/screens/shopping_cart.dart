@@ -28,7 +28,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     dynamic res = await _apiClient.getCart(cartId);
     List<String> products = [];
     if (res['error'] == null && res['cart'].length > 0) {
-      print(res['cart'][0]['cartItems']);
       shoppingCartRequest = res['cart'][0]['cartItems'];
       for (var p in res['cart'][0]['cartItems']) {
         products.add(p['productId']);
@@ -73,9 +72,10 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
 
   @override
   void initState() {
+    getCart(user.userId);
     super.initState();
+
     for (var item in shoppingCartItems.values) {
-      getCart(user.userId);
       shoppingItems.add(item);
     }
     for (var item in shoppingItems) {
