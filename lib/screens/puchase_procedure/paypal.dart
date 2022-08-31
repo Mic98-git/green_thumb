@@ -36,7 +36,6 @@ class PaypalPayment extends StatelessWidget {
     dynamic res = await _apiClient.addOrder(this.userId, orderData);
 
     if (res['error'] == null) {
-      print(res);
     } else {
       print(res['error']);
     }

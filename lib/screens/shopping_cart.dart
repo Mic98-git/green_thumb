@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:green_thumb/config/global_variables.dart';
@@ -22,10 +24,58 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   double shipping = 5;
   final ApiClient _apiClient = ApiClient();
 
+  Future<dynamic> getCart(String cartId) async {
+    dynamic res = await _apiClient.getCart(cartId);
+    List<String> products = [];
+    if (res['error'] == null && res['cart'].length > 0) {
+      print(res['cart'][0]['cartItems']);
+      shoppingCartRequest = res['cart'][0]['cartItems'];
+      for (var p in res['cart'][0]['cartItems']) {
+        products.add(p['productId']);
+      }
+      dynamic res1 = await _apiClient.getProductsByList(products);
+      if (res1['error'] == null) {
+        for (var a in res1['products']) {
+          final base64String = a['picture'];
+          Image articleImage = Image.memory(base64Decode(base64String));
+          shoppingCartItems.addEntries((<String, Article>{
+            a['_id']: new Article(
+                a['_id'],
+                a['sellerId'],
+                a['sellerName'],
+                a['name'],
+                a['latin'],
+                a['description'],
+                a['category'],
+                a['water'],
+                a['oxygen'].toString(),
+                a['sunlight'],
+                a['price'].toString(),
+                articleImage,
+                a['quantityStock'].toString())
+          }).entries);
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Error: ${res1['error']}'),
+          backgroundColor: Colors.red.shade300,
+        ));
+      }
+    } else if (res['cart'].length == 0) {
+      return;
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: ${res['error']}'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     for (var item in shoppingCartItems.values) {
+      getCart(user.userId);
       shoppingItems.add(item);
     }
     for (var item in shoppingItems) {

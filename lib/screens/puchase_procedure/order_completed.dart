@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:green_thumb/core/api_client.dart';
 import '../../config/global_variables.dart';
 import '../my_account.dart';
 
@@ -11,6 +12,22 @@ class OrderCompletedScreen extends StatefulWidget {
 }
 
 class _OrderCompletedScreenState extends State<OrderCompletedScreen> {
+  final ApiClient _apiClient = ApiClient();
+
+  Future<void> deleteCart(String cartId) async {
+    dynamic res = await _apiClient.deleteCart(cartId);
+    if (res['error'] == null) {
+      print(res);
+      return;
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: ${res['error']}'),
+        backgroundColor: Colors.red.shade300,
+      ));
+      return;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -71,6 +88,7 @@ class _OrderCompletedScreenState extends State<OrderCompletedScreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20))),
                   onPressed: () {
+                    deleteCart(user.userId);
                     Navigator.push(
                         context,
                         MaterialPageRoute(

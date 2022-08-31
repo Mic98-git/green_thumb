@@ -28,7 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<dynamic> getCart(String cartId) async {
     dynamic res = await _apiClient.getCart(cartId);
     List<String> products = [];
-
     if (res['error'] == null && res['cart'].length > 0) {
       print(res['cart'][0]['cartItems']);
       shoppingCartRequest = res['cart'][0]['cartItems'];
@@ -98,7 +97,6 @@ class _LoginScreenState extends State<LoginScreen> {
           //token: res['token']
         );
 
-        print(user.userId);
         getCart(user.userId);
 
         showAlertDialog(context);
