@@ -142,6 +142,13 @@ class _ArticleScreenState extends State<ArticleScreen> {
                   style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
                 ),
               ),
+              widget.article.sellerId != user.userId
+                  ? SizedBox(
+                      height: 0,
+                    )
+                  : SizedBox(
+                      height: size.height * 0.02,
+                    ),
               Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -150,23 +157,29 @@ class _ArticleScreenState extends State<ArticleScreen> {
                       ' ' + widget.article.sellerName,
                       style: TextStyle(color: Colors.grey, fontSize: 20),
                     ),
-                    TextButton(
-                      onPressed: contactSeller,
-                      child: Text(
-                        ' Contact us!',
-                        style: TextStyle(
-                            color: primaryColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                      ),
-                    ),
+                    widget.article.sellerId != user.userId
+                        ? TextButton(
+                            onPressed: contactSeller,
+                            child: Text(
+                              ' Contact us!',
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                            ),
+                          )
+                        : Text("")
                   ]),
-              SizedBox(
-                height: size.height * 0.01,
-              ),
+              widget.article.sellerId != user.userId
+                  ? SizedBox(
+                      height: size.height * 0.01,
+                    )
+                  : SizedBox(
+                      height: size.height * 0.02,
+                    ),
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: size.width * 0.07),
                   child: AspectRatio(

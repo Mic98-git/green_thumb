@@ -15,12 +15,26 @@ class _NewArticleScreenState extends State<NewArticleScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController latinNameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+  Map<String, String> formFields = Map();
 
   int buttonSelected = 1;
   String category = "plant";
 
-  void saveInfo() {
-    //check errors or nullable values to eraise dialogs
+  void nextScreen(BuildContext context) async {
+    formFields = await Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) {
+        return ArticleDetailsScreen(
+            water: formFields["water"] ?? "",
+            oxygen: formFields["oxygen"] ?? "",
+            sun: formFields["sun"] ?? "",
+            price: formFields["price"] ?? "",
+            pieces: formFields["pieces"] ?? "",
+            fullName: this.nameController.text,
+            latinName: this.latinNameController.text,
+            description: this.descriptionController.text,
+            category: this.category);
+      },
+    ));
   }
 
   showAlertDialog(BuildContext context) {
@@ -296,18 +310,7 @@ class _NewArticleScreenState extends State<NewArticleScreen> {
                         if (this.nameController.text.isNotEmpty &&
                             this.latinNameController.text.isNotEmpty &&
                             this.descriptionController.text.isNotEmpty) {
-                          saveInfo();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ArticleDetailsScreen(
-                                        fullName: this.nameController.text,
-                                        latinName:
-                                            this.latinNameController.text,
-                                        description:
-                                            this.descriptionController.text,
-                                        category: this.category,
-                                      )));
+                          nextScreen(context);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content:

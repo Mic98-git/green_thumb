@@ -51,8 +51,10 @@ class _AnnouncementCreationCompletedScreenState
                   child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                          "Thanks for sharing on GreenThumb! "
-                          "Please wait for the approval and check your inbox. ",
+                          "Hi " +
+                              user.fullname +
+                              ", thanks for sharing on GreenThumb! "
+                                  "Your announcement has been posted in our market and you will find it in your profile!",
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 20,

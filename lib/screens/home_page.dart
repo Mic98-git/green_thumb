@@ -1,71 +1,41 @@
-// import 'package:flutter/material.dart';
-// import 'package:green_thumb/screens/login_page.dart';
+import 'dart:core';
 
-// class HomePage extends StatefulWidget {
-//   final User user;
+import 'package:flutter/material.dart';
+import 'package:green_thumb/core/api_client.dart';
+import '../config/global_variables.dart';
+import '../widgets/app_bar.dart';
+import '../widgets/navigation_bar.dart';
 
-//   const HomePage({
-//     Key? key,
-//     required this.user,
-//   }) : super(key: key);
+class HomePageScreen extends StatefulWidget {
+  static String id = "home_page_screen";
+  const HomePageScreen({Key? key}) : super(key: key);
 
-//   @override
-//   State<HomePage> createState() => _HomePageState();
-// }
+  @override
+  State<HomePageScreen> createState() => _HomePageScreenState();
+}
 
-// class _HomePageState extends State<HomePage> {
-//   final _authClient = AuthenticationClient();
-
-//   bool _isProgress = false;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Home Page'),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             Text(
-//               'Authenticated User\n\nUID: ${widget.user.uid}\nName: ${widget.user.displayName}\nEmail: ${widget.user.email}',
-//               style: const TextStyle(fontSize: 20),
-//             ),
-//             // const SizedBox(height: 24.0),
-//             // _isProgress
-//             //     ? const CircularProgressIndicator()
-//             //     : SizedBox(
-//             //         width: double.maxFinite,
-//             //         child: ElevatedButton(
-//             //           onPressed: () async {
-//             //             setState(() {
-//             //               _isProgress = true;
-//             //             });
-//             //             await _authClient.logoutUser();
-//             //             setState(() {
-//             //               _isProgress = false;
-//             //             });
-//             //             Navigator.of(context).pushAndRemoveUntil(
-//             //               MaterialPageRoute(
-//             //                 builder: (context) => const LoginPage(),
-//             //               ),
-//             //               (route) => false,
-//             //             );
-//             //           },
-//             //           child: const Padding(
-//             //             padding: EdgeInsets.all(16.0),
-//             //             child: Text(
-//             //               'Sign Out',
-//             //               style: TextStyle(fontSize: 22.0),
-//             //             ),
-//             //           ),
-//             //         ),
-//             //       ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+class _HomePageScreenState extends State<HomePageScreen> {
+  @override
+  Widget build(BuildContext context) {
+    int _currentIndex = 0;
+    var size = MediaQuery.of(context).size;
+    return WillPopScope(
+        onWillPop: () async => false,
+        child: GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: Scaffold(
+            appBar: PreferredSize(
+                preferredSize: Size.fromHeight(size.height * 0.09),
+                child: appBarWidget(size, false)),
+            backgroundColor: Colors.white,
+            bottomNavigationBar:
+                BottomNavigationBarScreen(currentIndex: _currentIndex),
+            body: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [],
+                )),
+          ),
+        ));
+  }
+}

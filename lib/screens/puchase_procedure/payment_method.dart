@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:green_thumb/screens/puchase_procedure/confirmation.dart';
-import 'package:green_thumb/screens/puchase_procedure/credit_card_info.dart';
-import 'package:green_thumb/screens/puchase_procedure/paypal.dart';
 import '../../config/global_variables.dart';
 import '../../models/article.dart';
 

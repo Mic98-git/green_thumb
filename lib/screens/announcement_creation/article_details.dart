@@ -14,13 +14,23 @@ class ArticleDetailsScreen extends StatefulWidget {
   final String latinName;
   final String description;
   final String category;
-  const ArticleDetailsScreen(
-      {Key? key,
-      required this.fullName,
-      required this.latinName,
-      required this.description,
-      required this.category})
-      : super(key: key);
+  final String water;
+  final String oxygen;
+  final String sun;
+  final String price;
+  final String pieces;
+  const ArticleDetailsScreen({
+    Key? key,
+    required this.fullName,
+    required this.latinName,
+    required this.description,
+    required this.category,
+    required this.water,
+    required this.oxygen,
+    required this.sun,
+    required this.price,
+    required this.pieces,
+  }) : super(key: key);
 
   @override
   State<ArticleDetailsScreen> createState() => _ArticleDetailsScreenState();
@@ -35,7 +45,31 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
 
   Image? articleImage;
   String? imageString;
-  late String imagePath;
+  String imagePath = "";
+  String waterFrequency = "Daily";
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.water != "") {
+      this.waterFrequency = widget.water;
+    }
+    if (widget.oxygen != "") {
+      this.oxygenController.text = widget.oxygen;
+    }
+
+    if (widget.sun != "") {
+      this.lightController.text = widget.sun;
+    }
+
+    if (widget.price != "") {
+      this.priceController.text = widget.price;
+    }
+
+    if (widget.pieces != "") {
+      this.availablePiecesController.text = widget.pieces;
+    }
+  }
 
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
@@ -45,8 +79,6 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
     ];
     return menuItems;
   }
-
-  String waterFrequency = "Daily";
 
   void pickImage() async {
     XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -117,7 +149,15 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                     children: <Widget>[
                       IconButton(
                         icon: Icon(Icons.arrow_back_ios_new_outlined),
-                        onPressed: Navigator.of(context).pop,
+                        onPressed: () {
+                          Navigator.of(context).pop({
+                            "water": this.waterFrequency,
+                            "oxygen": this.oxygenController.text,
+                            "sun": this.lightController.text,
+                            "price": this.priceController.text,
+                            "pieces": this.availablePiecesController.text,
+                          });
+                        },
                       ),
                       TextButton(
                           onPressed: () {

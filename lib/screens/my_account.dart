@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:green_thumb/config/global_variables.dart';
+import 'package:green_thumb/screens/edit_profile.dart';
 import 'package:green_thumb/widgets/app_bar.dart';
 import 'package:green_thumb/widgets/navigation_bar.dart';
 import './announcement_creation/new_article.dart';
@@ -125,8 +126,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       height: size.height * 0.03,
                     ),
                     Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: size.width * 0.045),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: size.width * 0.03),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -147,10 +148,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 Row(
                                   children: [
                                     SizedBox(
-                                      width: size.width * 0.03,
+                                      width: size.width * 0.01,
                                     ),
                                     Container(
-                                      width: size.width * 0.4,
+                                      width: size.width * 0.5,
                                       child: Text(
                                         user.fullname,
                                         style: TextStyle(
@@ -165,7 +166,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 Row(
                                   children: [
                                     SizedBox(
-                                      width: size.width * 0.02,
+                                      width: size.width * 0.01,
                                     ),
                                     Container(
                                       height: 40,
@@ -180,7 +181,13 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(20))),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const EditProfileScreen()));
+                                        },
                                         child: Row(
                                           children: <Widget>[
                                             Text(
@@ -204,7 +211,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                   Row(
                                     children: [
                                       SizedBox(
-                                        width: size.width * 0.02,
+                                        width: size.width * 0.01,
                                       ),
                                       Container(
                                         height: 40,
@@ -300,21 +307,27 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 ])
                               : Column(children: [
                                   SizedBox(height: size.height * 0.02),
-                                  Container(
-                                      height: size.height * 0.3,
-                                      child: ListView.separated(
-                                        shrinkWrap: true,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: size.width * 0.05),
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: this.myArticles.length,
-                                        itemBuilder: (context, index) =>
-                                            articleBox(
-                                                item: this.myArticles[index],
-                                                size: size),
-                                        separatorBuilder: (context, _) =>
-                                            SizedBox(width: size.width * 0.05),
-                                      ))
+                                  Row(
+                                    children: [
+                                      Container(
+                                          height: size.height * 0.3,
+                                          child: ListView.separated(
+                                            shrinkWrap: true,
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: size.width * 0.05),
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: this.myArticles.length,
+                                            itemBuilder: (context, index) =>
+                                                articleBox(
+                                                    item:
+                                                        this.myArticles[index],
+                                                    size: size),
+                                            separatorBuilder: (context, _) =>
+                                                SizedBox(
+                                                    width: size.width * 0.05),
+                                          ))
+                                    ],
+                                  )
                                 ]),
                           myArticles.isEmpty && check
                               ? SizedBox(height: size.height * 0.09)
@@ -340,19 +353,24 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                             ],
                           ),
                           SizedBox(height: size.height * 0.02),
-                          Container(
-                              height: size.height * 0.3,
-                              child: ListView.separated(
-                                shrinkWrap: true,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: size.width * 0.05),
-                                scrollDirection: Axis.horizontal,
-                                itemCount: this.myArticles.length,
-                                itemBuilder: (context, index) => articleBox(
-                                    item: this.myArticles[index], size: size),
-                                separatorBuilder: (context, _) =>
-                                    SizedBox(width: size.width * 0.03),
-                              ))
+                          Row(
+                            children: [
+                              Container(
+                                  height: size.height * 0.3,
+                                  child: ListView.separated(
+                                    shrinkWrap: true,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: size.width * 0.05),
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: this.myArticles.length,
+                                    itemBuilder: (context, index) => articleBox(
+                                        item: this.myArticles[index],
+                                        size: size),
+                                    separatorBuilder: (context, _) =>
+                                        SizedBox(width: size.width * 0.05),
+                                  ))
+                            ],
+                          )
                         ],
                       ),
                     SizedBox(height: size.height * 0.03),

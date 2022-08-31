@@ -14,9 +14,20 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController fiscalAddressController = TextEditingController();
+  Map<String, String> formFields = Map();
 
-  void saveInfo() {
-    //check errors or nullable values to eraise dialogs
+  void nextScreen(BuildContext context) async {
+    formFields = await Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) {
+        return FiscalDetailsScreen(
+          activityName: this.nameController.text,
+          fiscalAddress: this.fiscalAddressController.text,
+          city: this.cityController.text,
+          vat: formFields["vat"] ?? "",
+          iban: formFields["iban"] ?? "",
+        );
+      },
+    ));
   }
 
   showAlertDialog(BuildContext context) {
@@ -229,15 +240,7 @@ class _ActivityInfoScreenState extends State<ActivityInfoScreen> {
                         if (this.nameController.text.isNotEmpty &&
                             this.fiscalAddressController.text.isNotEmpty &&
                             this.cityController.text.isNotEmpty) {
-                          saveInfo();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => FiscalDetailsScreen(
-                                      activityName: this.nameController.text,
-                                      fiscalAddress:
-                                          this.fiscalAddressController.text,
-                                      city: this.cityController.text)));
+                          nextScreen(context);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content:

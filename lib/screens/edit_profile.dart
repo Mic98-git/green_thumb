@@ -1,89 +1,22 @@
 import 'package:flutter/material.dart';
-import 'user_registration_completed.dart';
-import 'package:green_thumb/utils/validator.dart';
-import '../../core/api_client.dart';
-import '../login_page.dart';
+import 'package:green_thumb/screens/my_account.dart';
 import '../../config/global_variables.dart';
+import '../utils/validator.dart';
 
-class AccessParamsScreen extends StatefulWidget {
-  static String id = "access_params_screen";
-  final bool isCustomer;
-  final String name;
-  final String birthDate;
-  final String fiscalCode;
-  final String email;
-  final String password;
-  const AccessParamsScreen(
-      {Key? key,
-      required this.isCustomer,
-      required this.name,
-      required this.birthDate,
-      required this.fiscalCode,
-      required this.email,
-      required this.password})
-      : super(key: key);
+class EditProfileScreen extends StatefulWidget {
+  static String id = "edit_profile_screen";
+  const EditProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<AccessParamsScreen> createState() => _AccessParamsScreenState();
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
-class _AccessParamsScreenState extends State<AccessParamsScreen> {
+class _EditProfileScreenState extends State<EditProfileScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final ApiClient _apiClient = ApiClient();
-
   bool _showPassword = false;
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.email != "") {
-      this.emailController.text = widget.email;
-    }
-    if (widget.password != "") {
-      this.passwordController.text = widget.password;
-    }
-  }
-
-  Future<void> registerUsers() async {
-    if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text('Processing Data'),
-        backgroundColor: Colors.green.shade300,
-      ));
-
-      Map<String, dynamic> userData = {
-        "isCustomer": widget.isCustomer,
-        "fullname": widget.name,
-        "birth": widget.birthDate,
-        "fiscalcode": widget.fiscalCode,
-        "email": emailController.text,
-        "password": passwordController.text
-      };
-
-      dynamic res = await _apiClient.registerUser(userData);
-
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-      if (res['error'] == null) {
-        registeredFullname = res['user']['fullname'];
-        registeredUserId = res['user']['id'];
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => UserRegistrationCompletedScreen(
-                      name: widget.name,
-                      isCustomer: widget.isCustomer,
-                    )));
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Error: ${res['error']}'),
-          backgroundColor: Colors.red.shade300,
-        ));
-      }
-    }
-  }
 
   showAlertDialog(BuildContext context) {
     // set up the button
@@ -98,7 +31,7 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
       child: Text("Yes"),
       onPressed: () {
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const LoginScreen()));
+            MaterialPageRoute(builder: (context) => const MyAccountScreen()));
       },
     );
 
@@ -137,17 +70,8 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
                         height: size.height * 0.03,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.arrow_back_ios_new_outlined),
-                            onPressed: () {
-                              Navigator.of(context).pop({
-                                "email": this.emailController.text,
-                                "password": this.passwordController.text
-                              });
-                            },
-                          ),
                           TextButton(
                               onPressed: () {
                                 showAlertDialog(context);
@@ -166,7 +90,7 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
                       ),
                       Center(
                         child: Text(
-                          'About You',
+                          'Edit Profile',
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 40,
@@ -174,28 +98,38 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: size.height * 0.03,
+                        height: size.height * 0.05,
                       ),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              'Personal Info >> ',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Full Name",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.height * 0.02,
+                      ),
+                      Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: TextFormField(
+                            controller: nameController,
+                            decoration: InputDecoration(
+                              hintText: "Name",
+                              isDense: true,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            Text(
-                              'Access Parameters',
-                              style: TextStyle(
-                                  color: primaryColor,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ]),
+                          )),
                       SizedBox(
-                        height: size.height * 0.05,
+                        height: size.height * 0.03,
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
@@ -276,7 +210,7 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: size.height * 0.05,
+                        height: size.height * 0.07,
                       ),
                       Container(
                         height: 50,
@@ -290,19 +224,27 @@ class _AccessParamsScreenState extends State<AccessParamsScreen> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20))),
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              registerUsers();
+                            if (this.nameController.text.isNotEmpty &&
+                                this.emailController.text.isNotEmpty &&
+                                this.passwordController.text.isNotEmpty &&
+                                _formKey.currentState!.validate()) {
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(
+                                    'Error: Complete all the requested data'),
+                                backgroundColor: Colors.red.shade300,
+                              ));
                             }
                           },
                           child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Text(
-                                  'Create Account ',
+                                  'Edit',
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 25),
                                 ),
-                                Icon(Icons.double_arrow_outlined),
                               ]),
                         ),
                       ),

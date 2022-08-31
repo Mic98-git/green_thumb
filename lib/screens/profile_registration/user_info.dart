@@ -17,9 +17,21 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   final TextEditingController fiscalCodeController = TextEditingController();
   bool isCustomer = true;
   late DateTime birthDate;
+  Map<String, String> formFields = Map();
 
-  void saveInfo() {
-    //check errors or nullable values to eraise dialogs
+  void nextScreen(BuildContext context) async {
+    formFields = await Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) {
+        return AccessParamsScreen(
+          email: formFields["email"] ?? "",
+          password: formFields["password"] ?? "",
+          isCustomer: this.isCustomer,
+          name: this.nameController.text,
+          birthDate: this.birthDateController.text,
+          fiscalCode: this.fiscalCodeController.text,
+        );
+      },
+    ));
   }
 
   showAlertDialog(BuildContext context) {
@@ -287,18 +299,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                         if (this.nameController.text.isNotEmpty &&
                             this.birthDateController.text.isNotEmpty &&
                             this.fiscalCodeController.text.isNotEmpty) {
-                          saveInfo();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AccessParamsScreen(
-                                        isCustomer: this.isCustomer,
-                                        name: this.nameController.text,
-                                        birthDate:
-                                            this.birthDateController.text,
-                                        fiscalCode:
-                                            this.fiscalCodeController.text,
-                                      )));
+                          nextScreen(context);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content:

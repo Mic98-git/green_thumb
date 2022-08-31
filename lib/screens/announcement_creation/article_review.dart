@@ -40,6 +40,10 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
   final ApiClient _apiClient = ApiClient();
 
   Future<void> saveInfo() async {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text('Processing Data'),
+      backgroundColor: Colors.green.shade300,
+    ));
     //todo manage errors
     Map<String, dynamic> articleData = {
       'sellerId': user.userId,
@@ -73,8 +77,6 @@ class _ArticleReviewScreenState extends State<ArticleReviewScreen> {
         backgroundColor: Colors.red.shade300,
       ));
     }
-    //check errors or nullable values to eraise dialogs
-    //params are widget.water ecc
   }
 
   showAlertDialog(BuildContext context) {

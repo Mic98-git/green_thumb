@@ -8,11 +8,15 @@ class FiscalDetailsScreen extends StatefulWidget {
   final String activityName;
   final String fiscalAddress;
   final String city;
+  final String vat;
+  final String iban;
   const FiscalDetailsScreen(
       {Key? key,
       required this.activityName,
       required this.fiscalAddress,
-      required this.city})
+      required this.city,
+      required this.vat,
+      required this.iban})
       : super(key: key);
 
   @override
@@ -25,7 +29,24 @@ class _FiscalDetailsScreenState extends State<FiscalDetailsScreen> {
 
   final ApiClient _apiClient = ApiClient();
 
+  @override
+  void initState() {
+    super.initState();
+    print(widget.vat);
+    if (widget.vat != "") {
+      this.VATController.text = widget.vat;
+    }
+    if (widget.iban != "") {
+      this.IBANController.text = widget.iban;
+    }
+  }
+
   Future<void> updateFiscalDetails() async {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text('Processing Data'),
+      backgroundColor: Colors.green.shade300,
+    ));
+
     Map<String, dynamic> userData = {
       "activityName": widget.activityName,
       "fiscalAddress": widget.fiscalAddress,
@@ -35,6 +56,8 @@ class _FiscalDetailsScreenState extends State<FiscalDetailsScreen> {
     };
 
     dynamic res = await _apiClient.updateUser(registeredUserId, userData);
+
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
     if (res['error'] == null) {
       Navigator.push(
@@ -107,7 +130,12 @@ class _FiscalDetailsScreenState extends State<FiscalDetailsScreen> {
                     children: <Widget>[
                       IconButton(
                         icon: Icon(Icons.arrow_back_ios_new_outlined),
-                        onPressed: Navigator.of(context).pop,
+                        onPressed: () {
+                          Navigator.of(context).pop({
+                            "vat": this.VATController.text,
+                            "iban": this.IBANController.text
+                          });
+                        },
                       ),
                       TextButton(
                           onPressed: () {

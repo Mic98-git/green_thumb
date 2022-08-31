@@ -99,7 +99,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
         getCart(user.userId);
 
-        showAlertDialog(context);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const MyAccountScreen()));
       } else {
@@ -109,34 +108,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
       }
     }
-  }
-
-  showAlertDialog(BuildContext context) {
-    // set up the button
-    Widget okButton = TextButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const LoginScreen()));
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Login"),
-      content: Text("Login done"),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
   }
 
   @override
