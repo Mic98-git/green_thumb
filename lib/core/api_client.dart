@@ -204,6 +204,17 @@ class ApiClient {
     }
   }
 
+  Future<dynamic> getSellerOrders(String sellerId) async {
+    try {
+      Response response = await _dio.get(
+        url + ':3003/order/seller/' + sellerId,
+      );
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
   Future<dynamic> addOrder(String userId, Map<String, dynamic>? data) async {
     try {
       Response response =

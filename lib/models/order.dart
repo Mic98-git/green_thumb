@@ -1,14 +1,12 @@
+import 'package:green_thumb/models/article.dart';
+
 class Order {
   final String userId;
   final String fullname;
   final String address;
   final String city;
   final String payment;
-  final String sellerId;
-  final String productId;
-  final int quantity;
-  final int price;
-  final String cartId;
+  final List<Article> cart;
   final int total;
   final double latitude;
   final double longitude;
@@ -20,11 +18,7 @@ class Order {
       required this.address,
       required this.city,
       required this.payment,
-      required this.sellerId,
-      required this.productId,
-      required this.quantity,
-      required this.price,
-      required this.cartId,
+      required this.cart,
       required this.total,
       required this.latitude,
       required this.longitude,
@@ -37,11 +31,7 @@ class Order {
         address: json['order']['address'],
         city: json['order']['city'],
         payment: json['order']['payment'],
-        sellerId: json['order']['cart'][0]['sellerId'],
-        productId: json['order']['cart'][0]['productId'],
-        quantity: json['order']['cart'][0]['qty'],
-        price: json['order']['cart'][0]['price'],
-        cartId: json['order']['cart'][0]['_id'],
+        cart: json['order']['cart'][0]['_id'],
         total: json['order']['total'],
         latitude: json['order']['latitude'],
         longitude: json['order']['longitude'],
