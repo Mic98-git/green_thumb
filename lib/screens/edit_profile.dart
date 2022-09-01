@@ -21,12 +21,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final ApiClient _apiClient = ApiClient();
 
   Future<void> updateUser(String userId) async {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text('Processing Data'),
+      backgroundColor: Colors.green.shade300,
+    ));
+
     Map<String, dynamic> userData = {
       "fullname": nameController.text,
       "email": emailController.text,
       "password": passwordController.text
     };
+
     dynamic res = await _apiClient.updateUserInfo(userId, userData);
+
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
     if (res['error'] == null) {
       user.fullname = nameController.text;
       user.email = emailController.text;

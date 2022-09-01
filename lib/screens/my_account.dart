@@ -23,12 +23,13 @@ class MyAccountScreen extends StatefulWidget {
 class _MyAccountScreenState extends State<MyAccountScreen> {
   final ApiClient _apiClient = ApiClient();
   List<Article> myArticles = [];
-  bool checkAnnouncements = false;
-  Image profileImage = Image.asset('assets/images/image.png');
-  Image pendingOrder = Image.asset('assets/icons/pending_order.png');
   List<Order> pendingOrders = [];
   List<Order> completedOrders = [];
-  bool checkOrders = false;
+  bool checkAnnouncements = false;
+  bool checkPendingOrders = false;
+  bool checkCompletedOrders = false;
+  Image profileImage = Image.asset('assets/images/image.png');
+  Image pendingOrder = Image.asset('assets/icons/pending_order.png');
 
   @override
   void initState() {
@@ -97,7 +98,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         }
       }
       setState(() {
-        this.checkOrders = true;
+        this.checkPendingOrders = true;
+        this.checkCompletedOrders = true;
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -181,7 +183,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                     child: Material(
                         child: Ink.image(
                       image: this.pendingOrder.image,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                       child: InkWell(
                         onTap: () {
                           showOrderDetails(order);
@@ -200,11 +202,27 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                     showOrderDetails(order);
                   },
                   child: Text(
-                    order.createdAt,
+                    'Order ' +
+                        ((order.orderId.replaceAll(RegExp('[a-zA-Z]'), ''))
+                            .substring(0, 5)),
                     style: TextStyle(fontSize: 20),
-                  )))
+                  ))),
         ]),
       );
+
+  Future<void> _pullRefresh() async {
+    this.myArticles.clear();
+    this.pendingOrders.clear();
+    this.completedOrders.clear();
+    this.checkAnnouncements = false;
+    this.checkPendingOrders = false;
+    this.checkCompletedOrders = false;
+    if (!user.isCustomer) {
+      this.getSellersAnnouncements(user.userId);
+    }
+    this.getOrders(user.userId, user.isCustomer);
+    await Future.delayed(Duration(seconds: 2));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -219,62 +237,108 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
             backgroundColor: Colors.white,
             bottomNavigationBar:
                 BottomNavigationBarScreen(currentIndex: _currentIndex),
-            body: SingleChildScrollView(
+            body: RefreshIndicator(
+              onRefresh: _pullRefresh,
+              child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: size.height * 0.03,
+                child: Column(children: [
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "My Account",
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "My Account",
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.03,
-                    ),
-                    Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: size.width * 0.03),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: primaryColor,
-                              radius: size.height * 0.11,
-                              child: CircleAvatar(
-                                radius: size.height * 0.1,
-                                backgroundImage: profileImage.image,
-                              ),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: primaryColor,
+                            radius: size.height * 0.11,
+                            child: CircleAvatar(
+                              radius: size.height * 0.1,
+                              backgroundImage: profileImage.image,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                SizedBox(
-                                  height: size.height * 0.01,
-                                ),
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      width: size.width * 0.01,
-                                    ),
-                                    Container(
-                                      width: size.width * 0.5,
-                                      child: Text(
-                                        user.fullname,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                        ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                height: size.height * 0.01,
+                              ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: size.width * 0.01,
+                                  ),
+                                  Container(
+                                    width: size.width * 0.5,
+                                    child: Text(
+                                      user.fullname,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
                                       ),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(height: size.height * 0.02),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(height: size.height * 0.02),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: size.width * 0.01,
+                                  ),
+                                  Container(
+                                    height: 40,
+                                    width: 85,
+                                    decoration: BoxDecoration(
+                                        color: primaryColor,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          primary: primaryColor,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20))),
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const EditProfileScreen()));
+                                      },
+                                      child: Row(
+                                        children: <Widget>[
+                                          Text(
+                                            'Edit ',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15),
+                                          ),
+                                          Icon(
+                                            Icons.edit,
+                                            size: 18,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: size.height * 0.02),
+                              if (!user.isCustomer)
                                 Row(
                                   children: [
                                     SizedBox(
@@ -282,7 +346,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     ),
                                     Container(
                                       height: 40,
-                                      width: 85,
+                                      width: 180,
                                       decoration: BoxDecoration(
                                           color: primaryColor,
                                           borderRadius:
@@ -298,71 +362,47 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      const EditProfileScreen()));
+                                                      const NewArticleScreen()));
                                         },
-                                        child: Row(
-                                          children: <Widget>[
-                                            Text(
-                                              'Edit ',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 15),
-                                            ),
-                                            Icon(
-                                              Icons.edit,
-                                              size: 18,
-                                            )
-                                          ],
+                                        child: Text(
+                                          'New Announcement',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15),
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: size.height * 0.02),
-                                if (!user.isCustomer)
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        width: size.width * 0.01,
-                                      ),
-                                      Container(
-                                        height: 40,
-                                        width: 180,
-                                        decoration: BoxDecoration(
-                                            color: primaryColor,
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        child: ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                              primary: primaryColor,
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20))),
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const NewArticleScreen()));
-                                          },
-                                          child: Text(
-                                            'New Announcement',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                              ],
-                            ),
-                          ],
-                        )),
-                    SizedBox(height: size.height * 0.04),
-                    if (user.isCustomer)
-                      Column(
+                            ],
+                          ),
+                        ],
+                      )),
+                  SizedBox(height: size.height * 0.04),
+                  if (user.isCustomer)
+                    Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: size.height * 0.03),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'My orders',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: size.height * 0.02),
+                            ],
+                          ),
+                        )
+                      ],
+                    )
+                  else
+                    Column(children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Padding(
                             padding: EdgeInsets.symmetric(
@@ -371,140 +411,148 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  'My orders',
+                                  'My announcements',
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: size.height * 0.02),
                               ],
                             ),
-                          )
-                        ],
-                      )
-                    else
-                      Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: size.height * 0.03),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'My announcements',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
                           ),
-                          myArticles.isEmpty && checkAnnouncements
-                              ? Column(children: [
-                                  SizedBox(height: size.height * 0.09),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 20),
-                                      child: Text(
-                                          'No announcement posted. Create your first one!',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.grey))),
-                                  SizedBox(height: size.height * 0.09)
-                                ])
-                              : Column(children: [
-                                  SizedBox(height: size.height * 0.02),
-                                  Row(
-                                    children: [
-                                      Container(
-                                          height: size.height * 0.3,
-                                          child: ListView.separated(
-                                            shrinkWrap: true,
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: size.width * 0.05),
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount: this.myArticles.length,
-                                            itemBuilder: (context, index) =>
-                                                articleBox(
-                                                    item:
-                                                        this.myArticles[index],
-                                                    size: size),
-                                            separatorBuilder: (context, _) =>
-                                                SizedBox(
-                                                    width: size.width * 0.05),
-                                          )),
-                                      SizedBox(height: size.height * 0.01),
-                                    ],
-                                  )
-                                ]),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: size.height * 0.03),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Pending orders',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          pendingOrders.isEmpty && checkOrders
-                              ? Column(children: [
-                                  SizedBox(height: size.height * 0.09),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 20),
-                                      child: Text(
-                                          'No pending orders. Good job!',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.grey))),
-                                  SizedBox(height: size.height * 0.09)
-                                ])
-                              : Column(children: [
-                                  SizedBox(height: size.height * 0.02),
-                                  Row(
-                                    children: [
-                                      Container(
-                                          height: size.height * 0.3,
-                                          child: ListView.separated(
-                                            shrinkWrap: true,
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: size.width * 0.05),
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount:
-                                                this.pendingOrders.length,
-                                            itemBuilder: (context, index) =>
-                                                orderBox(
-                                                    order: this
-                                                        .pendingOrders[index],
-                                                    size: size),
-                                            separatorBuilder: (context, _) =>
-                                                SizedBox(
-                                                    width: size.width * 0.05),
-                                          )),
-                                      SizedBox(height: size.height * 0.05)
-                                    ],
-                                  )
-                                ]),
                         ],
                       ),
-                  ],
-                ))));
+                      myArticles.isEmpty && checkAnnouncements
+                          ? Column(children: [
+                              SizedBox(height: size.height * 0.09),
+                              Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: size.width * 0.1),
+                                  child: Text(
+                                      'No announcement posted. Create your first one!',
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.grey))),
+                              SizedBox(height: size.height * 0.09)
+                            ])
+                          : Column(
+                              children: [
+                                SizedBox(height: size.height * 0.02),
+                                Container(
+                                    height: size.height * 0.30,
+                                    child: ListView.separated(
+                                      shrinkWrap: true,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: size.width * 0.05),
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: this.myArticles.length,
+                                      itemBuilder: (context, index) =>
+                                          articleBox(
+                                              item: this.myArticles[index],
+                                              size: size),
+                                      separatorBuilder: (context, _) =>
+                                          SizedBox(width: size.width * 0.05),
+                                    )),
+                              ],
+                            ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: size.height * 0.03),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Pending orders',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      this.pendingOrders.isEmpty && checkPendingOrders
+                          ? Column(children: [
+                              SizedBox(height: size.height * 0.09),
+                              Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: size.width * 0.1),
+                                  child: Text('No pending orders. Good job!',
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.grey))),
+                              SizedBox(height: size.height * 0.09)
+                            ])
+                          : Column(children: [
+                              SizedBox(height: size.height * 0.03),
+                              Container(
+                                  height: size.height * 0.3,
+                                  child: ListView.separated(
+                                    shrinkWrap: true,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: size.width * 0.05),
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: this.pendingOrders.length,
+                                    itemBuilder: (context, index) => orderBox(
+                                        order: this.pendingOrders[index],
+                                        size: size),
+                                    separatorBuilder: (context, _) =>
+                                        SizedBox(width: size.width * 0.05),
+                                  )),
+                            ]),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: size.height * 0.03),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Completed orders',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      this.completedOrders.isEmpty && checkCompletedOrders
+                          ? Column(children: [
+                              SizedBox(height: size.height * 0.09),
+                              Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: size.width * 0.1),
+                                  child: Text(
+                                      'No order has been completed. Please check your pending list!',
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.grey))),
+                              SizedBox(height: size.height * 0.09)
+                            ])
+                          : Column(children: [
+                              SizedBox(height: size.height * 0.03),
+                              Container(
+                                  height: size.height * 0.3,
+                                  child: ListView.separated(
+                                    shrinkWrap: true,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: size.width * 0.05),
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: this.completedOrders.length,
+                                    itemBuilder: (context, index) => orderBox(
+                                        order: this.completedOrders[index],
+                                        size: size),
+                                    separatorBuilder: (context, _) =>
+                                        SizedBox(width: size.width * 0.05),
+                                  )),
+                            ]),
+                    ]),
+                ]),
+              ),
+            )));
   }
 }

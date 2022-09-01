@@ -152,10 +152,13 @@ class _ArticleScreenState extends State<ArticleScreen> {
               Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Icon(Icons.store),
+                    Icon(
+                      Icons.store,
+                      color: Colors.grey,
+                    ),
                     Text(
                       ' ' + widget.article.sellerName,
-                      style: TextStyle(color: Colors.grey, fontSize: 20),
+                      style: TextStyle(color: Colors.black, fontSize: 20),
                     ),
                     widget.article.sellerId != user.userId
                         ? TextButton(
