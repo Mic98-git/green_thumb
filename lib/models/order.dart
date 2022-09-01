@@ -7,7 +7,7 @@ class Order {
   final String address;
   final String city;
   final String payment;
-  final List<dynamic> cart;
+  final List<Article> cart;
   final int total;
   final double latitude;
   final double longitude;
@@ -27,20 +27,4 @@ class Order {
       required this.longitude,
       required this.createdAt,
       required this.delivered});
-
-  factory Order.fromJson(Map<String, dynamic> json) {
-    return Order(
-        orderId: json['order']['_id'],
-        userId: json['order']['userId'],
-        fullname: json['order']['fullname'],
-        address: json['order']['address'],
-        city: json['order']['city'],
-        payment: json['order']['payment'],
-        cart: json['order']['cart'],
-        total: json['order']['total'],
-        latitude: json['order']['latitude'],
-        longitude: json['order']['longitude'],
-        createdAt: json['order']['created_at'],
-        delivered: json['order']['delivered']);
-  }
 }
