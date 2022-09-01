@@ -49,7 +49,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Stream<Message> getText() async* {
-    yield* Stream.periodic(Duration(seconds: 1), (_) {
+    yield* Stream.periodic(Duration(seconds: 3), (_) {
       return getMessage();
     }).asyncMap((event) async => await event);
   }

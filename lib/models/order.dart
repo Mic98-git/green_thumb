@@ -7,7 +7,7 @@ class Order {
   final String address;
   final String city;
   final String payment;
-  final List<Article> cart;
+  final List<dynamic> cart;
   final int total;
   final double latitude;
   final double longitude;
@@ -36,7 +36,7 @@ class Order {
         address: json['order']['address'],
         city: json['order']['city'],
         payment: json['order']['payment'],
-        cart: json['order']['cart'][0]['_id'],
+        cart: json['order']['cart'],
         total: json['order']['total'],
         latitude: json['order']['latitude'],
         longitude: json['order']['longitude'],
