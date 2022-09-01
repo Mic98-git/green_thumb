@@ -49,6 +49,17 @@ class ApiClient {
     }
   }
 
+  Future<dynamic> updateUserInfo(
+      String userId, Map<String, dynamic>? data) async {
+    try {
+      Response response =
+          await _dio.put(url + ':3000/users/info/' + userId, data: data);
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
   Future<dynamic> addNewProduct(Map<String, dynamic>? data) async {
     try {
       Response response = await _dio.post(url + ':3002/products', data: data);
