@@ -45,7 +45,7 @@ class User {
         birth: json['user']['birth'],
         fiscalcode: json['user']['fiscalcode'],
         email: json['user']['email'],
-        userId: json['user']['_id'],
+        userId: json['user']['id'],
         ratingValue: json['user']['ratingValue'],
         numberOfRatings: json['user']['numberOfRatings']
         //token: json['user']['token']

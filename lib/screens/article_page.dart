@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:green_thumb/config/global_variables.dart';
+import 'package:green_thumb/core/api_client.dart';
 import 'package:green_thumb/models/article.dart';
 import 'package:green_thumb/screens/chat/chat.dart';
 import 'package:green_thumb/screens/shopping_cart.dart';
@@ -15,22 +16,56 @@ class ArticleScreen extends StatefulWidget {
 }
 
 class _ArticleScreenState extends State<ArticleScreen> {
-  void addItemToCart() {
-    shoppingCartItems.addEntries(
-        (<String, Article>{widget.article.articleId: widget.article}).entries);
-    showAddAlertDialog(context);
+  final ApiClient _apiClient = ApiClient();
+
+  Future<void> addItemToCart(String userId) async {
+    Article article = widget.article;
+    Map<String, dynamic> cartData = {
+      "qty": 1,
+      "price": article.price,
+      "sellerId": article.sellerId
+    };
+
+    dynamic res = await _apiClient.addProductInCart(
+        cartData, user.userId, article.articleId);
+
+    if (res['error'] == null) {
+      shoppingCartItems.addEntries((<String, Article>{
+        widget.article.articleId: widget.article
+      }).entries);
+      showAddAlertDialog(context);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: ${res['error']}'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
   }
 
-  void removeItemFromCart() {
-    shoppingCartItems.remove(widget.article.articleId);
+  Future<void> removeItemFromCart(String userId) async {
+    Article article = widget.article;
+    dynamic res =
+        await _apiClient.deleteProductFromCart(user.userId, article.articleId);
+
+    if (res['error'] == null) {
+      shoppingCartItems.remove(widget.article.articleId);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: ${res['error']}'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
   }
+  // void removeItemFromCart() {
+  //
+  // }
 
   showRemoveAlertDialog(BuildContext context) {
     // set up the button
     Widget okButton = TextButton(
       child: Text("Yes"),
       onPressed: () {
-        removeItemFromCart();
+        removeItemFromCart(user.userId);
         Navigator.of(context, rootNavigator: true).pop('dialog');
         setState(() {});
       },
@@ -300,7 +335,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                   shoppingCartItems
                                           .containsKey(widget.article.articleId)
                                       ? showRemoveAlertDialog(context)
-                                      : this.addItemToCart();
+                                      : this.addItemToCart(user.userId);
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
