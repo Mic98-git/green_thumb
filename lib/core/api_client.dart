@@ -225,6 +225,15 @@ class ApiClient {
     }
   }
 
+  Future<dynamic> deliveredOrder(String orderId) async {
+    try {
+      Response response =
+          await _dio.put(url + ':3003/order/delivered/' + orderId);
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
   // Future<dynamic> getUserProfileData(String accessToken) async {
   //   try {
   //     Response response = await _dio.get(
