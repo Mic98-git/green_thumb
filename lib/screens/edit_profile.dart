@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:green_thumb/core/api_client.dart';
 import 'package:green_thumb/screens/my_account.dart';
 import '../../config/global_variables.dart';
 import '../utils/validator.dart';
@@ -17,6 +18,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool _showPassword = false;
+  final ApiClient _apiClient = ApiClient();
+
+  Future<void> updateUser(String userId) async {
+    Map<String, dynamic> userData = {
+      "fullname": nameController.text,
+      "email": emailController.text,
+      "password": passwordController.text
+    };
+    dynamic res = await _apiClient.updateUser(userId, userData);
+    if (res['error'] == null) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const MyAccountScreen()));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: ${res['error']}'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
+  }
 
   showAlertDialog(BuildContext context) {
     // set up the button
@@ -228,6 +248,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 this.emailController.text.isNotEmpty &&
                                 this.passwordController.text.isNotEmpty &&
                                 _formKey.currentState!.validate()) {
+                              updateUser(user.userId);
                             } else {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
