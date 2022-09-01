@@ -17,13 +17,13 @@ String registeredFullname = '';
 class User {
   final bool isCustomer;
   // final bool isSeller;
-  final String fullname;
+  String fullname;
   final String birth;
   final String fiscalcode;
-  final String email;
+  String email;
   final String userId;
   //final String token;
-  const User({
+  User({
     Key? key,
     required this.isCustomer,
     required this.fullname,

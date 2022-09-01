@@ -26,8 +26,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       "email": emailController.text,
       "password": passwordController.text
     };
-    dynamic res = await _apiClient.updateUser(userId, userData);
+    dynamic res = await _apiClient.updateUserInfo(userId, userData);
     if (res['error'] == null) {
+      user.fullname = nameController.text;
+      user.email = emailController.text;
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const MyAccountScreen()));
     } else {
