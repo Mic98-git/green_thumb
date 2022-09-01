@@ -83,7 +83,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
               total: o['total'],
               latitude: o['latitude'].toDouble(),
               longitude: o['longitude'].toDouble(),
-              createdAt: o['created_at']));
+              createdAt: o['created_at'],
+              delivered: o['delivered']));
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('Error: ${res1['error']}'),

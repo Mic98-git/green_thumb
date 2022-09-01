@@ -12,6 +12,7 @@ class Order {
   final double latitude;
   final double longitude;
   final String createdAt;
+  final bool delivered;
 
   const Order(
       {required this.orderId,
@@ -24,7 +25,8 @@ class Order {
       required this.total,
       required this.latitude,
       required this.longitude,
-      required this.createdAt});
+      required this.createdAt,
+      required this.delivered});
 
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
@@ -38,6 +40,7 @@ class Order {
         total: json['order']['total'],
         latitude: json['order']['latitude'],
         longitude: json['order']['longitude'],
-        createdAt: json['order']['created_at']);
+        createdAt: json['order']['created_at'],
+        delivered: json['order']['delivered']);
   }
 }
