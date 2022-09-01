@@ -1,6 +1,7 @@
 import 'package:green_thumb/models/article.dart';
 
 class Order {
+  final String orderId;
   final String userId;
   final String fullname;
   final String address;
@@ -13,7 +14,8 @@ class Order {
   final String createdAt;
 
   const Order(
-      {required this.userId,
+      {required this.orderId,
+      required this.userId,
       required this.fullname,
       required this.address,
       required this.city,
@@ -26,6 +28,7 @@ class Order {
 
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
+        orderId: json['order']['_id'],
         userId: json['order']['userId'],
         fullname: json['order']['fullname'],
         address: json['order']['address'],

@@ -73,6 +73,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 a['quantityStock'].toString()));
           }
           orders.add(new Order(
+              orderId: o['_id'],
               userId: o['userId'],
               fullname: o['fullname'],
               address: o['address'],
@@ -90,6 +91,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           ));
         }
       }
+
       setState(() {
         this.checkOrders = true;
       });
