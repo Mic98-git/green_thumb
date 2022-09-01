@@ -26,7 +26,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   bool checkAnnouncements = false;
   Image profileImage = Image.asset('assets/images/image.png');
   Image pendingOrder = Image.asset('assets/icons/pending_order.png');
-  List<Order> orders = [];
+  List<Order> pendingOrders = [];
+  List<Order> completedOrders = [];
   bool checkOrders = false;
 
   @override
@@ -71,7 +72,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 articleImage,
                 a['quantityStock'].toString()));
           }
-          orders.add(new Order(
+          Order newOrder = new Order(
               orderId: o['_id'],
               userId: o['userId'],
               fullname: o['fullname'],
@@ -83,7 +84,11 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
               latitude: o['latitude'].toDouble(),
               longitude: o['longitude'].toDouble(),
               createdAt: o['created_at'],
-              delivered: o['delivered']));
+              delivered: o['delivered']);
+          if (newOrder.delivered)
+            completedOrders.add(newOrder);
+          else
+            pendingOrders.add(newOrder);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('Error: ${res1['error']}'),
@@ -91,7 +96,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           ));
         }
       }
-
       setState(() {
         this.checkOrders = true;
       });
@@ -459,7 +463,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               ),
                             ],
                           ),
-                          orders.isEmpty && checkOrders
+                          pendingOrders.isEmpty && checkOrders
                               ? Column(children: [
                                   SizedBox(height: size.height * 0.09),
                                   Padding(
@@ -483,10 +487,12 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: size.width * 0.05),
                                             scrollDirection: Axis.horizontal,
-                                            itemCount: this.orders.length,
+                                            itemCount:
+                                                this.pendingOrders.length,
                                             itemBuilder: (context, index) =>
                                                 orderBox(
-                                                    order: this.orders[index],
+                                                    order: this
+                                                        .pendingOrders[index],
                                                     size: size),
                                             separatorBuilder: (context, _) =>
                                                 SizedBox(
