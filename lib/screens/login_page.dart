@@ -88,14 +88,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (res['error'] == null) {
         user = new User(
-          isCustomer: res['isCustomer'],
-          fullname: res['fullname'],
-          birth: res['birth'],
-          fiscalcode: res['fiscalcode'],
-          email: res['email'],
-          userId: res['id'],
-          //token: res['token']
-        );
+            isCustomer: res['isCustomer'],
+            fullname: res['fullname'],
+            birth: res['birth'],
+            fiscalcode: res['fiscalcode'],
+            email: res['email'],
+            userId: res['id'],
+            ratingValue: res['ratingValue'],
+            numberOfRatings: res['numberOfRatings']
+            //token: res['token']
+            );
 
         getCart(user.userId);
 
