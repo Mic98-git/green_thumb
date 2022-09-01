@@ -60,6 +60,16 @@ class ApiClient {
     }
   }
 
+  Future<dynamic> rateUser(String userId, int ratingValue) async {
+    try {
+      Response response = await _dio.put(
+          url + ':3000/users/rate/' + userId + '/' + ratingValue.toString());
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
   Future<dynamic> addNewProduct(Map<String, dynamic>? data) async {
     try {
       Response response = await _dio.post(url + ':3002/products', data: data);

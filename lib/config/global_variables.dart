@@ -23,7 +23,7 @@ class User {
   String email;
   final String userId;
   //final String token;
-  double ratingValue;
+  int ratingValue;
   int numberOfRatings;
   User({
     Key? key,
