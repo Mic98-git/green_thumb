@@ -433,8 +433,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                             {
                                               setState(() {
                                                 _activeWidget = 0;
+                                                this.searchString = "";
                                               }),
-                                              this.searchString = ""
                                             }
                                         },
                                     child: TextField(
@@ -443,12 +443,13 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                             this.searchString =
                                                 value.toLowerCase();
                                           });
-                                          if (this.searchString != "")
-                                            searchArticle(searchString);
-                                          else {
+                                          searchArticle(searchString);
+                                          if (this.searchString == "") {
                                             this.searchArticles.clear();
+                                            this.checkSearch = false;
+                                            FocusScope.of(context).unfocus();
                                             setState(() {
-                                              this.checkSearch = false;
+                                              this._activeWidget = 0;
                                             });
                                           }
                                         },

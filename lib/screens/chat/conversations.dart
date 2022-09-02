@@ -27,6 +27,7 @@ class ConversationScreen extends StatefulWidget {
 
 class _ConversationScreenState extends State<ConversationScreen> {
   String mioId = user.userId;
+  bool checkMessages = false;
 
   Future<Message> getMessage() async {
     final response = await http
@@ -72,6 +73,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
               if (snapshot.hasData) {
                 getUsername(snapshot.data!.idConversation)
                     .then((value) => fullname = value.fullname);
+                this.checkMessages = true;
               }
               return Scaffold(
                   appBar: PreferredSize(
@@ -96,8 +98,11 @@ class _ConversationScreenState extends State<ConversationScreen> {
                         SizedBox(
                           height: size.height * 0.03,
                         ),
-                        snapshot.hasData
-                            ? ListView.builder(
+                        !snapshot.hasData && checkMessages
+                            ? Text("No message here",
+                                style:
+                                    TextStyle(fontSize: 20, color: Colors.grey))
+                            : ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: 1,
@@ -121,9 +126,6 @@ class _ConversationScreenState extends State<ConversationScreen> {
                                                             .idConversation)));
                                           }),
                                     )))
-                            : Text("No message here",
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.grey)),
                       ])));
             }));
   }
