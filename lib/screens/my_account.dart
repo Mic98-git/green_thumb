@@ -30,6 +30,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   bool checkCompletedOrders = false;
   Image profileImage = Image.asset('assets/images/image.png');
   Image pendingOrder = Image.asset('assets/icons/pending_order.png');
+  Image orderCompleted = Image.asset('assets/icons/order_completed.png');
 
   @override
   void initState() {
@@ -168,7 +169,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         ]),
       );
 
-  Widget orderBox({required Order order, required Size size}) => Container(
+  Widget orderBox(
+          {required Order order, required Size size, required bool pending}) =>
+      Container(
         child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Expanded(
             child: Container(
@@ -182,7 +185,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                     borderRadius: BorderRadius.circular(10),
                     child: Material(
                         child: Ink.image(
-                      image: this.pendingOrder.image,
+                      image: pending
+                          ? this.pendingOrder.image
+                          : this.orderCompleted.image,
                       fit: BoxFit.contain,
                       child: InkWell(
                         onTap: () {
@@ -496,7 +501,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     itemCount: this.pendingOrders.length,
                                     itemBuilder: (context, index) => orderBox(
                                         order: this.pendingOrders[index],
-                                        size: size),
+                                        size: size,
+                                        pending: true),
                                     separatorBuilder: (context, _) =>
                                         SizedBox(width: size.width * 0.05),
                                   )),
@@ -545,7 +551,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     itemCount: this.completedOrders.length,
                                     itemBuilder: (context, index) => orderBox(
                                         order: this.completedOrders[index],
-                                        size: size),
+                                        size: size,
+                                        pending: false),
                                     separatorBuilder: (context, _) =>
                                         SizedBox(width: size.width * 0.05),
                                   )),

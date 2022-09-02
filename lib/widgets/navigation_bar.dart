@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:green_thumb/config/global_variables.dart';
 import 'package:green_thumb/screens/chat/conversations.dart';
-import 'package:green_thumb/screens/home_page/home_plants_page.dart';
+import 'package:green_thumb/screens/home_page/home_page.dart';
 import 'package:green_thumb/screens/my_account.dart';
 import 'package:green_thumb/screens/shopping_cart.dart';
 
@@ -26,7 +26,7 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
   }
 
   final List<Widget> _routes = [
-    HomePlantsPageScreen(),
+    HomePageScreen(),
     ShoppingCartScreen(),
     ConversationScreen(),
     MyAccountScreen()
