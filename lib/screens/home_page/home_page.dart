@@ -41,12 +41,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
     dynamic res = await _apiClient.getProducts();
     articleList articles = new articleList(res);
     for (var article in articles.list) {
-      if (user.userId != article.sellerId) {
-        if (article.category == "plant") {
-          this.plantAnnouncements.add(article);
-        } else {
-          this.toolAnnouncements.add(article);
-        }
+      if (article.category == "plant") {
+        this.plantAnnouncements.add(article);
+      } else {
+        this.toolAnnouncements.add(article);
       }
     }
     this.announcements.addAll(this.plantAnnouncements);
@@ -106,7 +104,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
   Widget articleBox({required Article item, required Size size}) => Container(
         child: Column(children: [
           Container(
-              padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
+              padding: EdgeInsets.symmetric(vertical: size.height * 0.005),
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
@@ -116,23 +114,26 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        height: size.height * 0.25,
-                        width: size.width * 0.35,
-                        child: AspectRatio(
-                          aspectRatio: 4 / 3,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Material(
-                                child: Ink.image(
-                              image: item.picture.image,
-                              fit: BoxFit.cover,
-                              child: InkWell(
-                                onTap: () {
-                                  showArticleDetails(item);
-                                },
-                              ),
-                            )),
+                      Padding(
+                        padding: EdgeInsets.only(right: size.width * 0.015),
+                        child: Container(
+                          height: size.height * 0.25,
+                          width: size.width * 0.33,
+                          child: AspectRatio(
+                            aspectRatio: 4 / 3,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Material(
+                                  child: Ink.image(
+                                image: item.picture.image,
+                                fit: BoxFit.cover,
+                                child: InkWell(
+                                  onTap: () {
+                                    showArticleDetails(item);
+                                  },
+                                ),
+                              )),
+                            ),
                           ),
                         ),
                       ),
@@ -148,7 +149,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                     showArticleDetails(item);
                                   },
                                   child: Container(
-                                    width: size.width * 0.3,
+                                    width: size.width * 0.4,
                                     child: Text(item.name,
                                         style: TextStyle(
                                             fontSize: 18,
@@ -218,22 +219,26 @@ class _HomePageScreenState extends State<HomePageScreen> {
                               ),
                             ],
                           ),
+                          SizedBox(height: size.height * 0.02),
                         ],
                       ),
                       Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Row(
-                              children: [
-                                Icon(Icons.euro, size: 18),
-                                Text(
-                                  item.price,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
+                            Container(
+                                width: size.width * 0.2,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Icon(Icons.euro, size: 18),
+                                    Text(
+                                      item.price,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ],
+                                )),
                             SizedBox(height: size.height * 0.01),
                             Row(children: [
                               IconButton(
@@ -275,7 +280,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 ),
                               )
                             ]),
-                            SizedBox(height: size.height * 0.12),
+                            SizedBox(height: size.height * 0.05),
                           ])
                     ],
                   ),
@@ -304,7 +309,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     child: ListView.separated(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
                   itemCount: this.searchArticles.length,
                   itemBuilder: (context, index) =>
                       articleBox(item: this.searchArticles[index], size: size),
@@ -330,7 +335,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     child: ListView.separated(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
                   itemCount: this.toolAnnouncements.length,
                   itemBuilder: (context, index) => articleBox(
                       item: this.toolAnnouncements[index], size: size),
@@ -356,7 +361,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     child: ListView.separated(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
                   itemCount: this.plantAnnouncements.length,
                   itemBuilder: (context, index) => articleBox(
                       item: this.plantAnnouncements[index], size: size),
