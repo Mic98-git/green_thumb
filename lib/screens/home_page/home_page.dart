@@ -41,10 +41,12 @@ class _HomePageScreenState extends State<HomePageScreen> {
     dynamic res = await _apiClient.getProducts();
     articleList articles = new articleList(res);
     for (var article in articles.list) {
-      if (article.category == "plant") {
-        this.plantAnnouncements.add(article);
-      } else {
-        this.toolAnnouncements.add(article);
+      if (user.userId != article.sellerId) {
+        if (article.category == "plant") {
+          this.plantAnnouncements.add(article);
+        } else {
+          this.toolAnnouncements.add(article);
+        }
       }
     }
     this.announcements.addAll(this.plantAnnouncements);
