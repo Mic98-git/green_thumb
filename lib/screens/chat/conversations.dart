@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:green_thumb/models/message.dart';
@@ -26,6 +27,7 @@ class ConversationScreen extends StatefulWidget {
 }
 
 class _ConversationScreenState extends State<ConversationScreen> {
+  var duration = const Duration(seconds: 3);
   String mioId = user.userId;
   bool checkMessages = false;
 
@@ -37,6 +39,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
     if (response.statusCode == 200 && response.body.contains('id')) {
       return Message.fromJson(jsonDecode(response.body));
     } else {
+      sleep(duration);
       return getMessage();
     }
   }

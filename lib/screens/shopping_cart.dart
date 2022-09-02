@@ -320,7 +320,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                                               size: 20),
                                                           Text(
                                                             itemsPrice
-                                                                .toString(),
+                                                                .toStringAsFixed(
+                                                                    2),
                                                             style: TextStyle(
                                                                 fontSize: 20),
                                                           ),
@@ -343,7 +344,9 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                                           Icon(Icons.euro,
                                                               size: 20),
                                                           Text(
-                                                            shipping.toString(),
+                                                            shipping
+                                                                .toStringAsFixed(
+                                                                    2),
                                                             style: TextStyle(
                                                                 fontSize: 20),
                                                           ),
@@ -371,7 +374,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                                           Text(
                                                             (itemsPrice +
                                                                     shipping)
-                                                                .toString(),
+                                                                .toStringAsFixed(
+                                                                    2),
                                                             style: TextStyle(
                                                                 fontSize: 25,
                                                                 fontWeight:

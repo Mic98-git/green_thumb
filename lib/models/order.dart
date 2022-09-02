@@ -8,7 +8,7 @@ class Order {
   final String city;
   final String payment;
   final List<Article> cart;
-  final int total;
+  final double total;
   final double latitude;
   final double longitude;
   final String createdAt;

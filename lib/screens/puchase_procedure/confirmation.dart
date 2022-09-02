@@ -411,7 +411,8 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                                               children: [
                                                 Icon(Icons.euro, size: 25),
                                                 Text(
-                                                  widget.totalPrice.toString(),
+                                                  widget.totalPrice
+                                                      .toStringAsFixed(2),
                                                   style: TextStyle(
                                                       fontSize: 25,
                                                       fontWeight:

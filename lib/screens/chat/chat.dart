@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ final ChatMessage mess = new ChatMessage(
 bool flagChat = true;
 
 class _ChatScreenState extends State<ChatScreen> {
+  var duration = const Duration(seconds: 3);
   final String userIdMittente =
       user.userId; //COMPRATORE il mio id, verifico se mi arrivano messaggi
 
@@ -44,6 +46,7 @@ class _ChatScreenState extends State<ChatScreen> {
     if (response.statusCode == 200 && response.body.contains('id')) {
       return Message.fromJson(jsonDecode(response.body));
     } else {
+      sleep(duration);
       return getMessage();
     }
   }
