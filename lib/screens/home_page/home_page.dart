@@ -41,10 +41,12 @@ class _HomePageScreenState extends State<HomePageScreen> {
     dynamic res = await _apiClient.getProducts();
     articleList articles = new articleList(res);
     for (var article in articles.list) {
-      if (article.category == "plant") {
-        this.plantAnnouncements.add(article);
-      } else {
-        this.toolAnnouncements.add(article);
+      if (user.userId != article.sellerId) {
+        if (article.category == "plant") {
+          this.plantAnnouncements.add(article);
+        } else {
+          this.toolAnnouncements.add(article);
+        }
       }
     }
     this.announcements.addAll(this.plantAnnouncements);
@@ -280,7 +282,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 ),
                               )
                             ]),
-                            SizedBox(height: size.height * 0.05),
+                            SizedBox(height: size.height * 0.03),
                           ])
                     ],
                   ),
@@ -485,7 +487,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                   child: Text(
                                     'Plants',
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 16,
                                         color: _activeWidget == 0
                                             ? Colors.white
                                             : Colors.grey),
@@ -494,12 +496,15 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                       ? (ElevatedButton.styleFrom(
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(
-                                                12), // <-- Radius
+                                                20), // <-- Radius
                                           ),
                                           primary: primaryColor))
                                       : (ElevatedButton.styleFrom(
                                           primary: Colors.white,
                                           elevation: 0.0,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
                                         ))),
                               ElevatedButton(
                                   onPressed: () {
@@ -510,7 +515,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                   child: Text(
                                     'Tools',
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 16,
                                         color: _activeWidget == 1
                                             ? Colors.white
                                             : Colors.grey),
@@ -519,13 +524,15 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                       ? (ElevatedButton.styleFrom(
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(
-                                                12), // <-- Radius
+                                                20), // <-- Radius
                                           ),
                                           primary: primaryColor))
                                       : (ElevatedButton.styleFrom(
                                           primary: Colors.white,
                                           elevation: 0.0,
-                                        )))
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20)))))
                             ],
                           ),
                         _homeBody(context)

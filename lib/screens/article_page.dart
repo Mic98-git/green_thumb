@@ -217,7 +217,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         IconButton(
-                          constraints: BoxConstraints(),
                           icon: Icon(CupertinoIcons.delete_simple,
                               size: 25, color: Colors.red),
                           onPressed: () {
@@ -243,7 +242,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                 alignment: Alignment.center,
                 child: Text(
                   widget.article.latinName,
-                  style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+                  style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
                 ),
               ),
               widget.article.sellerId != user.userId
@@ -262,7 +261,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                     ),
                     Text(
                       ' ' + widget.article.sellerName,
-                      style: TextStyle(color: Colors.black, fontSize: 20),
+                      style: TextStyle(color: Colors.black, fontSize: 18),
                     ),
                     widget.article.sellerId != user.userId
                         ? TextButton(
@@ -271,7 +270,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                               ' Contact us!',
                               style: TextStyle(
                                   color: primaryColor,
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold),
                             ),
                             style: TextButton.styleFrom(
@@ -316,7 +315,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                     ' ' + widget.article.waterFrequency,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize: 18,
                     ),
                   ),
                   SizedBox(
@@ -336,7 +335,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                         '  ' + widget.article.oxygen + ' grams/day',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 20,
+                          fontSize: 18,
                         ),
                       ),
                     ],
@@ -361,7 +360,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                     ' ' + widget.article.sunlight,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize: 18,
                     ),
                   ),
                 ],
@@ -380,7 +379,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                       Text('Price: ' + widget.article.price,
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 25,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold)),
                       Icon(Icons.euro, size: 25),
                     ],
@@ -447,7 +446,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                           Text(widget.article.description,
                               style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   fontStyle: FontStyle.italic))
                         ],
                       ))),

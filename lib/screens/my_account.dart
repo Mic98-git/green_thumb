@@ -31,6 +31,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   Image profileImage = Image.asset('assets/images/image.png');
   Image pendingOrder = Image.asset('assets/icons/pending_order.png');
   Image orderCompleted = Image.asset('assets/icons/order_completed.png');
+  int rating = 0;
 
   @override
   void initState() {
@@ -39,6 +40,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       this.getSellersAnnouncements(user.userId);
     }
     this.getOrders(user.userId, user.isCustomer);
+    if (user.ratingValue > 0 && user.numberOfRatings > 0)
+      setState(() {
+        rating = (user.ratingValue / user.numberOfRatings).round();
+      });
   }
 
   Future<void> getOrders(String userId, bool isCustomer) async {
@@ -154,7 +159,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   ),
                 )),
           ),
-          SizedBox(height: size.height * 0.02),
+          SizedBox(height: size.height * 0.01),
           Container(
               width: size.width * 0.35,
               height: size.height * 0.1,
@@ -164,7 +169,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   },
                   child: Text(
                     item.name,
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 18),
                   )))
         ]),
       );
@@ -209,8 +214,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   child: Text(
                     'Order ' +
                         ((order.orderId.replaceAll(RegExp('[a-zA-Z]'), ''))
-                            .substring(0, 5)),
-                    style: TextStyle(fontSize: 20),
+                            .substring(0, 8)),
+                    style: TextStyle(fontSize: 18),
                   ))),
         ]),
       );
@@ -231,6 +236,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(user.ratingValue);
     int _currentIndex = 3;
     var size = MediaQuery.of(context).size;
     return WillPopScope(
@@ -287,7 +293,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     width: size.width * 0.01,
                                   ),
                                   Container(
-                                    width: size.width * 0.5,
+                                    width: size.width * 0.3,
                                     child: Text(
                                       user.fullname,
                                       style: TextStyle(
@@ -295,7 +301,14 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                         fontSize: 20,
                                       ),
                                     ),
-                                  )
+                                  ),
+                                  for (int i = 0; i < 5; i++)
+                                    Container(
+                                      width: 16,
+                                      height: 16,
+                                      child:
+                                          Image.asset('assets/icons/leaf.png'),
+                                    ),
                                 ],
                               ),
                               SizedBox(height: size.height * 0.02),
