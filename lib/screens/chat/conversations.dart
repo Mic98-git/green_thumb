@@ -102,30 +102,34 @@ class _ConversationScreenState extends State<ConversationScreen> {
                             ? Text("No message here",
                                 style:
                                     TextStyle(fontSize: 20, color: Colors.grey))
-                            : ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: 1,
-                                itemBuilder: (context, i) => Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    child: Padding(
-                                      padding:
-                                          EdgeInsets.all(size.height * 0.005),
-                                      child: ListTile(
-                                          leading: Image.asset(
-                                              'assets/images/image.png'),
-                                          title: Text(fullname),
-                                          onTap: () async {
-                                            await Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (_) => ChatScreen(
-                                                        fullname,
-                                                        snapshot.data!
-                                                            .idConversation)));
-                                          }),
-                                    )))
+                            : fullname.isNotEmpty
+                                ? ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: 1,
+                                    itemBuilder: (context, i) => Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(
+                                              size.height * 0.005),
+                                          child: ListTile(
+                                              leading: Image.asset(
+                                                  'assets/images/image.png'),
+                                              title: Text(fullname),
+                                              onTap: () async {
+                                                await Navigator.of(context)
+                                                    .push(MaterialPageRoute(
+                                                        builder: (_) => ChatScreen(
+                                                            fullname,
+                                                            snapshot.data!
+                                                                .idConversation)));
+                                              }),
+                                        )))
+                                : Row()
                       ])));
             }));
   }

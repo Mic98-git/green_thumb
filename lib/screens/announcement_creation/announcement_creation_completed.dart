@@ -47,7 +47,7 @@ class _AnnouncementCreationCompletedScreenState
                 height: size.height * 0.05,
               ),
               Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
                   child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(

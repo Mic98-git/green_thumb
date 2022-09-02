@@ -74,7 +74,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   void initState() {
     getCart(user.userId);
     super.initState();
-
     for (var item in shoppingCartItems.values) {
       shoppingItems.add(item);
     }
@@ -83,12 +82,13 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     }
   }
 
-  Future<dynamic> removeItemFromCartDB(String cartId, String productId) async {
+  /*Future<dynamic> removeItemFromCartDB(String cartId, String productId) async {
     return _apiClient.deleteProductFromCart(cartId, productId);
-  }
+  }*/
 
   void removeItemFromCart(Article item, int index) async {
-    dynamic res = await removeItemFromCartDB(user.userId, item.articleId);
+    dynamic res =
+        await _apiClient.deleteProductFromCart(user.userId, item.articleId);
     if (res['error'] == null) {
       shoppingCartItems.remove(item.articleId);
       shoppingItems.removeAt(index);

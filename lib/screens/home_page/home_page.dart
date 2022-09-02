@@ -92,7 +92,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
     Article article = a;
     dynamic res =
         await _apiClient.deleteProductFromCart(user.userId, article.articleId);
-
     if (res['error'] == null) {
       shoppingCartItems.remove(a.articleId);
       setState(() {});
@@ -107,8 +106,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
   Widget articleBox({required Article item, required Size size}) => Container(
         child: Column(children: [
           Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: size.width * 0.01, vertical: size.height * 0.01),
+              padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
@@ -119,8 +117,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        height: size.height * 0.23,
-                        width: size.width * 0.4,
+                        height: size.height * 0.25,
+                        width: size.width * 0.35,
                         child: AspectRatio(
                           aspectRatio: 4 / 3,
                           child: ClipRRect(
@@ -138,7 +136,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(width: size.width * 0.015),
+                      SizedBox(width: size.width * 0.01),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -153,12 +151,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                     width: size.width * 0.3,
                                     child: Text(item.name,
                                         style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: 18,
                                             fontWeight: FontWeight.bold)),
                                   )),
                             ],
                           )),
-                          SizedBox(height: size.height * 0.01),
                           Container(
                               child: Row(
                             children: [
@@ -168,7 +165,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 size: 18,
                               ),
                               Container(
-                                  width: size.width * 0.30,
+                                  width: size.width * 0.3,
                                   child: Text(
                                     ' ' + item.sellerName,
                                     style: TextStyle(
@@ -176,19 +173,20 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                   )),
                             ],
                           )),
-                          SizedBox(height: size.height * 0.01),
+                          SizedBox(height: size.height * 0.02),
                           Row(
                             children: [
                               Container(
-                                  width: size.width * 0.4,
+                                  width: size.width * 0.35,
                                   child: Text(item.description,
+                                      maxLines: 2,
                                       style: TextStyle(
                                         fontSize: 13,
                                         fontStyle: FontStyle.italic,
                                       )))
                             ],
                           ),
-                          SizedBox(height: size.height * 0.01),
+                          SizedBox(height: size.height * 0.02),
                           Row(
                             children: [
                               Container(
@@ -223,59 +221,62 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         ],
                       ),
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(Icons.euro, size: 20),
-                              Text(
-                                '' + item.price,
-                                style: TextStyle(fontSize: 15),
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.euro, size: 18),
+                                Text(
+                                  item.price,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                            SizedBox(height: size.height * 0.01),
+                            Row(children: [
+                              IconButton(
+                                onPressed: () {
+                                  shoppingCartItems.containsKey(item.articleId)
+                                      ? this
+                                          .removeItemFromCart(user.userId, item)
+                                      : this.addItemToCart(user.userId, item);
+                                },
+                                padding: EdgeInsets.zero,
+                                constraints: BoxConstraints(),
+                                icon: Stack(
+                                  children: <Widget>[
+                                    Icon(Icons.shopping_cart_rounded),
+                                    Positioned(
+                                      left: 12,
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                            color: primaryColor,
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
+                                          constraints: BoxConstraints(
+                                            minWidth: 5,
+                                            minHeight: 5,
+                                          ),
+                                          child: shoppingCartItems
+                                                  .containsKey(item.articleId)
+                                              ? Icon(
+                                                  Icons.remove,
+                                                  size: 12,
+                                                  color: Colors.white,
+                                                )
+                                              : Icon(Icons.add,
+                                                  size: 12,
+                                                  color: Colors.white)),
+                                    )
+                                  ],
+                                ),
                               )
-                            ],
-                          ),
-                          SizedBox(height: size.height * 0.01),
-                          Row(children: [
-                            IconButton(
-                              onPressed: () {
-                                shoppingCartItems.containsKey(item.articleId)
-                                    ? this.removeItemFromCart(user.userId, item)
-                                    : this.addItemToCart(user.userId, item);
-                              },
-                              padding: EdgeInsets.zero,
-                              constraints: BoxConstraints(),
-                              icon: Stack(
-                                children: <Widget>[
-                                  Icon(Icons.shopping_cart_rounded),
-                                  Positioned(
-                                    left: 12,
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                          color: primaryColor,
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                        ),
-                                        constraints: BoxConstraints(
-                                          minWidth: 5,
-                                          minHeight: 5,
-                                        ),
-                                        child: shoppingCartItems
-                                                .containsKey(item.articleId)
-                                            ? Icon(
-                                                Icons.remove,
-                                                size: 12,
-                                                color: Colors.white,
-                                              )
-                                            : Icon(Icons.add,
-                                                size: 12, color: Colors.white)),
-                                  )
-                                ],
-                              ),
-                            )
-                          ]),
-                          SizedBox(height: size.height * 0.1),
-                        ],
-                      )
+                            ]),
+                            SizedBox(height: size.height * 0.12),
+                          ])
                     ],
                   ),
                 ],
@@ -413,6 +414,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
               body: RefreshIndicator(
                 onRefresh: _pullRefresh,
                 child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     child: Column(
                       children: [

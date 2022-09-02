@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:green_thumb/config/global_variables.dart';
 import 'package:green_thumb/core/api_client.dart';
 import 'package:green_thumb/models/article.dart';
 import 'package:green_thumb/screens/chat/chat.dart';
+import 'package:green_thumb/screens/my_account.dart';
 import 'package:green_thumb/screens/shopping_cart.dart';
 import '../widgets/app_bar.dart';
 
@@ -17,6 +19,25 @@ class ArticleScreen extends StatefulWidget {
 
 class _ArticleScreenState extends State<ArticleScreen> {
   final ApiClient _apiClient = ApiClient();
+
+  Future<void> deleteAnnouncement() async {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text('Processing Data'),
+      backgroundColor: Colors.green.shade300,
+    ));
+
+    dynamic res = await _apiClient.deleteProduct(widget.article.articleId);
+
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+    if (res['error'] == null) {
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: ${res['error']}'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
+  }
 
   Future<void> addItemToCart(String userId) async {
     Article article = widget.article;
@@ -46,7 +67,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
     Article article = widget.article;
     dynamic res =
         await _apiClient.deleteProductFromCart(user.userId, article.articleId);
-
     if (res['error'] == null) {
       shoppingCartItems.remove(widget.article.articleId);
     } else {
@@ -56,9 +76,44 @@ class _ArticleScreenState extends State<ArticleScreen> {
       ));
     }
   }
-  // void removeItemFromCart() {
-  //
-  // }
+
+  showDeleteProductAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("Yes"),
+      onPressed: () {
+        this.deleteAnnouncement().then((value) => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => MyAccountScreen())));
+      },
+    );
+
+    Widget undoButton = TextButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop('dialog');
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Attention"),
+      content: Text("Are you sure you want to remove this announcement?"),
+      actions: [
+        okButton,
+        undoButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   showRemoveAlertDialog(BuildContext context) {
     // set up the button
@@ -157,9 +212,23 @@ class _ArticleScreenState extends State<ArticleScreen> {
         body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(children: <Widget>[
-              SizedBox(
-                height: size.height * 0.03,
-              ),
+              user.userId == widget.article.sellerId
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        IconButton(
+                          constraints: BoxConstraints(),
+                          icon: Icon(CupertinoIcons.delete_simple,
+                              size: 25, color: Colors.red),
+                          onPressed: () {
+                            showDeleteProductAlertDialog(context);
+                          },
+                        ),
+                      ],
+                    )
+                  : SizedBox(
+                      height: size.height * 0.03,
+                    ),
               Align(
                 alignment: Alignment.center,
                 child: Text(
@@ -168,13 +237,13 @@ class _ArticleScreenState extends State<ArticleScreen> {
                 ),
               ),
               SizedBox(
-                height: size.height * 0.02,
+                height: size.height * 0.01,
               ),
               Align(
                 alignment: Alignment.center,
                 child: Text(
                   widget.article.latinName,
-                  style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
+                  style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
                 ),
               ),
               widget.article.sellerId != user.userId
