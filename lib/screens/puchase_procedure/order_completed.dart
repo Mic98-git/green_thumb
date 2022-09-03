@@ -15,6 +15,7 @@ class _OrderCompletedScreenState extends State<OrderCompletedScreen> {
   final ApiClient _apiClient = ApiClient();
 
   Future<void> deleteCart(String cartId) async {
+    shoppingCartItems.clear(); //clean the local shopping cart
     dynamic res = await _apiClient.deleteCart(cartId);
     if (res['error'] == null) {
       print(res);

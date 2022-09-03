@@ -72,7 +72,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              height: size.height * 0.10,
+              height: size.height * 0.15,
               width: size.width * 0.25,
               child: AspectRatio(
                 aspectRatio: 4 / 3,
@@ -440,14 +440,13 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20))),
                       onPressed: () {
-                        shoppingCartItems
-                            .clear(); //clean the shopping cart and proceed
                         if (widget.paymentMethod == "Paypal") {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => PaypalPayment(
-                                  amount: widget.totalPrice,
+                                  amount: double.parse(
+                                      widget.totalPrice.toStringAsFixed(2)),
                                   currency: 'EUR',
                                   userId: user.userId,
                                   fullname: widget.fullname,

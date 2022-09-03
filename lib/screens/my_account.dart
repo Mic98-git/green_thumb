@@ -23,11 +23,13 @@ class MyAccountScreen extends StatefulWidget {
 class _MyAccountScreenState extends State<MyAccountScreen> {
   final ApiClient _apiClient = ApiClient();
   List<Article> myArticles = [];
-  List<Order> pendingOrders = [];
-  List<Order> completedOrders = [];
+  List<Order> customerOrders = [];
+  List<Order> sellerPendingOrders = [];
+  List<Order> sellerCompletedOrders = [];
   bool checkAnnouncements = false;
-  bool checkPendingOrders = false;
-  bool checkCompletedOrders = false;
+  bool checkSellerPendingOrders = false;
+  bool checkSellerCompletedOrders = false;
+  bool checkCustomerOrders = false;
   Image profileImage = Image.asset('assets/images/image.png');
   Image pendingOrder = Image.asset('assets/icons/pending_order.png');
   Image orderCompleted = Image.asset('assets/icons/order_completed.png');
@@ -93,9 +95,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
               createdAt: o['created_at'],
               delivered: o['delivered']);
           if (newOrder.delivered)
-            completedOrders.add(newOrder);
+            sellerCompletedOrders.add(newOrder);
           else
-            pendingOrders.add(newOrder);
+            sellerPendingOrders.add(newOrder);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('Error: ${res1['error']}'),
@@ -103,9 +105,12 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           ));
         }
       }
+      customerOrders.addAll(sellerPendingOrders);
+      customerOrders.addAll(sellerCompletedOrders);
       setState(() {
-        this.checkPendingOrders = true;
-        this.checkCompletedOrders = true;
+        this.checkSellerPendingOrders = true;
+        this.checkSellerCompletedOrders = true;
+        this.checkCustomerOrders = true;
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -134,7 +139,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   void showOrderDetails(Order o) {}
 
-  Widget articleBox({required Article item, required Size size}) => Container(
+  Widget sellerArticleBox({required Article item, required Size size}) =>
+      Container(
         child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Expanded(
             child: Container(
@@ -174,7 +180,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         ]),
       );
 
-  Widget orderBox(
+  Widget sellerOrderBox(
           {required Order order, required Size size, required bool pending}) =>
       Container(
         child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -220,13 +226,41 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         ]),
       );
 
+  Widget customerOrderBox({required Order order, required Size size}) =>
+      Container(
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Expanded(
+            child: Container(
+              width: size.width * 0.35,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          ),
+          SizedBox(height: size.height * 0.02),
+          Container(
+              width: size.width * 0.35,
+              height: size.height * 0.1,
+              child: GestureDetector(
+                  onTap: () {
+                    showOrderDetails(order);
+                  },
+                  child: Text(
+                    'Order ' +
+                        ((order.orderId.replaceAll(RegExp('[a-zA-Z]'), ''))
+                            .substring(0, 8)),
+                    style: TextStyle(fontSize: 18),
+                  ))),
+        ]),
+      );
+
   Future<void> _pullRefresh() async {
     this.myArticles.clear();
-    this.pendingOrders.clear();
-    this.completedOrders.clear();
+    this.sellerPendingOrders.clear();
+    this.sellerCompletedOrders.clear();
     this.checkAnnouncements = false;
-    this.checkPendingOrders = false;
-    this.checkCompletedOrders = false;
+    this.checkSellerPendingOrders = false;
+    this.checkSellerCompletedOrders = false;
     if (!user.isCustomer) {
       this.getSellersAnnouncements(user.userId);
     }
@@ -236,9 +270,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(user.ratingValue);
     int _currentIndex = 3;
     var size = MediaQuery.of(context).size;
+    print(this.customerOrders);
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -269,9 +303,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   ),
                   Padding(
                       padding:
-                          EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                          EdgeInsets.symmetric(horizontal: size.width * 0.02),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           CircleAvatar(
                             backgroundColor: primaryColor,
@@ -293,7 +327,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     width: size.width * 0.01,
                                   ),
                                   Container(
-                                    width: size.width * 0.3,
+                                    constraints: BoxConstraints(
+                                        minWidth: size.width * 0.25,
+                                        maxWidth: size.width * 0.35),
                                     child: Text(
                                       user.fullname,
                                       style: TextStyle(
@@ -302,13 +338,14 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                       ),
                                     ),
                                   ),
-                                  for (int i = 0; i < 5; i++)
-                                    Container(
-                                      width: 16,
-                                      height: 16,
-                                      child:
-                                          Image.asset('assets/icons/leaf.png'),
-                                    ),
+                                  if (!user.isCustomer)
+                                    for (int i = 0; i < this.rating; i++)
+                                      Container(
+                                        width: 15,
+                                        height: 15,
+                                        child: Image.asset(
+                                            'assets/icons/leaf.png'),
+                                      ),
                                 ],
                               ),
                               SizedBox(height: size.height * 0.02),
@@ -414,7 +451,39 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               SizedBox(height: size.height * 0.02),
                             ],
                           ),
-                        )
+                        ),
+                        this.customerOrders.isEmpty && checkCustomerOrders
+                            ? Column(children: [
+                                SizedBox(height: size.height * 0.09),
+                                Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: size.width * 0.1),
+                                    child: Text('No order placed!',
+                                        style: TextStyle(
+                                            fontSize: 20, color: Colors.grey))),
+                                SizedBox(height: size.height * 0.09)
+                              ])
+                            : Column(
+                                children: [
+                                  SizedBox(height: size.height * 0.02),
+                                  Container(
+                                      height: size.height * 0.3,
+                                      child: ListView.separated(
+                                        shrinkWrap: true,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: size.width * 0.05),
+                                        itemCount: this.customerOrders.length,
+                                        itemBuilder: (context, index) =>
+                                            customerOrderBox(
+                                                order:
+                                                    this.customerOrders[index],
+                                                size: size),
+                                        separatorBuilder: (context, _) =>
+                                            SizedBox(
+                                                height: size.height * 0.02),
+                                      )),
+                                ],
+                              )
                       ],
                     )
                   else
@@ -455,7 +524,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               children: [
                                 SizedBox(height: size.height * 0.02),
                                 Container(
-                                    height: size.height * 0.30,
+                                    height: size.height * 0.3,
                                     child: ListView.separated(
                                       shrinkWrap: true,
                                       padding: EdgeInsets.symmetric(
@@ -463,7 +532,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                       scrollDirection: Axis.horizontal,
                                       itemCount: this.myArticles.length,
                                       itemBuilder: (context, index) =>
-                                          articleBox(
+                                          sellerArticleBox(
                                               item: this.myArticles[index],
                                               size: size),
                                       separatorBuilder: (context, _) =>
@@ -491,7 +560,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           ),
                         ],
                       ),
-                      this.pendingOrders.isEmpty && checkPendingOrders
+                      this.sellerPendingOrders.isEmpty &&
+                              checkSellerPendingOrders
                           ? Column(children: [
                               SizedBox(height: size.height * 0.09),
                               Padding(
@@ -511,11 +581,13 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     padding: EdgeInsets.symmetric(
                                         horizontal: size.width * 0.05),
                                     scrollDirection: Axis.horizontal,
-                                    itemCount: this.pendingOrders.length,
-                                    itemBuilder: (context, index) => orderBox(
-                                        order: this.pendingOrders[index],
-                                        size: size,
-                                        pending: true),
+                                    itemCount: this.sellerPendingOrders.length,
+                                    itemBuilder: (context, index) =>
+                                        sellerOrderBox(
+                                            order:
+                                                this.sellerPendingOrders[index],
+                                            size: size,
+                                            pending: true),
                                     separatorBuilder: (context, _) =>
                                         SizedBox(width: size.width * 0.05),
                                   )),
@@ -540,7 +612,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           ),
                         ],
                       ),
-                      this.completedOrders.isEmpty && checkCompletedOrders
+                      this.sellerCompletedOrders.isEmpty &&
+                              checkSellerCompletedOrders
                           ? Column(children: [
                               SizedBox(height: size.height * 0.09),
                               Padding(
@@ -561,11 +634,14 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     padding: EdgeInsets.symmetric(
                                         horizontal: size.width * 0.05),
                                     scrollDirection: Axis.horizontal,
-                                    itemCount: this.completedOrders.length,
-                                    itemBuilder: (context, index) => orderBox(
-                                        order: this.completedOrders[index],
-                                        size: size,
-                                        pending: false),
+                                    itemCount:
+                                        this.sellerCompletedOrders.length,
+                                    itemBuilder: (context, index) =>
+                                        sellerOrderBox(
+                                            order: this
+                                                .sellerCompletedOrders[index],
+                                            size: size,
+                                            pending: false),
                                     separatorBuilder: (context, _) =>
                                         SizedBox(width: size.width * 0.05),
                                   )),
