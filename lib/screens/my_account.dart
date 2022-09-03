@@ -226,31 +226,132 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         ]),
       );
 
+  Widget customerOrderArticleBox(
+          {required Article article, required Size size}) =>
+      Container(
+          child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Container(
+            height: size.height * 0.10,
+            width: size.width * 0.20,
+            child: AspectRatio(
+              aspectRatio: 4 / 3,
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: FittedBox(
+                    child: article.picture,
+                    fit: BoxFit.cover,
+                  )),
+            ),
+            decoration: BoxDecoration(
+                color: articleBoxColor,
+                borderRadius: BorderRadius.circular(20)),
+          ),
+          SizedBox(width: size.width * 0.03),
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(children: [
+                  Container(
+                    child: Text(
+                      article.name,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ]),
+                Row(children: [
+                  Icon(
+                    Icons.store,
+                    color: Colors.grey,
+                  ),
+                  Text(
+                    ' ' + article.sellerName,
+                    style: TextStyle(color: Colors.grey, fontSize: 16),
+                  ),
+                ])
+              ])
+        ])
+      ]));
+
   Widget customerOrderBox({required Order order, required Size size}) =>
       Container(
-        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Expanded(
-            child: Container(
-              width: size.width * 0.35,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
-          SizedBox(height: size.height * 0.02),
+        child: Column(children: [
           Container(
-              width: size.width * 0.35,
-              height: size.height * 0.1,
-              child: GestureDetector(
-                  onTap: () {
-                    showOrderDetails(order);
-                  },
-                  child: Text(
-                    'Order ' +
-                        ((order.orderId.replaceAll(RegExp('[a-zA-Z]'), ''))
-                            .substring(0, 8)),
-                    style: TextStyle(fontSize: 18),
-                  ))),
+              padding: EdgeInsets.symmetric(
+                  vertical: size.height * 0.015, horizontal: size.width * 0.03),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: primaryColor, width: 1)),
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Order ' +
+                                      ((order.orderId.replaceAll(
+                                              RegExp('[a-zA-Z]'), ''))
+                                          .substring(0, 8)),
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                !order.delivered
+                                    ? TextButton(
+                                        onPressed: () {},
+                                        style: TextButton.styleFrom(
+                                            padding: EdgeInsets.zero),
+                                        child: Text("Track order",
+                                            style: TextStyle(fontSize: 18)))
+                                    : Text("")
+                              ])
+                        ],
+                      ),
+                      SizedBox(height: size.height * 0.02),
+                      Container(
+                          child: ListView.separated(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: order.cart.length,
+                        itemBuilder: (context, index) =>
+                            customerOrderArticleBox(
+                                article: order.cart[index], size: size),
+                        separatorBuilder: (context, _) =>
+                            SizedBox(height: size.height * 0.02),
+                      )),
+                      SizedBox(height: size.height * 0.02),
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                        Text(
+                          "Total",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ]),
+                      SizedBox(height: size.height * 0.01),
+                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                        Icon(Icons.euro, size: 18),
+                        Text(
+                          order.total.toStringAsFixed(2),
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        ),
+                      ])
+                    ],
+                  )
+                ],
+              )),
         ]),
       );
 
@@ -272,7 +373,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   Widget build(BuildContext context) {
     int _currentIndex = 3;
     var size = MediaQuery.of(context).size;
-    print(this.customerOrders);
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -448,7 +548,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: size.height * 0.02),
+                              SizedBox(height: size.height * 0.04),
                             ],
                           ),
                         ),
@@ -467,21 +567,21 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 children: [
                                   SizedBox(height: size.height * 0.02),
                                   Container(
-                                      height: size.height * 0.3,
                                       child: ListView.separated(
-                                        shrinkWrap: true,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: size.width * 0.05),
-                                        itemCount: this.customerOrders.length,
-                                        itemBuilder: (context, index) =>
-                                            customerOrderBox(
-                                                order:
-                                                    this.customerOrders[index],
-                                                size: size),
-                                        separatorBuilder: (context, _) =>
-                                            SizedBox(
-                                                height: size.height * 0.02),
-                                      )),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: size.width * 0.02),
+                                    itemCount: this.customerOrders.length,
+                                    itemBuilder: (context, index) =>
+                                        customerOrderBox(
+                                            order: this.customerOrders[index],
+                                            size: size),
+                                    separatorBuilder: (context, _) =>
+                                        SizedBox(height: size.height * 0.02),
+                                  )),
+                                  SizedBox(height: size.height * 0.04),
                                 ],
                               )
                       ],
