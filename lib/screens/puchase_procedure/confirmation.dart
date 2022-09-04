@@ -458,8 +458,15 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      const CreditCardInfo()));
+                                  builder: (context) => CreditCardInfo(
+                                        amount: double.parse(widget.totalPrice
+                                            .toStringAsFixed(2)),
+                                        currency: 'EUR',
+                                        userId: user.userId,
+                                        fullname: widget.fullname,
+                                        address: widget.address,
+                                        city: widget.city,
+                                      )));
                         }
                       },
                       child: Row(
