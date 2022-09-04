@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:green_thumb/config/global_variables.dart';
 import 'package:green_thumb/models/order.dart';
+import 'package:green_thumb/screens/tracking/user_tracking.dart';
 import 'package:green_thumb/widgets/app_bar.dart';
 import 'package:green_thumb/widgets/navigation_bar.dart';
 import './announcement_creation/new_article.dart';
@@ -140,7 +141,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   void showOrderDetails(Order o) {}
 
-  void trackOrder() {}
+  void trackOrder(String orderId) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => ViewPositionScreen(orderId)));
+  }
 
   Widget buildRating(Size size) => RatingBar.builder(
         initialRating: 0,
@@ -343,7 +347,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                             !order.delivered
                                 ? TextButton(
                                     onPressed: () {
-                                      trackOrder();
+                                      trackOrder(order.orderId);
                                     },
                                     style: TextButton.styleFrom(
                                         padding: EdgeInsets.zero),

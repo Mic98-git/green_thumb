@@ -8,28 +8,29 @@ import 'package:green_thumb/core/api_client.dart';
 import 'package:green_thumb/models/tracking.dart';
 import 'package:http/http.dart' as http;
 
-final ApiClient apiClient = ApiClient();
+class ViewPositionScreen extends StatelessWidget {
+  final String orderId;
+  ViewPositionScreen(String this.orderId, {super.key});
+
+  final ApiClient apiClient = ApiClient();
 
 //PASSARE L'ID DELL'ORDINE
 
-String id = '6310b567b58c9d14d297006c';
+  Future<Tracking> fetchOrder() async {
+    final response = await http
+        // ignore: prefer_interpolation_to_compose_strings
+        .get(Uri.parse(url + ':3003/order/' + orderId));
 
-Future<Tracking> fetchOrder() async {
-  final response = await http
-      // ignore: prefer_interpolation_to_compose_strings
-      .get(Uri.parse(url + ':3003/order/' + id));
-
-  if (response.statusCode == 200) {
-    print(response.body);
-    return Tracking.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception('Failed to load order');
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Tracking.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load order');
+    }
   }
-}
 
-const double ZOOM = 15;
+  final double ZOOM = 15;
 
-class ViewPositionScreen extends StatelessWidget {
   GoogleMapController? mapController;
 
   double longitude = 0;
