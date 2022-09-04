@@ -11,6 +11,7 @@ import '../models/article.dart';
 import '../core/api_client.dart';
 import '../models/articleList.dart';
 import 'package:green_thumb/screens/edit_profile.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class MyAccountScreen extends StatefulWidget {
   static String id = "my_account_screen";
@@ -138,6 +139,44 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   }
 
   void showOrderDetails(Order o) {}
+
+  void trackOrder() {}
+
+  Widget buildRating(Size size) => RatingBar.builder(
+        initialRating: 0,
+        minRating: 1,
+        direction: Axis.horizontal,
+        itemCount: 5,
+        itemSize: 25,
+        itemPadding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+        itemBuilder: (context, _) => Image.asset('assets/icons/leaf.png'),
+        onRatingUpdate: (rating) {
+          print(rating);
+        },
+      );
+
+  void showRatingDialog(Size size) => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: Text("Rating"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Please leave a rating to your order',
+                    style: TextStyle(fontSize: 20)),
+                SizedBox(height: size.height * 0.04),
+                buildRating(size),
+              ],
+            ),
+            actions: [
+              TextButton(
+                child: Text('Ok', style: TextStyle(fontSize: 18)),
+                onPressed: () =>
+                    Navigator.of(context, rootNavigator: true).pop('dialog'),
+              )
+            ],
+          ));
 
   Widget sellerArticleBox({required Article item, required Size size}) =>
       Container(
@@ -281,7 +320,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         child: Column(children: [
           Container(
               padding: EdgeInsets.symmetric(
-                  vertical: size.height * 0.015, horizontal: size.width * 0.03),
+                  vertical: size.height * 0.001, horizontal: size.width * 0.03),
               width: double.infinity,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
@@ -292,28 +331,35 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                     children: [
                       Row(
                         children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Order ' +
-                                      ((order.orderId.replaceAll(
-                                              RegExp('[a-zA-Z]'), ''))
-                                          .substring(0, 8)),
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                !order.delivered
-                                    ? TextButton(
-                                        onPressed: () {},
-                                        style: TextButton.styleFrom(
-                                            padding: EdgeInsets.zero),
-                                        child: Text("Track order",
-                                            style: TextStyle(fontSize: 18)))
-                                    : Text("")
-                              ])
+                          Row(children: [
+                            Text(
+                              'Order ' +
+                                  ((order.orderId
+                                          .replaceAll(RegExp('[a-zA-Z]'), ''))
+                                      .substring(0, 8)),
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            SizedBox(width: size.width * 0.02),
+                            !order.delivered
+                                ? TextButton(
+                                    onPressed: () {
+                                      trackOrder();
+                                    },
+                                    style: TextButton.styleFrom(
+                                        padding: EdgeInsets.zero),
+                                    child: Text("Track order",
+                                        style: TextStyle(fontSize: 18)))
+                                : TextButton(
+                                    onPressed: () {
+                                      showRatingDialog(size);
+                                    },
+                                    style: TextButton.styleFrom(
+                                        padding: EdgeInsets.zero),
+                                    child: Text("Rate order",
+                                        style: TextStyle(fontSize: 18)))
+                          ])
                         ],
                       ),
-                      SizedBox(height: size.height * 0.02),
                       Container(
                           child: ListView.separated(
                         physics: const NeverScrollableScrollPhysics(),
@@ -347,7 +393,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           order.total.toStringAsFixed(2),
                           style: TextStyle(color: Colors.black, fontSize: 18),
                         ),
-                      ])
+                      ]),
+                      SizedBox(height: size.height * 0.015),
                     ],
                   )
                 ],
@@ -359,9 +406,11 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     this.myArticles.clear();
     this.sellerPendingOrders.clear();
     this.sellerCompletedOrders.clear();
+    this.customerOrders.clear();
     this.checkAnnouncements = false;
     this.checkSellerPendingOrders = false;
     this.checkSellerCompletedOrders = false;
+    this.checkCustomerOrders = false;
     if (!user.isCustomer) {
       this.getSellersAnnouncements(user.userId);
     }
@@ -533,13 +582,13 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           ),
                         ],
                       )),
-                  SizedBox(height: size.height * 0.04),
+                  SizedBox(height: size.height * 0.02),
                   if (user.isCustomer)
                     Column(
                       children: <Widget>[
                         Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: size.height * 0.03),
+                              horizontal: size.width * 0.03),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -548,7 +597,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: size.height * 0.04),
+                              SizedBox(height: size.height * 0.03),
                             ],
                           ),
                         ),
@@ -593,7 +642,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         children: <Widget>[
                           Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: size.height * 0.03),
+                                horizontal: size.width * 0.03),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -645,7 +694,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         children: <Widget>[
                           Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: size.height * 0.03),
+                                horizontal: size.width * 0.03),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -697,7 +746,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         children: <Widget>[
                           Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: size.height * 0.03),
+                                horizontal: size.width * 0.03),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [

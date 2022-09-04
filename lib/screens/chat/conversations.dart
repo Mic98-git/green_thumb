@@ -76,7 +76,6 @@ class _ConversationScreenState extends State<ConversationScreen> {
               if (snapshot.hasData) {
                 getUsername(snapshot.data!.idConversation)
                     .then((value) => fullname = value.fullname);
-                this.checkMessages = true;
               }
               return Scaffold(
                   appBar: PreferredSize(
@@ -101,7 +100,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                         SizedBox(
                           height: size.height * 0.03,
                         ),
-                        !snapshot.hasData && checkMessages
+                        !snapshot.hasData
                             ? Text("No message here",
                                 style:
                                     TextStyle(fontSize: 20, color: Colors.grey))

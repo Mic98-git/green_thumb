@@ -32,80 +32,82 @@ class _PasswordForgottenScreenState extends State<PasswordForgottenScreen> {
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
             backgroundColor: Colors.white,
-            body: Form(
-                key: _formKey,
-                child: Column(children: <Widget>[
-                  SizedBox(
-                    height: size.height * 0.03,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.arrow_back_ios_new_outlined),
-                        onPressed: Navigator.of(context).pop,
+            body: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Form(
+                    key: _formKey,
+                    child: Column(children: <Widget>[
+                      SizedBox(
+                        height: size.height * 0.03,
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: size.height * 0.02,
-                  ),
-                  Center(
-                    child: Text(
-                      'Please insert your email',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.height * 0.05,
-                  ),
-                  Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: TextFormField(
-                        controller: emailController,
-                        validator: (value) {
-                          return Validator.validateEmail(value ?? "");
-                        },
-                        decoration: InputDecoration(
-                          hintText: "Email",
-                          isDense: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          IconButton(
+                            icon: Icon(Icons.arrow_back_ios_new_outlined),
+                            onPressed: Navigator.of(context).pop,
                           ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: size.height * 0.02,
+                      ),
+                      Center(
+                        child: Text(
+                          'Please insert your email',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold),
                         ),
-                      )),
-                  SizedBox(
-                    height: size.height * 0.05,
-                  ),
-                  Container(
-                    height: 50,
-                    width: 250,
-                    decoration: BoxDecoration(
-                        color: primaryColor,
-                        borderRadius: BorderRadius.circular(20)),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: primaryColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20))),
-                      onPressed: () {
-                        resetPassword();
-                      },
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Text(
-                              'Reset Password',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 25),
+                      ),
+                      SizedBox(
+                        height: size.height * 0.05,
+                      ),
+                      Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: TextFormField(
+                            controller: emailController,
+                            validator: (value) {
+                              return Validator.validateEmail(value ?? "");
+                            },
+                            decoration: InputDecoration(
+                              hintText: "Email",
+                              isDense: true,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
-                            Icon(Icons.double_arrow_outlined),
-                          ]),
-                    ),
-                  ),
-                ]))));
+                          )),
+                      SizedBox(
+                        height: size.height * 0.05,
+                      ),
+                      Container(
+                        height: 50,
+                        width: 250,
+                        decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: primaryColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20))),
+                          onPressed: () {
+                            resetPassword();
+                          },
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Text(
+                                  'Reset Password',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 25),
+                                ),
+                                Icon(Icons.double_arrow_outlined),
+                              ]),
+                        ),
+                      ),
+                    ])))));
   }
 }
