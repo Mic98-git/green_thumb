@@ -374,7 +374,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                             style: TextStyle(fontSize: 20),
                           ),
                           SizedBox(width: size.width * 0.02),
-                          if (order.delivered)
+                          if (!order.delivered)
                             TextButton(
                                 onPressed: () {
                                   trackOrder(order.orderId);
