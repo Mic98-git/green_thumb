@@ -8,6 +8,8 @@ import 'package:green_thumb/core/api_client.dart';
 import 'package:green_thumb/models/tracking.dart';
 import 'package:http/http.dart' as http;
 
+import '../../widgets/app_bar.dart';
+
 class ViewPositionScreen extends StatelessWidget {
   final String orderId;
   ViewPositionScreen(String this.orderId, {super.key});
@@ -52,45 +54,51 @@ class ViewPositionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: StreamBuilder<Tracking>(
-        stream: getPosition(),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            latitude = snapshot.data!.latitude;
-            longitude = snapshot.data!.longitude;
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
+    var size = MediaQuery.of(context).size;
+    return Scaffold(
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(size.height * 0.09),
+            child: appBarWidget(size, true)),
+        body: SafeArea(
+          child: StreamBuilder<Tracking>(
+            stream: getPosition(),
+            builder: (context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                latitude = snapshot.data!.latitude;
+                longitude = snapshot.data!.longitude;
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
 
-          // Remove any existing markers
-          markers.clear();
+              // Remove any existing markers
+              markers.clear();
 
-          final latLng = LatLng(latitude, longitude);
+              final latLng = LatLng(latitude, longitude);
 
-          // Add new marker with markerId.
-          markers.add(Marker(markerId: MarkerId("location"), position: latLng));
+              // Add new marker with markerId.
+              markers.add(
+                  Marker(markerId: MarkerId("location"), position: latLng));
 
-          // If google map is already created then update camera position with animation
-          mapController?.animateCamera(CameraUpdate.newCameraPosition(
-            CameraPosition(
-              target: latLng,
-              zoom: ZOOM,
-            ),
-          ));
+              // If google map is already created then update camera position with animation
+              mapController?.animateCamera(CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: latLng,
+                  zoom: ZOOM,
+                ),
+              ));
 
-          return GoogleMap(
-            initialCameraPosition:
-                CameraPosition(target: LatLng(latitude, longitude)),
-            // Markers to be pointed
-            markers: markers,
-            onMapCreated: (controller) {
-              // Assign the controller value to use it later
-              mapController = controller;
+              return GoogleMap(
+                initialCameraPosition:
+                    CameraPosition(target: LatLng(latitude, longitude)),
+                // Markers to be pointed
+                markers: markers,
+                onMapCreated: (controller) {
+                  // Assign the controller value to use it later
+                  mapController = controller;
+                },
+              );
             },
-          );
-        },
-      ),
-    );
+          ),
+        ));
   }
 }
