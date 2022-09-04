@@ -60,7 +60,7 @@ class ApiClient {
     }
   }
 
-  Future<dynamic> rateUsers(Map<String, dynamic>? data, int ratingValue) async {
+  Future<dynamic> rateUsers(List<String> data, int ratingValue) async {
     try {
       Response response = await _dio
           .put(url + ':3000/users/rate/' + ratingValue.toString(), data: data);

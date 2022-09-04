@@ -50,7 +50,30 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       });
   }
 
-  Future<void> rateOrder(String orderId, int ratingValue) async {}
+  Future<void> rateOrder(Order order, int ratingValue) async {
+    dynamic res =
+        await _apiClient.rateOrder(order.orderId, ratingValue.toString());
+    if (res['error'] == null) {
+      List<String> orderIds = [];
+      for (var p in order.cart) {
+        orderIds.add(p.sellerId);
+      }
+      dynamic res1 = await _apiClient.rateUsers(orderIds, ratingValue);
+      if (res1['error'] == null) {
+        print(res);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Error: ${res1['error']}'),
+          backgroundColor: Colors.red.shade300,
+        ));
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: ${res['error']}'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
+  }
 
   Future<void> getOrders(String userId, bool isCustomer) async {
     dynamic res;
