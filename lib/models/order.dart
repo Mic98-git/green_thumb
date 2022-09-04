@@ -13,6 +13,7 @@ class Order {
   final double longitude;
   final String createdAt;
   final bool delivered;
+  final int ratingValue;
 
   const Order(
       {required this.orderId,
@@ -26,5 +27,6 @@ class Order {
       required this.latitude,
       required this.longitude,
       required this.createdAt,
-      required this.delivered});
+      required this.delivered,
+      required this.ratingValue});
 }

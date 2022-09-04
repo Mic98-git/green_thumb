@@ -50,6 +50,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       });
   }
 
+  Future<void> rateOrder(String orderId, int ratingValue) async {}
+
   Future<void> getOrders(String userId, bool isCustomer) async {
     dynamic res;
     if (isCustomer)
@@ -95,7 +97,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
               latitude: o['latitude'].toDouble(),
               longitude: o['longitude'].toDouble(),
               createdAt: o['created_at'],
-              delivered: o['delivered']);
+              delivered: o['delivered'],
+              ratingValue: o['ratingValue']);
           if (newOrder.delivered)
             sellerCompletedOrders.add(newOrder);
           else
