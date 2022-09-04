@@ -27,7 +27,6 @@ class ConversationScreen extends StatefulWidget {
 }
 
 class _ConversationScreenState extends State<ConversationScreen> {
-  var duration = const Duration(seconds: 3);
   String mioId = user.userId;
   bool checkMessages = false;
 
@@ -39,7 +38,6 @@ class _ConversationScreenState extends State<ConversationScreen> {
     if (response.statusCode == 200 && response.body.contains('id')) {
       return Message.fromJson(jsonDecode(response.body));
     } else {
-      sleep(duration);
       return getMessage();
     }
   }
@@ -58,7 +56,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   }
 
   Stream<Message> getText() async* {
-    yield* Stream.periodic(Duration(seconds: 3), (_) {
+    yield* Stream.periodic(Duration(seconds: 1), (_) {
       return getMessage();
     }).asyncMap((event) async => await event);
   }

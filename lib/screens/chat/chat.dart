@@ -34,7 +34,6 @@ final ChatMessage mess = new ChatMessage(
 bool flagChat = true;
 
 class _ChatScreenState extends State<ChatScreen> {
-  var duration = const Duration(seconds: 3);
   final String userIdMittente =
       user.userId; //COMPRATORE il mio id, verifico se mi arrivano messaggi
 
@@ -46,13 +45,12 @@ class _ChatScreenState extends State<ChatScreen> {
     if (response.statusCode == 200 && response.body.contains('id')) {
       return Message.fromJson(jsonDecode(response.body));
     } else {
-      sleep(duration);
       return getMessage();
     }
   }
 
   Stream<Message> getText() async* {
-    yield* Stream.periodic(Duration(seconds: 3), (_) {
+    yield* Stream.periodic(Duration(seconds: 1), (_) {
       return getMessage();
     }).asyncMap((event) async => await event);
   }
