@@ -159,6 +159,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                   )),
                             ],
                           )),
+                          SizedBox(height: size.height * 0.005),
                           Container(
                               child: Row(
                             children: [
@@ -172,7 +173,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                   child: Text(
                                     ' ' + item.sellerName,
                                     style: TextStyle(
-                                        color: Colors.grey, fontSize: 16),
+                                        color: Colors.grey, fontSize: 14),
                                   )),
                             ],
                           )),
@@ -184,9 +185,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                   child: Text(item.description,
                                       maxLines: 2,
                                       style: TextStyle(
-                                        fontSize: 13,
-                                        fontStyle: FontStyle.italic,
-                                      )))
+                                          fontSize: 13,
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.grey[700])))
                             ],
                           ),
                           SizedBox(height: size.height * 0.02),

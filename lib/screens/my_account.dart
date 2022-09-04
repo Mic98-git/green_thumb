@@ -35,7 +35,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   Image profileImage = Image.asset('assets/images/image.png');
   Image pendingOrder = Image.asset('assets/icons/pending_order.png');
   Image orderCompleted = Image.asset('assets/icons/order_completed.png');
-  int rating = 0;
+  int sellerRating = 0;
+  int orderRating = 0;
 
   @override
   void initState() {
@@ -46,7 +47,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     this.getOrders(user.userId, user.isCustomer);
     if (user.ratingValue > 0 && user.numberOfRatings > 0)
       setState(() {
-        rating = (user.ratingValue / user.numberOfRatings).round();
+        sellerRating = (user.ratingValue / user.numberOfRatings).round();
       });
   }
 
@@ -181,11 +182,13 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         itemPadding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
         itemBuilder: (context, _) => Image.asset('assets/icons/leaf.png'),
         onRatingUpdate: (rating) {
-          print(rating);
+          setState(() {
+            this.orderRating = rating.toInt();
+          });
         },
       );
 
-  void showRatingDialog(Size size) => showDialog(
+  showRatingDialog(Size size, Order order) => showDialog(
       context: context,
       builder: (context) => AlertDialog(
             title: Text("Rating"),
@@ -193,18 +196,22 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Please leave a rating to your order',
-                    style: TextStyle(fontSize: 20)),
+                Text(
+                    'Please help us improve the service leaving a rating to your order',
+                    style: TextStyle(fontSize: 18)),
                 SizedBox(height: size.height * 0.04),
                 buildRating(size),
               ],
             ),
             actions: [
               TextButton(
-                child: Text('Ok', style: TextStyle(fontSize: 18)),
-                onPressed: () =>
-                    Navigator.of(context, rootNavigator: true).pop('dialog'),
-              )
+                  child: Text('Ok', style: TextStyle(fontSize: 18)),
+                  onPressed: () {
+                    this.rateOrder(order, orderRating).then((_) {
+                      setState(() {});
+                      Navigator.of(context, rootNavigator: true).pop('dialog');
+                    });
+                  })
             ],
           ));
 
@@ -331,14 +338,12 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                     ),
                   ),
                 ]),
+                SizedBox(height: size.height * 0.005),
                 Row(children: [
-                  Icon(
-                    Icons.store,
-                    color: Colors.grey,
-                  ),
+                  Icon(Icons.store, color: Colors.grey, size: 18),
                   Text(
                     ' ' + article.sellerName,
-                    style: TextStyle(color: Colors.grey, fontSize: 16),
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
                   ),
                 ])
               ])
@@ -360,34 +365,52 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   Column(
                     children: [
                       Row(
-                        children: [
-                          Row(children: [
-                            Text(
-                              'Order ' +
-                                  ((order.orderId
-                                          .replaceAll(RegExp('[a-zA-Z]'), ''))
-                                      .substring(0, 8)),
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            SizedBox(width: size.width * 0.02),
-                            !order.delivered
-                                ? TextButton(
-                                    onPressed: () {
-                                      trackOrder(order.orderId);
-                                    },
-                                    style: TextButton.styleFrom(
-                                        padding: EdgeInsets.zero),
-                                    child: Text("Track order",
-                                        style: TextStyle(fontSize: 18)))
-                                : TextButton(
-                                    onPressed: () {
-                                      showRatingDialog(size);
-                                    },
-                                    style: TextButton.styleFrom(
-                                        padding: EdgeInsets.zero),
-                                    child: Text("Rate order",
-                                        style: TextStyle(fontSize: 18)))
-                          ])
+                        children: <Widget>[
+                          Text(
+                            'Order ' +
+                                ((order.orderId
+                                        .replaceAll(RegExp('[a-zA-Z]'), ''))
+                                    .substring(0, 8)),
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          SizedBox(width: size.width * 0.02),
+                          if (order.delivered)
+                            TextButton(
+                                onPressed: () {
+                                  trackOrder(order.orderId);
+                                },
+                                style: TextButton.styleFrom(
+                                    padding: EdgeInsets.zero),
+                                child: Text("Track order",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.normal)))
+                          else if (order.ratingValue > 0)
+                            Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: size.height * 0.02),
+                                child: Row(children: [
+                                  for (int i = 0; i < order.ratingValue; i++)
+                                    Container(
+                                      width: 18,
+                                      height: 18,
+                                      child:
+                                          Image.asset('assets/icons/leaf.png'),
+                                    )
+                                ]))
+                          else
+                            TextButton(
+                                onPressed: () {
+                                  showRatingDialog(size, order);
+                                },
+                                style: TextButton.styleFrom(
+                                    padding: EdgeInsets.zero),
+                                child: Text("Rate order",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.normal)))
                         ],
                       ),
                       Container(
@@ -464,6 +487,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
             body: RefreshIndicator(
               onRefresh: _pullRefresh,
               child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 child: Column(children: [
                   SizedBox(
@@ -518,7 +542,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     ),
                                   ),
                                   if (!user.isCustomer)
-                                    for (int i = 0; i < this.rating; i++)
+                                    for (int i = 0; i < this.sellerRating; i++)
                                       Container(
                                         width: 15,
                                         height: 15,
@@ -612,7 +636,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           ),
                         ],
                       )),
-                  SizedBox(height: size.height * 0.02),
+                  SizedBox(height: size.height * 0.03),
                   if (user.isCustomer)
                     Column(
                       children: <Widget>[
@@ -658,7 +682,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                             order: this.customerOrders[index],
                                             size: size),
                                     separatorBuilder: (context, _) =>
-                                        SizedBox(height: size.height * 0.02),
+                                        SizedBox(height: size.height * 0.015),
                                   )),
                                   SizedBox(height: size.height * 0.04),
                                 ],
