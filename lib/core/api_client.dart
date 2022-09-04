@@ -60,10 +60,10 @@ class ApiClient {
     }
   }
 
-  Future<dynamic> rateUser(String userId, int ratingValue) async {
+  Future<dynamic> rateUsers(Map<String, dynamic>? data, int ratingValue) async {
     try {
-      Response response = await _dio.put(
-          url + ':3000/users/rate/' + userId + '/' + ratingValue.toString());
+      Response response = await _dio
+          .put(url + ':3000/users/rate/' + ratingValue.toString(), data: data);
       return response.data;
     } on DioError catch (e) {
       return e.response!.data;
@@ -250,6 +250,16 @@ class ApiClient {
     try {
       Response response =
           await _dio.put(url + ':3003/order/delivered/' + orderId);
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
+  Future<dynamic> rateOrder(String orderId, String ratingValue) async {
+    try {
+      Response response = await _dio
+          .put(url + ':3003/order/rate/' + orderId + '/' + ratingValue);
       return response.data;
     } on DioError catch (e) {
       return e.response!.data;

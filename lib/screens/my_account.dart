@@ -91,7 +91,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
               city: o['city'],
               payment: o['payment'],
               cart: orderArticles,
-              total: o['total'],
+              total: o['total'].toDouble(),
               latitude: o['latitude'].toDouble(),
               longitude: o['longitude'].toDouble(),
               createdAt: o['created_at'],
