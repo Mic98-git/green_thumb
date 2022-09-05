@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:green_thumb/config/global_variables.dart';
 import 'package:green_thumb/models/order.dart';
+import 'package:green_thumb/screens/order_page.dart';
 import 'package:green_thumb/screens/tracking/user_tracking.dart';
 import 'package:green_thumb/widgets/app_bar.dart';
 import 'package:green_thumb/widgets/navigation_bar.dart';
@@ -134,9 +135,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           ));
         }
       }
-      customerOrders.addAll(sellerPendingOrders);
       customerOrders.addAll(sellerCompletedOrders);
+      customerOrders.addAll(sellerPendingOrders);
       setState(() {
+        customerOrders = customerOrders.reversed.toList();
         this.checkSellerPendingOrders = true;
         this.checkSellerCompletedOrders = true;
         this.checkCustomerOrders = true;
@@ -166,7 +168,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     });
   }
 
-  void showOrderDetails(Order o) {}
+  void showOrderDetails(Order o) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => OrderScreen(order: o)));
+  }
 
   void trackOrder(String orderId) {
     Navigator.push(context,
@@ -413,18 +418,24 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                         fontWeight: FontWeight.normal)))
                         ],
                       ),
-                      Container(
-                          child: ListView.separated(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: order.cart.length,
-                        itemBuilder: (context, index) =>
-                            customerOrderArticleBox(
-                                article: order.cart[index], size: size),
-                        separatorBuilder: (context, _) =>
-                            SizedBox(height: size.height * 0.02),
-                      )),
-                      SizedBox(height: size.height * 0.02),
+                      order.cart.isNotEmpty
+                          ? Container(
+                              child: ListView.separated(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: order.cart.length,
+                              itemBuilder: (context, index) =>
+                                  customerOrderArticleBox(
+                                      article: order.cart[index], size: size),
+                              separatorBuilder: (context, _) =>
+                                  SizedBox(height: size.height * 0.02),
+                            ))
+                          : Row(children: [
+                              Text("Products info not available!",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.red))
+                            ]),
+                      SizedBox(height: size.height * 0.01)
                     ],
                   ),
                   Column(
