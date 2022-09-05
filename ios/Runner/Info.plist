@@ -2,14 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 	<dict>
-		<key>NSLocationWhenInUseUsageDescription</key>
-		<string>This application requires location services to work</string>
-		<key>NSLocationAlwaysUsageDescription</key>
-		<string>This application requires location services to work</string>
-		<key>NSLocationUsageDescription</key>
-		<string>This application requires location services to work</string>
-		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-		<string>This application requires location services to work</string>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
@@ -57,6 +49,18 @@
 		<false/>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>To take selling article photo</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<true/>
+		<string>This application requires location services to work</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+		<true/>
+		<string>This application requires location services to work</string>
+		<key>NSLocationUsageDescription</key>
+		<true/>
+		<string>This application requires location services to work</string>
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+		<true/>
+		<string>This application requires location services to work</string>
 		<key>NSAppTransportSecurity</key>
 		<dict>
     		<key>NSAllowsArbitraryLoads</key>
