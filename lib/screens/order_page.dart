@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:green_thumb/config/global_variables.dart';
@@ -10,8 +11,8 @@ import '../widgets/app_bar.dart';
 
 class OrderScreen extends StatefulWidget {
   static String id = "order_screen";
-  final Order order;
-  const OrderScreen({Key? key, required this.order}) : super(key: key);
+  Order order;
+  OrderScreen({Key? key, required this.order}) : super(key: key);
 
   @override
   State<OrderScreen> createState() => _OrderScreenState();
@@ -39,26 +40,63 @@ class _OrderScreenState extends State<OrderScreen> {
     });
   }
 
-  /*Future<void> getOrderInfo() async {
-    dynamic res = await _apiClient.getOrder(widget.order.orderId);
-    var o = res['order'];
-    currentOrder = new Order(
-        orderId: o['_id'],
-        userId: o['userId'],
-        fullname: o['fullname'],
-        address: o['address'],
-        city: o['city'],
-        payment: o['payment'],
-        cart: <Article>[],
-        total: o['total'],
-        latitude: o['latitude'],
-        longitude: o['longitude'],
-        createdAt: o['createdAt'],
-        delivered: o['delivered'],
-        deliveryInProgress: o['deliveryInProgress'],
-        ratingValue: o['ratingValue']);
-    print(currentOrder);
-  }*/
+  Future<void> getOrderInfo(String orderId) async {
+    dynamic res = await _apiClient.getOrder(orderId);
+    if (res['error'] == null) {
+      var o = res['order'];
+      List<String> products = [];
+      List<Article> orderArticles = [];
+      for (var i in o['cart']) {
+        products.add(i['productId']);
+      }
+      dynamic res1 = await _apiClient.getProductsByList(products);
+      if (res1['error'] == null) {
+        for (var a in res1['products']) {
+          final base64String = a['picture'];
+          Image articleImage = Image.memory(base64Decode(base64String));
+          orderArticles.add(new Article(
+              a['_id'],
+              a['sellerId'],
+              a['sellerName'],
+              a['name'],
+              a['latin'],
+              a['description'],
+              a['category'],
+              a['water'],
+              a['oxygen'].toString(),
+              a['sunlight'],
+              a['price'].toString(),
+              articleImage,
+              a['quantityStock'].toString()));
+        }
+        Order newOrder = new Order(
+            orderId: o['_id'],
+            userId: o['userId'],
+            fullname: o['fullname'],
+            address: o['address'],
+            city: o['city'],
+            payment: o['payment'],
+            cart: orderArticles,
+            total: o['total'].toDouble(),
+            latitude: o['latitude'].toDouble(),
+            longitude: o['longitude'].toDouble(),
+            createdAt: o['created_at'],
+            delivered: o['delivered'],
+            deliveryInProgress: o['deliveryInProgress'],
+            ratingValue: o['ratingValue']);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Error: ${res1['error']}'),
+          backgroundColor: Colors.red.shade300,
+        ));
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: ${res['error']}'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
+  }
 
   Future<void> deliveryInProgress(String orderId) async {
     dynamic res = await _apiClient.deliveryInProgress(orderId);
@@ -236,6 +274,7 @@ class _OrderScreenState extends State<OrderScreen> {
                               alignment: Alignment.center,
                               child: TextButton(
                                 onPressed: () {
+                                  // getOrderInfo(widget.order.orderId);
                                   print("delivering order");
                                   startOrderDelivery(widget.order.orderId).then(
                                       (_) => deliveryInProgress(
