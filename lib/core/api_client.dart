@@ -62,8 +62,9 @@ class ApiClient {
 
   Future<dynamic> rateUsers(List<String> data, int ratingValue) async {
     try {
-      Response response = await _dio
-          .put(url + ':3000/users/rate/' + ratingValue.toString(), data: data);
+      Response response = await _dio.put(
+          url + ':3000/users/rate/' + ratingValue.toString(),
+          data: {'userIds': data});
       return response.data;
     } on DioError catch (e) {
       return e.response!.data;

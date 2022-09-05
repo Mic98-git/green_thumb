@@ -62,7 +62,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       }
       dynamic res1 = await _apiClient.rateUsers(orderIds, ratingValue);
       if (res1['error'] == null) {
-        print(res);
+        print(res1);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Error: ${res1['error']}'),
