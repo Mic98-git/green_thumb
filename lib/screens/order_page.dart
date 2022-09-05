@@ -18,6 +18,32 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
+  final ApiClient _apiClient = ApiClient();
+
+  Future<void> deliveryInProgress(String orderId) async {
+    dynamic res = await _apiClient.deliveryInProgress(orderId);
+    if (res['error'] == null) {
+      print(res);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: ${res['error']}'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
+  }
+
+  Future<void> deliveryCompleted(String orderId) async {
+    dynamic res = await _apiClient.deliveredOrder(orderId);
+    if (res['error'] == null) {
+      print(res);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: ${res['error']}'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
+  }
+
   Future<Position> startOrderDelivery(String orderId) async {
     bool serviceEnabled;
     LocationPermission permission;
