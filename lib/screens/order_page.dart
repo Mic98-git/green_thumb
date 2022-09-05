@@ -20,10 +20,52 @@ class OrderScreen extends StatefulWidget {
 class _OrderScreenState extends State<OrderScreen> {
   final ApiClient _apiClient = ApiClient();
 
+  String orderStatus = "";
+  late Order currentOrder;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      if (widget.order.delivered) {
+        this.orderStatus = "order delivered";
+      } else {
+        if (widget.order.deliveryInProgress) {
+          this.orderStatus = "complete delivery";
+        } else {
+          this.orderStatus = "start delivery";
+        }
+      }
+    });
+  }
+
+  /*Future<void> getOrderInfo() async {
+    dynamic res = await _apiClient.getOrder(widget.order.orderId);
+    var o = res['order'];
+    currentOrder = new Order(
+        orderId: o['_id'],
+        userId: o['userId'],
+        fullname: o['fullname'],
+        address: o['address'],
+        city: o['city'],
+        payment: o['payment'],
+        cart: <Article>[],
+        total: o['total'],
+        latitude: o['latitude'],
+        longitude: o['longitude'],
+        createdAt: o['createdAt'],
+        delivered: o['delivered'],
+        deliveryInProgress: o['deliveryInProgress'],
+        ratingValue: o['ratingValue']);
+    print(currentOrder);
+  }*/
+
   Future<void> deliveryInProgress(String orderId) async {
     dynamic res = await _apiClient.deliveryInProgress(orderId);
     if (res['error'] == null) {
-      print(res);
+      setState(() {
+        this.orderStatus = "complete delivery";
+      });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Error: ${res['error']}'),
@@ -35,7 +77,9 @@ class _OrderScreenState extends State<OrderScreen> {
   Future<void> deliveryCompleted(String orderId) async {
     dynamic res = await _apiClient.deliveredOrder(orderId);
     if (res['error'] == null) {
-      print(res);
+      setState(() {
+        this.orderStatus = "order delivered";
+      });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Error: ${res['error']}'),
@@ -166,33 +210,61 @@ class _OrderScreenState extends State<OrderScreen> {
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
               ),
-              !widget.order.delivered
-                  ? Align(
-                      alignment: Alignment.center,
-                      child: TextButton(
-                        onPressed: () =>
-                            startOrderDelivery(widget.order.orderId),
-                        style: TextButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                        ),
-                        child: Text('start delivery',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontStyle: FontStyle.italic,
-                                color: primaryColor)),
-                      ),
-                    )
-                  : Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: size.height * 0.02),
-                      child: Align(
-                          alignment: Alignment.center,
-                          child: Text('order delivered',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontStyle: FontStyle.italic,
-                                  color: primaryColor,
-                                  fontWeight: FontWeight.w500)))),
+              !user.isCustomer
+                  ? !widget.order.delivered
+                      ? widget.order.deliveryInProgress
+                          ? Align(
+                              alignment: Alignment.center,
+                              child: TextButton(
+                                onPressed: () {
+                                  print("completing order");
+                                  deliveryCompleted(widget.order.orderId);
+                                },
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                ),
+                                child: Text(this.orderStatus,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontStyle: FontStyle.italic,
+                                      color: primaryColor,
+                                      decoration: TextDecoration.underline,
+                                    )),
+                              ),
+                            )
+                          : Align(
+                              alignment: Alignment.center,
+                              child: TextButton(
+                                onPressed: () {
+                                  print("delivering order");
+                                  startOrderDelivery(widget.order.orderId).then(
+                                      (_) => deliveryInProgress(
+                                          widget.order.orderId));
+                                },
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                ),
+                                child: Text(this.orderStatus,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontStyle: FontStyle.italic,
+                                      color: primaryColor,
+                                      decoration: TextDecoration.underline,
+                                    )),
+                              ),
+                            )
+                      : Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: size.height * 0.02),
+                          child: Align(
+                              alignment: Alignment.center,
+                              child: Text(this.orderStatus,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontStyle: FontStyle.italic,
+                                      color: primaryColor,
+                                      fontWeight: FontWeight.w500))))
+                  : SizedBox(height: size.height * 0.03),
               Column(children: [
                 Padding(
                     padding: EdgeInsets.symmetric(
@@ -307,56 +379,59 @@ class _OrderScreenState extends State<OrderScreen> {
                                   ]),
                             ]))))
               ]),
-              Column(children: [
-                Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: size.width * 0.04,
-                        vertical: size.height * 0.03),
-                    child: Container(
-                        width: size.width,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: size.height * 0.02,
-                                horizontal: size.width * 0.03),
-                            child: Column(children: [
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Articles",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ]),
-                              SizedBox(height: size.height * 0.02),
-                              widget.order.cart.isNotEmpty
-                                  ? Column(children: [
-                                      ListView.separated(
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        shrinkWrap: true,
-                                        itemCount: widget.order.cart.length,
-                                        itemBuilder: (context, index) => items(
-                                          item: widget.order.cart[index],
-                                          size: size,
-                                        ),
-                                        separatorBuilder: (context, _) =>
-                                            SizedBox(
-                                                height: size.height * 0.02),
-                                      ),
-                                    ])
-                                  : Row(children: [
-                                      Text("Products info not available!",
-                                          style: TextStyle(
-                                              fontSize: 18, color: Colors.red))
+              if (!user.isCustomer)
+                Column(children: [
+                  Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: size.width * 0.04,
+                          vertical: size.height * 0.03),
+                      child: Container(
+                          width: size.width,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: size.height * 0.02,
+                                  horizontal: size.width * 0.03),
+                              child: Column(children: [
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Articles",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      )
                                     ]),
-                            ]))))
-              ]),
+                                SizedBox(height: size.height * 0.02),
+                                widget.order.cart.isNotEmpty
+                                    ? Column(children: [
+                                        ListView.separated(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: widget.order.cart.length,
+                                          itemBuilder: (context, index) =>
+                                              items(
+                                            item: widget.order.cart[index],
+                                            size: size,
+                                          ),
+                                          separatorBuilder: (context, _) =>
+                                              SizedBox(
+                                                  height: size.height * 0.02),
+                                        ),
+                                      ])
+                                    : Row(children: [
+                                        Text("Products info not available!",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.red))
+                                      ]),
+                              ]))))
+                ]),
             ])));
   }
 }

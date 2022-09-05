@@ -163,15 +163,13 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   void showArticleDetails(Article a) {
     Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ArticleScreen(article: a)))
-        .then((_) {
-      setState(() {});
-    });
+        MaterialPageRoute(builder: (context) => ArticleScreen(article: a)));
   }
 
   void showOrderDetails(Order o) {
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => OrderScreen(order: o)));
+            MaterialPageRoute(builder: (context) => OrderScreen(order: o)))
+        .then((_) => _pullRefresh());
   }
 
   void trackOrder(String orderId) {
@@ -214,7 +212,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   child: Text('Ok', style: TextStyle(fontSize: 18)),
                   onPressed: () {
                     this.rateOrder(order, orderRating).then((_) {
-                      setState(() {});
+                      _pullRefresh();
                       Navigator.of(context, rootNavigator: true).pop('dialog');
                     });
                   })
@@ -372,14 +370,20 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                     children: [
                       Row(
                         children: <Widget>[
-                          Text(
-                            'Order ' +
-                                ((order.orderId
-                                        .replaceAll(RegExp('[a-zA-Z]'), ''))
-                                    .substring(0, 8)),
-                            style: TextStyle(fontSize: 20),
+                          GestureDetector(
+                            onTap: () => showOrderDetails(order),
+                            child: Text(
+                              'Order ' +
+                                  ((order.orderId
+                                          .replaceAll(RegExp('[a-zA-Z]'), ''))
+                                      .substring(0, 8)),
+                              style: TextStyle(
+                                fontSize: 20,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
                           ),
-                          SizedBox(width: size.width * 0.02),
+                          SizedBox(width: size.width * 0.03),
                           if (!order.delivered)
                             TextButton(
                                 onPressed: () {
@@ -480,7 +484,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       this.getSellersAnnouncements(user.userId);
     }
     this.getOrders(user.userId, user.isCustomer);
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
   }
 
   @override

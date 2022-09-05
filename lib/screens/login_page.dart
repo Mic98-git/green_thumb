@@ -7,7 +7,6 @@ import 'package:green_thumb/screens/my_account.dart';
 import 'package:green_thumb/utils/validator.dart';
 import 'package:green_thumb/core/api_client.dart';
 import './profile_registration/user_info.dart';
-import './password_forgotten.dart';
 import '../config/global_variables.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -129,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: <Widget>[
                         Padding(
                           padding: EdgeInsets.only(
-                              top: size.height.toDouble() * 0.05),
+                              top: size.height.toDouble() * 0.06),
                           child: Center(
                             child: Container(
                                 width: 100,
@@ -221,27 +220,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
-                        Align(
-                            alignment: Alignment.centerRight,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const PasswordForgottenScreen()));
-                                },
-                                child: Text(
-                                  'Password Forgotten?',
-                                  style: TextStyle(
-                                      color: primaryColor, fontSize: 15),
-                                ),
-                              ),
-                            )),
                         SizedBox(
-                          height: size.height * 0.05,
+                          height: size.height * 0.1,
                         ),
                         Container(
                           height: 50,

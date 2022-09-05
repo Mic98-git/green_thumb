@@ -50,16 +50,12 @@
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>To take selling article photo</string>
 		<key>NSLocationWhenInUseUsageDescription</key>
-		<true/>
 		<string>This application requires location services to work</string>
 		<key>NSLocationAlwaysUsageDescription</key>
-		<true/>
 		<string>This application requires location services to work</string>
 		<key>NSLocationUsageDescription</key>
-		<true/>
 		<string>This application requires location services to work</string>
 		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-		<true/>
 		<string>This application requires location services to work</string>
 		<key>NSAppTransportSecurity</key>
 		<dict>
