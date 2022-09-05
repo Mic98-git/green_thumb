@@ -69,7 +69,7 @@ class _OrderScreenState extends State<OrderScreen> {
               articleImage,
               a['quantityStock'].toString()));
         }
-        Order newOrder = new Order(
+        currentOrder = new Order(
             orderId: o['_id'],
             userId: o['userId'],
             fullname: o['fullname'],
