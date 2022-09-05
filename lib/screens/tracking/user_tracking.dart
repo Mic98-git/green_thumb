@@ -10,13 +10,12 @@ import 'package:http/http.dart' as http;
 
 import '../../widgets/app_bar.dart';
 
+// ignore: must_be_immutable
 class ViewPositionScreen extends StatelessWidget {
   final String orderId;
   ViewPositionScreen(String this.orderId, {super.key});
 
   final ApiClient apiClient = ApiClient();
-
-//PASSARE L'ID DELL'ORDINE
 
   Future<Tracking> fetchOrder() async {
     final response = await http
@@ -38,6 +37,7 @@ class ViewPositionScreen extends StatelessWidget {
   double longitude = 0;
   double latitude = 0;
 
+  // ignore: unused_element
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
@@ -70,16 +70,13 @@ class ViewPositionScreen extends StatelessWidget {
                 return Text('${snapshot.error}');
               }
 
-              // Remove any existing markers
               markers.clear();
 
               final latLng = LatLng(latitude, longitude);
 
-              // Add new marker with markerId.
               markers.add(
                   Marker(markerId: MarkerId("location"), position: latLng));
 
-              // If google map is already created then update camera position with animation
               mapController?.animateCamera(CameraUpdate.newCameraPosition(
                 CameraPosition(
                   target: latLng,
@@ -90,10 +87,8 @@ class ViewPositionScreen extends StatelessWidget {
               return GoogleMap(
                 initialCameraPosition:
                     CameraPosition(target: LatLng(latitude, longitude)),
-                // Markers to be pointed
                 markers: markers,
                 onMapCreated: (controller) {
-                  // Assign the controller value to use it later
                   mapController = controller;
                 },
               );

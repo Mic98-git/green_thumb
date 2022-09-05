@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:green_thumb/config/global_variables.dart';
+import 'package:green_thumb/core/api_client.dart';
 import 'package:green_thumb/models/article.dart';
 import 'package:green_thumb/models/order.dart';
+import 'package:geolocator/geolocator.dart';
 import '../widgets/app_bar.dart';
 
 class OrderScreen extends StatefulWidget {
@@ -14,7 +18,51 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  void startOrderDelivery() {}
+  Future<Position> startOrderDelivery(String orderId) async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    final ApiClient apiClient = ApiClient();
+    final LocationSettings locationSettings = LocationSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 100,
+    );
+
+    Geolocator.getPositionStream(locationSettings: locationSettings)
+        .listen((Position? position) async {
+      print(position == null
+          ? 'Unknown'
+          : '${position.latitude.toString()}, ${position.longitude.toString()}');
+
+      Map<String, dynamic> body = {
+        "latitude": position?.latitude,
+        "longitude": position?.longitude
+      };
+
+      await apiClient.updatePosition(body, orderId);
+    });
+
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+  }
 
   Widget items({required Article item, required Size size}) => Container(
         child: Row(
@@ -96,7 +144,8 @@ class _OrderScreenState extends State<OrderScreen> {
                   ? Align(
                       alignment: Alignment.center,
                       child: TextButton(
-                        onPressed: startOrderDelivery,
+                        onPressed: () =>
+                            startOrderDelivery(widget.order.orderId),
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.zero,
                         ),
