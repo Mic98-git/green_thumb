@@ -123,6 +123,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
               longitude: o['longitude'].toDouble(),
               createdAt: o['created_at'],
               delivered: o['delivered'],
+              deliveryInProgress: o['deliveryInProgress'],
               ratingValue: o['ratingValue']);
           if (newOrder.delivered)
             sellerCompletedOrders.add(newOrder);

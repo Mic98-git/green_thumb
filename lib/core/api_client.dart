@@ -256,6 +256,16 @@ class ApiClient {
     }
   }
 
+  Future<dynamic> deliveryInProgress(String orderId) async {
+    try {
+      Response response =
+          await _dio.put(url + ':3003/order/deliveryInProgress/' + orderId);
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+
   Future<dynamic> rateOrder(String orderId, String ratingValue) async {
     try {
       Response response = await _dio
