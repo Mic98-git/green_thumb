@@ -11,7 +11,7 @@ import '../widgets/app_bar.dart';
 
 class OrderScreen extends StatefulWidget {
   static String id = "order_screen";
-  Order order;
+  final Order order;
   OrderScreen({Key? key, required this.order}) : super(key: key);
 
   @override
@@ -23,21 +23,29 @@ class _OrderScreenState extends State<OrderScreen> {
 
   String orderStatus = "";
   late Order currentOrder;
+  bool orderInitialized = false;
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      if (widget.order.delivered) {
-        this.orderStatus = "order delivered";
-      } else {
-        if (widget.order.deliveryInProgress) {
-          this.orderStatus = "complete delivery";
-        } else {
-          this.orderStatus = "start delivery";
-        }
-      }
+    this.getOrderInfo(widget.order.orderId).then((_) {
+      if (this.mounted)
+        setState(() {
+          if (widget.order.delivered) {
+            this.orderStatus = "order delivered";
+          } else {
+            if (widget.order.deliveryInProgress) {
+              this.orderStatus = "complete delivery";
+            } else {
+              this.orderStatus = "start delivery";
+            }
+          }
+        });
     });
+  }
+
+  Future<void> updateOrderStatus(String orderId) async {
+    await this.getOrderInfo(orderId);
   }
 
   Future<void> getOrderInfo(String orderId) async {
@@ -101,9 +109,9 @@ class _OrderScreenState extends State<OrderScreen> {
   Future<void> deliveryInProgress(String orderId) async {
     dynamic res = await _apiClient.deliveryInProgress(orderId);
     if (res['error'] == null) {
-      setState(() {
-        this.orderStatus = "complete delivery";
-      });
+      updateOrderStatus(orderId).then((_) => setState(() {
+            this.orderStatus = "complete delivery";
+          }));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Error: ${res['error']}'),
@@ -115,9 +123,9 @@ class _OrderScreenState extends State<OrderScreen> {
   Future<void> deliveryCompleted(String orderId) async {
     dynamic res = await _apiClient.deliveredOrder(orderId);
     if (res['error'] == null) {
-      setState(() {
-        this.orderStatus = "order delivered";
-      });
+      updateOrderStatus(orderId).then((_) => setState(() {
+            this.orderStatus = "order delivered";
+          }));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Error: ${res['error']}'),
@@ -231,6 +239,10 @@ class _OrderScreenState extends State<OrderScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    if (!orderInitialized) {
+      this.currentOrder = widget.order;
+      this.orderInitialized = true;
+    }
     return Scaffold(
         appBar: PreferredSize(
             preferredSize: Size.fromHeight(size.height * 0.09),
@@ -249,8 +261,8 @@ class _OrderScreenState extends State<OrderScreen> {
                 ),
               ),
               !user.isCustomer
-                  ? !widget.order.delivered
-                      ? widget.order.deliveryInProgress
+                  ? !currentOrder.delivered
+                      ? currentOrder.deliveryInProgress
                           ? Align(
                               alignment: Alignment.center,
                               child: TextButton(
@@ -274,7 +286,6 @@ class _OrderScreenState extends State<OrderScreen> {
                               alignment: Alignment.center,
                               child: TextButton(
                                 onPressed: () {
-                                  // getOrderInfo(widget.order.orderId);
                                   print("delivering order");
                                   startOrderDelivery(widget.order.orderId).then(
                                       (_) => deliveryInProgress(
@@ -303,7 +314,41 @@ class _OrderScreenState extends State<OrderScreen> {
                                       fontStyle: FontStyle.italic,
                                       color: primaryColor,
                                       fontWeight: FontWeight.w500))))
-                  : SizedBox(height: size.height * 0.03),
+                  : !currentOrder.delivered
+                      ? currentOrder.deliveryInProgress
+                          ? Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: size.height * 0.02),
+                              child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text('order shipped',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontStyle: FontStyle.italic,
+                                          color: primaryColor,
+                                          fontWeight: FontWeight.w500))))
+                          : Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: size.height * 0.02),
+                              child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text('order not yet shipped',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontStyle: FontStyle.italic,
+                                          color: primaryColor,
+                                          fontWeight: FontWeight.w500))))
+                      : Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: size.height * 0.02),
+                          child: Align(
+                              alignment: Alignment.center,
+                              child: Text('order delivered',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontStyle: FontStyle.italic,
+                                      color: primaryColor,
+                                      fontWeight: FontWeight.w500)))),
               Column(children: [
                 Padding(
                     padding: EdgeInsets.symmetric(
@@ -474,3 +519,5 @@ class _OrderScreenState extends State<OrderScreen> {
             ])));
   }
 }
+
+/*SizedBox(height: size.height * 0.03),*/
