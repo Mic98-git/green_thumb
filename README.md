@@ -1,16 +1,5 @@
-# green_thumb
+green_thumb
 
-A new Flutter project.
+E-commerce mobile application.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The main objective of the project is to create an e-commerce mobile app where plant-nursery owners can sell their products and where customers can choose and buy them. The idea came trying to help people to enjoy a better environment, with their beloved plants, without wasting so much time finding what they need. We are presenting GreenThumb, that is accessible by both customers and sellers involved in the green world.
