@@ -376,7 +376,10 @@ class _ArticleScreenState extends State<ArticleScreen> {
                       SizedBox(
                         width: 20,
                       ),
-                      Text('Price: ' + widget.article.price,
+                      Text(
+                          'Price: ' +
+                              double.parse(widget.article.price)
+                                  .toStringAsFixed(2),
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 22,
