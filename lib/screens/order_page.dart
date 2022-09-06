@@ -222,7 +222,7 @@ class _OrderScreenState extends State<OrderScreen> {
                     ),
                     Icon(Icons.euro, size: 20),
                     Text(
-                      item.price,
+                      double.parse(item.price).toStringAsFixed(2),
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20,
