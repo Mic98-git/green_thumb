@@ -173,8 +173,11 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   }
 
   void trackOrder(String orderId) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => ViewPositionScreen(orderId)));
+    Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ViewPositionScreen(orderId)))
+        .then((_) => _pullRefresh());
   }
 
   Widget buildRating(Size size) => RatingBar.builder(

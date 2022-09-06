@@ -50,7 +50,7 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
                 child: Container(
                   padding: EdgeInsets.all(1),
                   decoration: BoxDecoration(
-                    color: Colors.red,
+                    color: primaryColor,
                     borderRadius: BorderRadius.circular(6),
                   ),
                   constraints: BoxConstraints(
