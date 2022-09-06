@@ -235,7 +235,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                   children: [
                                     Icon(Icons.euro, size: 18),
                                     Text(
-                                      item.price,
+                                      double.parse(item.price)
+                                          .toStringAsFixed(2),
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),
