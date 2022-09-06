@@ -63,7 +63,7 @@ class _ChatScreenState extends State<ChatScreen> {
       return http.post(
         Uri.parse(url + ':3004/chat/'),
         body: (<String, String>{
-          'content': 'Hello, how can I help you? ',
+          'content': 'Welcome in my shop and thanks for contacting me!',
           'userId': userIdDestinatario,
           'idConversation': userIdMittente
         }),
