@@ -294,7 +294,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                         borderRadius: BorderRadius.circular(20),
                         child: FittedBox(
                           child: widget.article.picture,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.contain,
                         )),
                   )),
               SizedBox(

@@ -550,8 +550,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                   ),
                                   Container(
                                     constraints: BoxConstraints(
-                                        minWidth: size.width * 0.25,
-                                        maxWidth: size.width * 0.35),
+                                        minWidth: size.width * 0.20,
+                                        maxWidth: size.width * 0.25),
                                     child: Text(
                                       user.fullname,
                                       style: TextStyle(
